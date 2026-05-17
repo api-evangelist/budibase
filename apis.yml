@@ -54,7 +54,7 @@ common:
     url: https://budibase.com/blog
   - type: Pricing
     url: https://budibase.com/pricing
-  - type: Changelog
+  - type: ChangeLog
     url: https://budibase.com/changelog
   - type: Community
     url: https://discord.com/invite/budibase-733030666647765003
