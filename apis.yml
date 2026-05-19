@@ -44,6 +44,8 @@ apis:
       - type: OpenAPI
         url: https://budibase.com/api/public/v1/openapi.json
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/budibase
   - type: Website
     url: https://budibase.com
   - type: Documentation
