@@ -1,0 +1,670 @@
+openapi: 3.1.0
+info:
+  title: Budibase Public API
+  description: |
+    The Budibase Public API provides programmatic access to Budibase applications, tables,
+    rows, users, and queries. Authentication is via an API key in the `x-budibase-api-key`
+    header generated from the Budibase portal user dropdown menu.
+
+    Data endpoints (tables and rows) additionally require the `x-budibase-app-id` header
+    identifying the target application.
+  version: "1.0"
+  contact:
+    name: Budibase
+    url: https://docs.budibase.com/docs/public-api
+  license:
+    name: GPL-3.0
+    url: https://github.com/Budibase/budibase/blob/master/LICENSE
+servers:
+  - url: https://budibase.app/api/public/v1
+    description: Budibase Cloud Public API
+  - url: https://{selfhosted}/api/public/v1
+    description: Self-hosted Budibase
+    variables:
+      selfhosted:
+        default: budibase.example.com
+        description: Hostname of the self-hosted Budibase instance
+security:
+  - apiKeyAuth: []
+tags:
+  - name: Applications
+    description: Manage Budibase applications.
+  - name: Tables
+    description: Manage data tables inside an application.
+  - name: Rows
+    description: Manage rows inside a table.
+  - name: Users
+    description: Manage Budibase users.
+  - name: Queries
+    description: Execute and search queries.
+paths:
+  /applications:
+    get:
+      tags: [Applications]
+      summary: Search for applications
+      operationId: searchApplications
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NameSearch"
+      responses:
+        "200":
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApplicationSearch"
+    post:
+      tags: [Applications]
+      summary: Create an application
+      operationId: createApplication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApplicationCreate"
+      responses:
+        "200":
+          description: Created application
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApplicationOutput"
+  /applications/{id}:
+    parameters:
+      - $ref: "#/components/parameters/IdPath"
+    get:
+      tags: [Applications]
+      summary: Retrieve an application
+      operationId: getApplication
+      responses:
+        "200":
+          description: Application
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApplicationOutput"
+    put:
+      tags: [Applications]
+      summary: Update an application
+      operationId: updateApplication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApplicationCreate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApplicationOutput"
+    delete:
+      tags: [Applications]
+      summary: Delete an application
+      operationId: deleteApplication
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApplicationOutput"
+  /applications/{id}/publish:
+    parameters:
+      - $ref: "#/components/parameters/IdPath"
+    post:
+      tags: [Applications]
+      summary: Publish an application
+      operationId: publishApplication
+      responses:
+        "200":
+          description: Published
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  appUrl:
+                    type: string
+  /applications/{id}/unpublish:
+    parameters:
+      - $ref: "#/components/parameters/IdPath"
+    post:
+      tags: [Applications]
+      summary: Unpublish an application
+      operationId: unpublishApplication
+      responses:
+        "204":
+          description: Unpublished
+  /applications/{id}/export:
+    parameters:
+      - $ref: "#/components/parameters/IdPath"
+    post:
+      tags: [Applications]
+      summary: Export an app (Business / Enterprise only)
+      operationId: exportApplication
+      responses:
+        "200":
+          description: App export
+          content:
+            application/gzip:
+              schema:
+                type: string
+                format: binary
+  /applications/{id}/import:
+    parameters:
+      - $ref: "#/components/parameters/IdPath"
+    post:
+      tags: [Applications]
+      summary: Import an app to an existing app (Business / Enterprise only)
+      operationId: importApplication
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                appExport:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Import complete
+  /tables:
+    get:
+      tags: [Tables]
+      summary: Search for tables
+      operationId: searchTables
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NameSearch"
+      responses:
+        "200":
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/TableOutput"
+    post:
+      tags: [Tables]
+      summary: Create a table
+      operationId: createTable
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TableInput"
+      responses:
+        "200":
+          description: Created table
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TableOutput"
+  /tables/{id}:
+    parameters:
+      - $ref: "#/components/parameters/IdPath"
+    get:
+      tags: [Tables]
+      summary: Retrieve a table
+      operationId: getTable
+      responses:
+        "200":
+          description: Table
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TableOutput"
+    put:
+      tags: [Tables]
+      summary: Update a table
+      operationId: updateTable
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TableInput"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TableOutput"
+    delete:
+      tags: [Tables]
+      summary: Delete a table
+      operationId: deleteTable
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TableOutput"
+  /tables/{id}/rows:
+    parameters:
+      - $ref: "#/components/parameters/IdPath"
+    get:
+      tags: [Rows]
+      summary: Search for rows in a table
+      operationId: searchRows
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RowSearch"
+      responses:
+        "200":
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Row"
+    post:
+      tags: [Rows]
+      summary: Create a row
+      operationId: createRow
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Row"
+      responses:
+        "200":
+          description: Created row
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Row"
+  /tables/{id}/rows/{rowId}:
+    parameters:
+      - $ref: "#/components/parameters/IdPath"
+      - name: rowId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags: [Rows]
+      summary: Retrieve a row
+      operationId: getRow
+      responses:
+        "200":
+          description: Row
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Row"
+    put:
+      tags: [Rows]
+      summary: Update a row
+      operationId: updateRow
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Row"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Row"
+    delete:
+      tags: [Rows]
+      summary: Delete a row
+      operationId: deleteRow
+      responses:
+        "200":
+          description: Deleted
+  /users:
+    get:
+      tags: [Users]
+      summary: Search for users
+      operationId: searchUsers
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NameSearch"
+      responses:
+        "200":
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/User"
+    post:
+      tags: [Users]
+      summary: Create a user
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserInput"
+      responses:
+        "200":
+          description: Created user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+  /users/{id}:
+    parameters:
+      - $ref: "#/components/parameters/IdPath"
+    get:
+      tags: [Users]
+      summary: Retrieve a user
+      operationId: getUser
+      responses:
+        "200":
+          description: User
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+    put:
+      tags: [Users]
+      summary: Update a user
+      operationId: updateUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserInput"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+    delete:
+      tags: [Users]
+      summary: Delete a user
+      operationId: deleteUser
+      responses:
+        "200":
+          description: Deleted
+  /queries:
+    get:
+      tags: [Queries]
+      summary: Search for queries
+      operationId: searchQueries
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NameSearch"
+      responses:
+        "200":
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Query"
+  /queries/{id}/execute:
+    parameters:
+      - $ref: "#/components/parameters/IdPath"
+    post:
+      tags: [Queries]
+      summary: Execute a query
+      operationId: executeQuery
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                parameters:
+                  type: object
+                  additionalProperties: true
+                pagination:
+                  type: object
+      responses:
+        "200":
+          description: Query result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: true
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-budibase-api-key
+      description: API key generated from the Budibase portal user dropdown menu.
+  parameters:
+    IdPath:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    AppId:
+      name: x-budibase-app-id
+      in: header
+      required: false
+      description: Required for data endpoints (tables and rows). Use `app_dev_[id]` for development or `app_[id]` for published apps.
+      schema:
+        type: string
+  schemas:
+    NameSearch:
+      type: object
+      properties:
+        name:
+          type: string
+        paginate:
+          type: boolean
+        bookmark:
+          type: string
+        sort:
+          type: object
+          properties:
+            order:
+              type: string
+              enum: [ascending, descending]
+            type:
+              type: string
+              enum: [string, number]
+    ApplicationCreate:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+    ApplicationOutput:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        url:
+          type: string
+        status:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    ApplicationSearch:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/ApplicationOutput"
+    TableInput:
+      type: object
+      required: [name, schema]
+      properties:
+        name:
+          type: string
+        primaryDisplay:
+          type: string
+        schema:
+          type: object
+          additionalProperties:
+            $ref: "#/components/schemas/Column"
+    TableOutput:
+      allOf:
+        - type: object
+          properties:
+            _id:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+        - $ref: "#/components/schemas/TableInput"
+    Column:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+          enum: [string, longform, options, number, boolean, datetime, attachment, link, formula, array]
+        constraints:
+          type: object
+    Row:
+      type: object
+      properties:
+        _id:
+          type: string
+        _rev:
+          type: string
+        tableId:
+          type: string
+      additionalProperties: true
+    RowSearch:
+      type: object
+      properties:
+        query:
+          type: object
+          additionalProperties: true
+        paginate:
+          type: boolean
+        bookmark:
+          type: string
+        limit:
+          type: integer
+        sort:
+          type: object
+          properties:
+            order:
+              type: string
+              enum: [ascending, descending]
+            column:
+              type: string
+            type:
+              type: string
+    UserInput:
+      type: object
+      required: [email]
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        roles:
+          type: object
+          additionalProperties:
+            type: string
+        builder:
+          type: object
+          properties:
+            global:
+              type: boolean
+        admin:
+          type: object
+          properties:
+            global:
+              type: boolean
+    User:
+      allOf:
+        - $ref: "#/components/schemas/UserInput"
+        - type: object
+          properties:
+            _id:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+    Query:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        datasourceId:
+          type: string
+        queryVerb:
+          type: string
+        parameters:
+          type: array
+          items:
+            type: object
