@@ -154,6 +154,8 @@ common:
           - AWS Deployment
           - On-Premises Support
           - Air-Gapped Deployments
+  - type: LLMsTxt
+    url: https://docs.budibase.com/llms.txt
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
