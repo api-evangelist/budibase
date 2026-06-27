@@ -2,20 +2,13 @@
   "repo": "budibase",
   "feeds": [
     {
-      "source": "https://github.com/budibase/budibase",
-      "feed_url": "https://github.com/budibase/budibase",
-      "title": "",
-      "saved": 0,
-      "method": "none"
-    },
-    {
       "source": "https://budibase.com/blog",
-      "feed_url": "https://budibase.com/blog",
-      "title": "",
-      "saved": 0,
-      "method": "none"
+      "feed_url": "",
+      "saved": 1,
+      "method": "agent-scrape"
     }
   ],
-  "fetched": "2026-06-14T20:42:17Z",
-  "post_count": 1
+  "fetched": "2026-06-27T12:29:57Z",
+  "post_count": 3,
+  "agent_pulled": "2026-06-27"
 }

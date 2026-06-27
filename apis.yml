@@ -60,7 +60,7 @@ common:
     url: https://budibase.com/changelog
   - type: Community
     url: https://discord.com/invite/budibase-733030666647765003
-  - type: SignUp
+  - type: Signup
     url: https://account.budibase.app/register
   - type: Login
     url: https://account.budibase.app/auth/login
@@ -154,7 +154,7 @@ common:
           - AWS Deployment
           - On-Premises Support
           - Air-Gapped Deployments
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://docs.budibase.com/llms.txt
 maintainers:
   - FN: Kin Lane
