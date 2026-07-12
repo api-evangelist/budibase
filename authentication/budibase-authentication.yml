@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/budibase-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: apiKeyAuth
+  type: apiKey
+  in: header
+  parameter: x-budibase-api-key
+  description: API key generated from the Budibase portal user dropdown menu.
+  sources:
+  - openapi/budibase-openapi.yml
