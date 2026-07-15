@@ -44,6 +44,8 @@ apis:
       - type: OpenAPI
         url: https://budibase.com/api/public/v1/openapi.json
 common:
+  - type: AgenticAccess
+    url: agentic-access/budibase-agentic-access.yml
   - type: TrustCenter
     url: security/budibase-trust-center.yml
   - type: DomainSecurity
