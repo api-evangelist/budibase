@@ -1,0 +1,176 @@
+openapi: 3.1.0
+info:
+  title: Budibase Public Applications Rows API
+  description: 'The Budibase Public API provides programmatic access to Budibase applications, tables,
+
+    rows, users, and queries. Authentication is via an API key in the `x-budibase-api-key`
+
+    header generated from the Budibase portal user dropdown menu.
+
+
+    Data endpoints (tables and rows) additionally require the `x-budibase-app-id` header
+
+    identifying the target application.
+
+    '
+  version: '1.0'
+  contact:
+    name: Budibase
+    url: https://docs.budibase.com/docs/public-api
+  license:
+    name: GPL-3.0
+    url: https://github.com/Budibase/budibase/blob/master/LICENSE
+servers:
+- url: https://budibase.app/api/public/v1
+  description: Budibase Cloud Public API
+- url: https://{selfhosted}/api/public/v1
+  description: Self-hosted Budibase
+  variables:
+    selfhosted:
+      default: budibase.example.com
+      description: Hostname of the self-hosted Budibase instance
+security:
+- apiKeyAuth: []
+tags:
+- name: Rows
+  description: Manage rows inside a table.
+paths:
+  /tables/{id}/rows:
+    parameters:
+    - $ref: '#/components/parameters/IdPath'
+    get:
+      tags:
+      - Rows
+      summary: Search for rows in a table
+      operationId: searchRows
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RowSearch'
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Row'
+    post:
+      tags:
+      - Rows
+      summary: Create a row
+      operationId: createRow
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Row'
+      responses:
+        '200':
+          description: Created row
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Row'
+  /tables/{id}/rows/{rowId}:
+    parameters:
+    - $ref: '#/components/parameters/IdPath'
+    - name: rowId
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - Rows
+      summary: Retrieve a row
+      operationId: getRow
+      responses:
+        '200':
+          description: Row
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Row'
+    put:
+      tags:
+      - Rows
+      summary: Update a row
+      operationId: updateRow
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Row'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Row'
+    delete:
+      tags:
+      - Rows
+      summary: Delete a row
+      operationId: deleteRow
+      responses:
+        '200':
+          description: Deleted
+components:
+  schemas:
+    RowSearch:
+      type: object
+      properties:
+        query:
+          type: object
+          additionalProperties: true
+        paginate:
+          type: boolean
+        bookmark:
+          type: string
+        limit:
+          type: integer
+        sort:
+          type: object
+          properties:
+            order:
+              type: string
+              enum:
+              - ascending
+              - descending
+            column:
+              type: string
+            type:
+              type: string
+    Row:
+      type: object
+      properties:
+        _id:
+          type: string
+        _rev:
+          type: string
+        tableId:
+          type: string
+      additionalProperties: true
+  parameters:
+    IdPath:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-budibase-api-key
+      description: API key generated from the Budibase portal user dropdown menu.

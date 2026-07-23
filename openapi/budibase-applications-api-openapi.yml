@@ -1,0 +1,257 @@
+openapi: 3.1.0
+info:
+  title: Budibase Public Applications API
+  description: 'The Budibase Public API provides programmatic access to Budibase applications, tables,
+
+    rows, users, and queries. Authentication is via an API key in the `x-budibase-api-key`
+
+    header generated from the Budibase portal user dropdown menu.
+
+
+    Data endpoints (tables and rows) additionally require the `x-budibase-app-id` header
+
+    identifying the target application.
+
+    '
+  version: '1.0'
+  contact:
+    name: Budibase
+    url: https://docs.budibase.com/docs/public-api
+  license:
+    name: GPL-3.0
+    url: https://github.com/Budibase/budibase/blob/master/LICENSE
+servers:
+- url: https://budibase.app/api/public/v1
+  description: Budibase Cloud Public API
+- url: https://{selfhosted}/api/public/v1
+  description: Self-hosted Budibase
+  variables:
+    selfhosted:
+      default: budibase.example.com
+      description: Hostname of the self-hosted Budibase instance
+security:
+- apiKeyAuth: []
+tags:
+- name: Applications
+  description: Manage Budibase applications.
+paths:
+  /applications:
+    get:
+      tags:
+      - Applications
+      summary: Search for applications
+      operationId: searchApplications
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NameSearch'
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationSearch'
+    post:
+      tags:
+      - Applications
+      summary: Create an application
+      operationId: createApplication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationCreate'
+      responses:
+        '200':
+          description: Created application
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationOutput'
+  /applications/{id}:
+    parameters:
+    - $ref: '#/components/parameters/IdPath'
+    get:
+      tags:
+      - Applications
+      summary: Retrieve an application
+      operationId: getApplication
+      responses:
+        '200':
+          description: Application
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationOutput'
+    put:
+      tags:
+      - Applications
+      summary: Update an application
+      operationId: updateApplication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationCreate'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationOutput'
+    delete:
+      tags:
+      - Applications
+      summary: Delete an application
+      operationId: deleteApplication
+      responses:
+        '200':
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationOutput'
+  /applications/{id}/publish:
+    parameters:
+    - $ref: '#/components/parameters/IdPath'
+    post:
+      tags:
+      - Applications
+      summary: Publish an application
+      operationId: publishApplication
+      responses:
+        '200':
+          description: Published
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  appUrl:
+                    type: string
+  /applications/{id}/unpublish:
+    parameters:
+    - $ref: '#/components/parameters/IdPath'
+    post:
+      tags:
+      - Applications
+      summary: Unpublish an application
+      operationId: unpublishApplication
+      responses:
+        '204':
+          description: Unpublished
+  /applications/{id}/export:
+    parameters:
+    - $ref: '#/components/parameters/IdPath'
+    post:
+      tags:
+      - Applications
+      summary: Export an app (Business / Enterprise only)
+      operationId: exportApplication
+      responses:
+        '200':
+          description: App export
+          content:
+            application/gzip:
+              schema:
+                type: string
+                format: binary
+  /applications/{id}/import:
+    parameters:
+    - $ref: '#/components/parameters/IdPath'
+    post:
+      tags:
+      - Applications
+      summary: Import an app to an existing app (Business / Enterprise only)
+      operationId: importApplication
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                appExport:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Import complete
+components:
+  schemas:
+    ApplicationOutput:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        url:
+          type: string
+        status:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    NameSearch:
+      type: object
+      properties:
+        name:
+          type: string
+        paginate:
+          type: boolean
+        bookmark:
+          type: string
+        sort:
+          type: object
+          properties:
+            order:
+              type: string
+              enum:
+              - ascending
+              - descending
+            type:
+              type: string
+              enum:
+              - string
+              - number
+    ApplicationCreate:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+    ApplicationSearch:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationOutput'
+  parameters:
+    IdPath:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-budibase-api-key
+      description: API key generated from the Budibase portal user dropdown menu.
