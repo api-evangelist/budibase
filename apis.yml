@@ -8,7 +8,20 @@ description: >-
   government organizations, Budibase accelerates the delivery of internal
   business applications and process automation.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/budibase.png
 url: https://raw.githubusercontent.com/api-evangelist/budibase/refs/heads/main/apis.yml
 created: '2026-03-27'
 modified: '2026-04-21'
@@ -21,28 +34,71 @@ tags:
   - Open Source
   - Workflow Automation
 apis:
-  - aid: budibase:budibase-rest-api
-    name: Budibase REST API
-    description: >-
-      The Budibase Public API provides programmatic access to Budibase resources
-      including applications, tables, rows, users, queries, and automations. It
-      enables external systems to read and write Budibase data, trigger
-      automations, and manage platform resources. Authentication is via an API
-      key generated in account settings.
-    humanURL: https://docs.budibase.com/docs/public-api
-    tags:
-      - Applications
-      - Automation
-      - Low-Code
-      - Tables
-      - Users
-    properties:
-      - type: Documentation
-        url: https://docs.budibase.com/docs/public-api
-      - type: Authentication
-        url: https://docs.budibase.com/docs/public-api#authentication
-      - type: OpenAPI
-        url: https://budibase.com/api/public/v1/openapi.json
+- aid: budibase:budibase-applications-api
+  name: Budibase Applications API
+  description: Manage Budibase applications.
+  humanURL: https://docs.budibase.com/docs/public-api
+  tags:
+  - Applications
+  properties:
+  - type: OpenAPI
+    url: openapi/budibase-applications-api-openapi.yml
+  - type: Documentation
+    url: https://docs.budibase.com/docs/public-api
+  - type: Authentication
+    url: https://docs.budibase.com/docs/public-api#authentication
+- aid: budibase:budibase-queries-api
+  name: Budibase Queries API
+  description: Execute and search queries.
+  humanURL: https://docs.budibase.com/docs/public-api
+  tags:
+  - Queries
+  properties:
+  - type: OpenAPI
+    url: openapi/budibase-queries-api-openapi.yml
+  - type: Documentation
+    url: https://docs.budibase.com/docs/public-api
+  - type: Authentication
+    url: https://docs.budibase.com/docs/public-api#authentication
+- aid: budibase:budibase-rows-api
+  name: Budibase Rows API
+  description: Manage rows inside a table.
+  humanURL: https://docs.budibase.com/docs/public-api
+  tags:
+  - Rows
+  properties:
+  - type: OpenAPI
+    url: openapi/budibase-rows-api-openapi.yml
+  - type: Documentation
+    url: https://docs.budibase.com/docs/public-api
+  - type: Authentication
+    url: https://docs.budibase.com/docs/public-api#authentication
+- aid: budibase:budibase-tables-api
+  name: Budibase Tables API
+  description: Manage data tables inside an application.
+  humanURL: https://docs.budibase.com/docs/public-api
+  tags:
+  - Tables
+  properties:
+  - type: OpenAPI
+    url: openapi/budibase-tables-api-openapi.yml
+  - type: Documentation
+    url: https://docs.budibase.com/docs/public-api
+  - type: Authentication
+    url: https://docs.budibase.com/docs/public-api#authentication
+- aid: budibase:budibase-users-api
+  name: Budibase Users API
+  description: Manage Budibase users.
+  humanURL: https://docs.budibase.com/docs/public-api
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/budibase-users-api-openapi.yml
+  - type: Documentation
+    url: https://docs.budibase.com/docs/public-api
+  - type: Authentication
+    url: https://docs.budibase.com/docs/public-api#authentication
 common:
   - type: AgenticAccess
     url: agentic-access/budibase-agentic-access.yml
