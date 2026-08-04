@@ -1,0 +1,22 @@
+{
+  "provider": "budibase",
+  "sources": [
+    "budibase-applications-api-openapi.yml",
+    "budibase-queries-api-openapi.yml",
+    "budibase-rows-api-openapi.yml",
+    "budibase-tables-api-openapi.yml",
+    "budibase-users-api-openapi.yml"
+  ],
+  "outputs": [
+    "budibase-applications-api-openapi.yml",
+    "budibase-queries-api-openapi.yml",
+    "budibase-rows-api-openapi.yml",
+    "budibase-tables-api-openapi.yml",
+    "budibase-users-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
