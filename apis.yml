@@ -100,6 +100,16 @@ apis:
   - type: Authentication
     url: https://docs.budibase.com/docs/public-api#authentication
 common:
+  - type: IssueTracker
+    url: https://github.com/budibase/budibase/issues
+  - type: Releases
+    url: https://github.com/budibase/budibase/releases
+  - type: SecurityPolicy
+    url: https://github.com/Budibase/budibase/blob/master/SECURITY.md
+  - type: CodeOfConduct
+    url: https://github.com/Budibase/budibase/blob/master/.github/CODE_OF_CONDUCT.md
+  - type: ContributionGuide
+    url: https://github.com/Budibase/budibase/blob/master/.github/CONTRIBUTING.md
   - type: AgenticAccess
     url: agentic-access/budibase-agentic-access.yml
   - type: TrustCenter
