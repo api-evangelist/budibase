@@ -1,0 +1,358 @@
+# Budibase Docs Documentation
+
+> Transform workflows with Budibase, the Open Source workflow toolkit.
+
+## Guides
+- [What is Budibase?](https://docs.budibase.com/docs/what-is-budibase.md): Build internal tools and automate workflows with your data, LLMs, and APIs.
+- [Quickstart](https://docs.budibase.com/docs/quickstart.md): Using our internal database to hit the ground running
+- [Quickstart: Budibase AI](https://docs.budibase.com/docs/quickstart-budibase-ai.md): This page will help you get Budibase AI up and running quickly so you can start generating code or database tables or creating LLM-powered automations in your Workspace
+- [Guides and resources](https://docs.budibase.com/docs/examples-and-guides.md)
+- [Calculate field value on save](https://docs.budibase.com/docs/calculate-field-value-on-save.md): Displaying a preferred unit to end users, but always save a standardised unit
+- [Cascading dropdown filters](https://docs.budibase.com/docs/cascading-dropdown-filters.md): Example: Filter a city picker by the chosen country of another options picker
+- [Create an Audit Table](https://docs.budibase.com/docs/create-an-audit-table.md): This guide explains how to implement a basic audit system in your app. The system tracks changes to the Patients table and logs those changes in a separate Patient audit table using automations.
+- [Filter table with options picker](https://docs.budibase.com/docs/filter-table-block-with-options-picker.md): Filter by region dropdown or country name
+- [Link two entities in one form](https://docs.budibase.com/docs/save-two-linked-tables-in-one-form.md): Example: Creating an employee record and linking them to a newly created job
+- [Lookup record](https://docs.budibase.com/docs/lookup-record.md): Check if a record exists
+- [Passing bindings in URL parameters](https://docs.budibase.com/docs/passing-bindings-in-url-parameters.md): Using URL parameters to bring information into a screen
+- [Populate form fields on select](https://docs.budibase.com/docs/populate-form-fields-on-select.md): Auto-filling a form for a chosen record
+- [Create a secure public form](https://docs.budibase.com/docs/public-form.md)
+- [Saving in progress form](https://docs.budibase.com/docs/saving-in-progress-form.md): Allow your end users to pick up where they left off
+- [Scroll to top of screen](https://docs.budibase.com/docs/scroll-to-form-field.md)
+- [Show button on condition](https://docs.budibase.com/docs/show-button-on-condition.md): Allow end users to perform an app action only in certain cases
+- [Table row status](https://docs.budibase.com/docs/table-rows-status-icon.md): Add an icon to graphically indicate the status of your records
+- [Update date field on change](https://docs.budibase.com/docs/update-date-field-on-change.md): For example automatically setting an end date when a start date is selected
+- [Keyboard Shortcuts](https://docs.budibase.com/docs/keyboard-shortcuts.md)
+- [Introduction to workspaces](https://docs.budibase.com/docs/introduction-to-workspaces.md)
+- [Favouriting](https://docs.budibase.com/docs/favouriting-in-a-workspace.md)
+- [Export and import workspaces](https://docs.budibase.com/docs/export-and-import-apps.md): Methods for moving an application or backing up the design and data of an application
+- [Workspace migrations](https://docs.budibase.com/docs/app-migrations.md): Describing the process of workspace migrations
+- [Agents config](https://docs.budibase.com/docs/agents-config.md)
+- [Messaging channels](https://docs.budibase.com/docs/messaging-channels.md)
+- [Slack messaging channel](https://docs.budibase.com/docs/messaging-channels-slack.md)
+- [Microsoft Teams messaging channel](https://docs.budibase.com/docs/messaging-channels-microsoft-teams.md)
+- [Discord messaging channel](https://docs.budibase.com/docs/messaging-channels-discord.md)
+- [Agent chat](https://docs.budibase.com/docs/agent-chat.md)
+- [Agent building 101](https://docs.budibase.com/docs/agent-building-101.md)
+- [Agent instructions guide](https://docs.budibase.com/docs/agent-instructions-guide.md)
+- [Agent tools and permissions](https://docs.budibase.com/docs/agent-tools-and-permissions.md)
+- [Agent embedding models](https://docs.budibase.com/docs/agent-embedding-models.md)
+- [Agent vector databases](https://docs.budibase.com/docs/agent-vector-databases.md)
+- [Agent testing guide](https://docs.budibase.com/docs/agent-testing-guide.md)
+- [Agent troubleshooting](https://docs.budibase.com/docs/agent-troubleshooting.md)
+- [Agent activity](https://docs.budibase.com/docs/agent-activity.md): Monitor and track interactions with your AI agents.
+- [Introduction to data](https://docs.budibase.com/docs/data.md)
+- [Dev / Prod switcher](https://docs.budibase.com/docs/dev-prod-switcher.md)
+- [Views](https://docs.budibase.com/docs/views.md): Learn more about views within Budibase
+- [Users table](https://docs.budibase.com/docs/users-table.md)
+- [Budibase DB](https://docs.budibase.com/docs/budibasedb.md)
+- [AI Column🔒](https://docs.budibase.com/docs/ai-column.md): Simply select the AI column, add a prompt, and let AI do the work for you - from analysing customer feedback to triaging support tickets, drafting responses, or writing inventory descriptions.
+- [Attachments](https://docs.budibase.com/docs/attachments.md): Learn more about how Budibase manages static files.
+- [Barcode/QR](https://docs.budibase.com/docs/barcodeqr.md): This topic describes the barcode/qr data types, supported in Budibase
+- [Boolean (True/False)](https://docs.budibase.com/docs/boolean-truefalse.md)
+- [Date/Time](https://docs.budibase.com/docs/datetime.md)
+- [JSON](https://docs.budibase.com/docs/json.md)
+- [Multi-select](https://docs.budibase.com/docs/multi-select.md): Using the multiple options data type in Budibase
+- [Number](https://docs.budibase.com/docs/number.md): This topic describes the number data types, supported in Budibase
+- [Relationships](https://docs.budibase.com/docs/relationships.md)
+- [Text](https://docs.budibase.com/docs/text.md): This topic describes the string/text data types, supported in Budibase
+- [User](https://docs.budibase.com/docs/users-1.md)
+- [Options](https://docs.budibase.com/docs/options.md): `Options `data type is a straightforward way to provide _options_  for a dropdown list or radio buttons in forms.
+- [Datasources](https://docs.budibase.com/docs/data-sources.md): Connecting Budibase to databases and APIs
+- [CouchDB](https://docs.budibase.com/docs/couchdb.md)
+- [CSV Import](https://docs.budibase.com/docs/csv-import.md): Importing a CSV or JSON into Budibase as a table
+- [DynamoDB](https://docs.budibase.com/docs/dynamodb.md)
+- [Elasticsearch](https://docs.budibase.com/docs/elasticsearch.md): Using Elasticsearch as a data source in Budibase
+- [Firestore](https://docs.budibase.com/docs/firestore.md)
+- [Google Sheets](https://docs.budibase.com/docs/google-sheets.md)
+- [MongoDB](https://docs.budibase.com/docs/mongodb.md)
+- [MS SQL Server](https://docs.budibase.com/docs/ms-sql-server.md): Connecting Budibase to an existing Microsoft SQL Server
+- [MySQL / MariaDB](https://docs.budibase.com/docs/mysql-mariadb.md): Using a MySQL Database Server as a datasource for Budibase
+- [Oracle](https://docs.budibase.com/docs/oracle.md): Connecting Budibase to an existing Oracle database
+- [PostgreSQL](https://docs.budibase.com/docs/postgresql.md): Using a Postgres Database Server as a datasource for Budibase
+- [Redis](https://docs.budibase.com/docs/redis.md)
+- [S3](https://docs.budibase.com/docs/s3.md): Amazon S3: Cloud object storage
+- [Snowflake](https://docs.budibase.com/docs/snowflake.md)
+- [REST API](https://docs.budibase.com/docs/rest.md): Access APIs using the REST data source
+- [REST Templates](https://docs.budibase.com/docs/rest-templates.md)
+- [REST queries](https://docs.budibase.com/docs/rest-queries.md)
+- [REST bindings (tutorial)](https://docs.budibase.com/docs/rest-bindings.md)
+- [REST query import](https://docs.budibase.com/docs/rest-query-import.md)
+- [REST authentication](https://docs.budibase.com/docs/rest-authentication.md)
+- [REST variables](https://docs.budibase.com/docs/rest-variables.md)
+- [REST pagination](https://docs.budibase.com/docs/rest-pagination.md): Configure paginated REST queries for table/repeater data
+- [REST OAuth2](https://docs.budibase.com/docs/rest-oauth2.md)
+- [REST example](https://docs.budibase.com/docs/rest-example.md): A tutorial on using rest to create an application with budibase
+- [SQL](https://docs.budibase.com/docs/sql-datasource.md): Connecting to and integrating SQL databases into Budibase
+- [Transformers](https://docs.budibase.com/docs/transformers.md): Using Budibase query transformers
+- [Environment variables 🔒](https://docs.budibase.com/docs/environment-variables.md): Configuration for apps which switches per environment
+- [PDF exporting 🔒](https://docs.budibase.com/docs/pdf-exporting.md): The PDF Exporting feature allows you to generate downloadable PDF reports directly from your Budibase app similar to how you would build standard screens.
+- [AI-Powered Table Generation](https://docs.budibase.com/docs/ai-powered-table-generation.md): Build internal Budibase tables fast with Budibase AI.
+- [Introduction to apps](https://docs.budibase.com/docs/introduction-to-apps.md)
+- [App building 101](https://docs.budibase.com/docs/app-building-101.md)
+- [Command Palette](https://docs.budibase.com/docs/command-palette.md): Improve your productivity without touching the mouse.
+- [Update workspace version](https://docs.budibase.com/docs/update-workspace-version.md)
+- [Data in design](https://docs.budibase.com/docs/working-with-data.md)
+- [Displaying data](https://docs.budibase.com/docs/fetching-data.md)
+- [Data provider](https://docs.budibase.com/docs/data-provider.md)
+- [Repeater](https://docs.budibase.com/docs/repeater.md)
+- [Adding filtering](https://docs.budibase.com/docs/searchfilter-data.md)
+- [Adding search](https://docs.budibase.com/docs/adding-a-search-field.md): How to add and connect a search field to your data within Budibase
+- [Single Row Provider](https://docs.budibase.com/docs/single-row-provider.md): Like a [Data Provider](https://docs.budibase.com/update/docs/data-provider), only more targeted.
+- [Design guides](https://docs.budibase.com/docs/design-guides.md)
+- [Designing for mobile](https://docs.budibase.com/docs/designing-for-mobile.md): Learn how to design Budibase apps that look great on mobile.
+- [Theming your app](https://docs.budibase.com/docs/app-theming.md)
+- [Using sections](https://docs.budibase.com/docs/using-sections.md): Deprecated in v2.33.3
+- [Screens](https://docs.budibase.com/docs/screens.md)
+- [Navigation](https://docs.budibase.com/docs/navigation.md)
+- [Blocks](https://docs.budibase.com/docs/blocks.md): Working with pre-built components in the Design Section
+- [Form block](https://docs.budibase.com/docs/form-block.md): The fastest way to build forms
+- [Multi-step form block](https://docs.budibase.com/docs/multi-step-form-block.md): The all-in-one component for creating and managing a multi-step form
+- [Components](https://docs.budibase.com/docs/components.md): Learn about Components within Budibase
+- [Accordion](https://docs.budibase.com/docs/accordion.md)
+- [Attachment](https://docs.budibase.com/docs/attachment.md)
+- [Barcode/QR Scanner](https://docs.budibase.com/docs/barcodeqr-field.md)
+- [Barcode/QR Generator](https://docs.budibase.com/docs/barcodeqr-generator.md): Used to display values as either as a barcode or QR code.
+- [Buttons](https://docs.budibase.com/docs/button-button-group.md): Buttons allow users to perform an action or to navigate to another page. They have multiple styles for various needs and are ideal for calling attention to where a user needs to do something to move forward in a flow.
+- [Card](https://docs.budibase.com/docs/card.md): This is one of the Budibase UI components within the design area of the platform.
+- [Checkbox](https://docs.budibase.com/docs/checkbox.md)
+- [Container](https://docs.budibase.com/docs/container.md)
+- [Date range](https://docs.budibase.com/docs/date-range.md)
+- [Displaying text](https://docs.budibase.com/docs/displaying-text.md): Looking at the different components for display static or dynamic text
+- [Divider](https://docs.budibase.com/docs/divider.md): Dividers bring clarity to a layout by grouping and dividing content in close proximity. They can also be used to establish rhythm and hierarchy.
+- [Dynamic filter](https://docs.budibase.com/docs/dynamic-filter.md)
+- [Embed](https://docs.budibase.com/docs/embed.md): Custom HTML embed component
+- [Embedded Map](https://docs.budibase.com/docs/map.md)
+- [Icon](https://docs.budibase.com/docs/icon.md)
+- [Image](https://docs.budibase.com/docs/image.md)
+- [Link](https://docs.budibase.com/docs/link.md)
+- [Rating](https://docs.budibase.com/docs/rating.md)
+- [S3 File Upload](https://docs.budibase.com/docs/s3-file-upload.md)
+- [Side panel](https://docs.budibase.com/docs/side-panel.md): Show/Hide content without a modal screen
+- [Signature Field](https://docs.budibase.com/docs/signature-field.md): Form fields that allow users to draw in a signature using mouse or phone inputs.
+- [URL Field](https://docs.budibase.com/docs/url-field.md): Form fields for collecting website URLs
+- [Stat Card](https://docs.budibase.com/docs/stat-card.md)
+- [Table](https://docs.budibase.com/docs/table.md): Lift your tables from the Data section into your Design
+- [Tag](https://docs.budibase.com/docs/tag.md)
+- [Text inputs](https://docs.budibase.com/docs/text-inputs.md): Form fields that require key-press input
+- [Filter](https://docs.budibase.com/docs/filter.md)
+- [Calendar](https://docs.budibase.com/docs/calendar.md): A configurable calendar component to show events.
+- [Chatbox](https://docs.budibase.com/docs/chatbox.md): Embed your agent chat experience inside an app screen.
+- [Pickers](https://docs.budibase.com/docs/pickers.md): Selecting values from a range of options
+- [Date picker](https://docs.budibase.com/docs/date-picker.md)
+- [Multi-select picker](https://docs.budibase.com/docs/multi-select-picker.md)
+- [Options picker](https://docs.budibase.com/docs/option-picker.md)
+- [Relationship picker](https://docs.budibase.com/docs/filter-by-relationships.md)
+- [Charts](https://docs.budibase.com/docs/chart.md): Visualise your data
+- [Area Chart](https://docs.budibase.com/docs/area-chart.md)
+- [Bar Chart](https://docs.budibase.com/docs/bar-chart.md)
+- [Line Chart](https://docs.budibase.com/docs/line-chart.md)
+- [Pie & Donut Chart](https://docs.budibase.com/docs/pie-donut-chart.md)
+- [Histogram Chart](https://docs.budibase.com/docs/histogram-chart.md): Visualising buckets of data
+- [Candlestick Chart](https://docs.budibase.com/docs/candlestick-chart.md)
+- [Forms](https://docs.budibase.com/docs/forms.md): Learn about building forms with Budibase.
+- [Field groups](https://docs.budibase.com/docs/field-groups.md): Auto-populate and layout your form fields
+- [Form validation](https://docs.budibase.com/docs/form-validation.md)
+- [Saving static values](https://docs.budibase.com/docs/save-static-value.md): This quick tutorial shows you how to save a static value
+- [Form bindings](https://docs.budibase.com/docs/form-bindings.md): When and how to use bindings in forms
+- [Actions](https://docs.budibase.com/docs/actions.md)
+- [Data actions](https://docs.budibase.com/docs/data-actions.md): These are data based actions; CRUD and other data manipulations.
+- [Application actions](https://docs.budibase.com/docs/application-actions.md): These actions can be anything from notifications, to triggering automations or navigating between screens.
+- [Form actions](https://docs.budibase.com/docs/form-actions.md): These actions specifically deal with form interaction.
+- [Chaining actions](https://docs.budibase.com/docs/chaining-actions.md)
+- [App state](https://docs.budibase.com/docs/app-state.md)
+- [State explorer interface](https://docs.budibase.com/docs/state-explorer-interface.md): The State Explorer Interface enhances visibility and control over state management by clearly outlining where state variables are used and modified. This improves troubleshooting, debugging, and overall app maintainability.
+- [Conditional UI](https://docs.budibase.com/docs/conditions.md)
+- [Custom CSS](https://docs.budibase.com/docs/custom-css.md)
+- [Generating JavaScript with AI](https://docs.budibase.com/docs/generating-javascript-with-ai.md): Budibase AI makes it easier than ever to write JavaScript within Budibase, even if you're not a JS expert.
+- [App scripts 🔒](https://docs.budibase.com/docs/app-scripts.md): This adds the ability to add custom scripts and stylesheets to your apps.
+- [Progressive Web Apps 🔒](https://docs.budibase.com/docs/progressive-web-apps.md): PWAs allow your users to install your app on their device similar to a native app
+- [Link directly to Budibase app](https://docs.budibase.com/docs/link-directly-to-budibase-app.md)
+- [Introduction to automations](https://docs.budibase.com/docs/automation-steps.md)
+- [Automation building 101](https://docs.budibase.com/docs/automation-building-101.md)
+- [Triggers](https://docs.budibase.com/docs/trigger.md)
+- [On demand](https://docs.budibase.com/docs/app-action.md): Trigger your Budibase automation when an action takes place in your Budibase app.
+- [Schedule trigger](https://docs.budibase.com/docs/cronjob.md): Trigger your Budibase automations at regular intervals or specific times.
+- [Webhook](https://docs.budibase.com/docs/webhook.md): Trigger your Budibase automations when something happens in an external application
+- [Row triggers](https://docs.budibase.com/docs/row-triggers.md): Trigger Budibase automations whenever table rows are created, deleted or updated.
+- [Row trigger filters](https://docs.budibase.com/docs/row-trigger-filters.md)
+- [Row actions](https://docs.budibase.com/docs/row-actions.md): A key addition in Budibase v3 is Row Actions, these are used for creating and progressing workflows.
+- [Email listener](https://docs.budibase.com/docs/email-listener.md): Trigger budibase automations when an email hits your folder/inbox
+- [Action steps](https://docs.budibase.com/docs/automation-actions.md): Actions are the core of automations. Actions can carry out updates on a table, send Slack notifications, call an external service, send emails, and much more.
+- [Branching](https://docs.budibase.com/docs/branching.md): With the release of V3 of Budibase you now can branch your automations. This allows you to create more complicated automations, removing the linear limitation in previous versions.
+- [Condition](https://docs.budibase.com/docs/conditions-1.md): Create conditional automation workflows
+- [Discord](https://docs.budibase.com/docs/discord.md): This tutorial will help you add a Discord automation to your Budibase app.
+- [External Data Connector](https://docs.budibase.com/docs/external-data-connector.md): Connect to data from an external source
+- [JS Scripting](https://docs.budibase.com/docs/js-scripting.md): Adding a JavaScript code block step to your automations
+- [Loop](https://docs.budibase.com/docs/looping.md): Looping is useful when you want to process multiple items or perform an action repeatedly, such as sending a message to every contact in your database.
+- [Make (Integromat)](https://docs.budibase.com/docs/make-integromat.md): Executing Make tasks and workflows from Budibase
+- [n8n](https://docs.budibase.com/docs/n8n.md): Trigger an n8n workflow from Budibase
+- [Query Rows](https://docs.budibase.com/docs/query-rows.md): Pulling rows from a table
+- [Send Email](https://docs.budibase.com/docs/send-email.md): Send an email through a configured SMTP server
+- [Slack](https://docs.budibase.com/docs/slack-notification.md): This tutorial will help you add a Slack automation to your Budibase app.
+- [Trigger automation 🔒](https://docs.budibase.com/docs/trigger-automation.md): Trigger an On demand automation from another automation
+- [Zapier](https://docs.budibase.com/docs/zapier.md): Running a Zap from your Bapp
+- [AI automation steps overview](https://docs.budibase.com/docs/ai-automation-steps-overview.md)
+- [Classify text](https://docs.budibase.com/docs/ai-automation-step-classify-text.md)
+- [Translate](https://docs.budibase.com/docs/ai-automation-step-translate.md)
+- [Summarise](https://docs.budibase.com/docs/ai-automation-step-summarise.md)
+- [Generate text](https://docs.budibase.com/docs/ai-automation-step-generate-text.md)
+- [LLM prompt](https://docs.budibase.com/docs/ai-automation-step-llm-prompt.md)
+- [Agent](https://docs.budibase.com/docs/ai-automation-step-agent.md)
+- [Extract document data](https://docs.budibase.com/docs/ai-automation-step-extract-document-data.md)
+- [Data in automations](https://docs.budibase.com/docs/contextual-bindings.md)
+- [Bindings in automations](https://docs.budibase.com/docs/data-in-automations.md)
+- [History and settings](https://docs.budibase.com/docs/logs.md)
+- [Synchronous automations 🔒](https://docs.budibase.com/docs/synchronous-automations.md)
+- [Testing](https://docs.budibase.com/docs/activating-and-testing.md)
+- [Introduction to bindings](https://docs.budibase.com/docs/introduction-to-bindings.md): What are bindings and why are they important?
+- [Using Handlebars](https://docs.budibase.com/docs/bindings.md): Handlebars bindings
+- [Using JavaScript](https://docs.budibase.com/docs/javascript.md): You can use JavaScript within bindings or JS Scripting Actions in Automations. This guide is here to help you understand how this works.
+- [Formula](https://docs.budibase.com/docs/formula.md): Generating a value from an expression
+- [Bindings scope](https://docs.budibase.com/docs/bindings-scope.md)
+- [URL variables](https://docs.budibase.com/docs/url-parameters.md): Passing data between screens
+- [Helpers](https://docs.budibase.com/docs/helpers.md): These are inbuilt functions which can be used to prevent the need for writing additional code.
+- [Math](https://docs.budibase.com/docs/math-helpers.md): These helper functions are all based around manipulating data related to numbers.
+- [Array](https://docs.budibase.com/docs/array-helpers.md): These helpers are based around manipulating arrays.
+- [Number](https://docs.budibase.com/docs/number-helpers.md): These helpers are all based around manipulating numbers.
+- [Url](https://docs.budibase.com/docs/url-helpers.md): These are url based functions that aid in manipulating the url to suit your needs.
+- [String](https://docs.budibase.com/docs/string-helpers.md): These are all functions based around manipulating strings.
+- [Comparison](https://docs.budibase.com/docs/comparison-helpers.md): These are helpers which can be used for if statements/logic statements
+- [Object](https://docs.budibase.com/docs/object-helpers.md): These helpers are all based around manipulating objects.
+- [Date](https://docs.budibase.com/docs/date-helpers.md): These are helpers related to date manippulations.
+- [Snippets 🔒](https://docs.budibase.com/docs/snippets.md): This feature is available for premium tier and above customers. Efficiently reuse JavaScript code via snippets.
+- [Time ago snippet guide](https://docs.budibase.com/docs/time-ago-snippet-function.md)
+- [Formatting currency snippet guide](https://docs.budibase.com/docs/formatting-currency-snippet-guide.md)
+- [Binding explorer panel](https://docs.budibase.com/docs/binding-explorer-panel.md)
+- [Billing and Usage](https://docs.budibase.com/docs/usage.md): Keep track of your workspace plans
+- [Tenant management](https://docs.budibase.com/docs/tenant-management.md): Managing your cloud and self-hosted workspaces and subscriptions
+- [Finding your tenant ID](https://docs.budibase.com/docs/finding-your-tenant-id.md)
+- [Managing your account](https://docs.budibase.com/docs/closing-your-account.md): The steps needed to migrate or delete your account permanently from Budibase.
+- [User management](https://docs.budibase.com/docs/user-management.md): The user management page contains all you'll need to invite, delete and create new users as well as change their Budibase application roles.
+- [Adding users](https://docs.budibase.com/docs/adding-users.md)
+- [User roles](https://docs.budibase.com/docs/user-roles.md)
+- [Workspace access](https://docs.budibase.com/docs/workspace-access.md)
+- [Workspace user management](https://docs.budibase.com/docs/in-app-user-management.md)
+- [User groups 🔒](https://docs.budibase.com/docs/user-groups.md)
+- [SCIM provisioning 🔒](https://docs.budibase.com/docs/scim-provisioning.md): Manage users and groups externally
+- [Authentication and SSO](https://docs.budibase.com/docs/authentication-and-sso.md)
+- [OpenID Connect](https://docs.budibase.com/docs/openid-connect.md)
+- [SSO with Okta](https://docs.budibase.com/docs/sso-with-okta.md)
+- [SSO with Google](https://docs.budibase.com/docs/sso-with-google.md): Single sign-on to Budibase using Google OAuth
+- [SSO with Auth0](https://docs.budibase.com/docs/sso-with-auth0.md): Configure SSO using OpenID Connect and Auth0
+- [SSO with Azure AD](https://docs.budibase.com/docs/sso-with-azure-ad.md): Configure SSO using OpenID Connect and Azure AD
+- [SSO with OneLogin](https://docs.budibase.com/docs/sso-with-onelogin.md): Configure SSO using OpenID Connect and OneLogin
+- [SSO with Keycloak](https://docs.budibase.com/docs/sso-with-keycloak.md): Configure SSO using OpenID Connect and Keycloak
+- [SSO Maintenance Mode](https://docs.budibase.com/docs/sso-maintenance-mode.md): Using SSO maintenance mode to troubleshoot problems
+- [Enforce SSO 🔒](https://docs.budibase.com/docs/enforced-sso.md): Secure your organisation using enforced Single Sign-On
+- [Connections](https://docs.budibase.com/docs/connections.md)
+- [APIs](https://docs.budibase.com/docs/apis.md)
+- [Email](https://docs.budibase.com/docs/email.md)
+- [Portal](https://docs.budibase.com/docs/portal.md): The Budibase portal is the hub for your Budibase user's experience.
+- [User settings](https://docs.budibase.com/docs/user-settings.md): Configuration options for your user account.
+- [Analytics](https://docs.budibase.com/docs/analytics.md)
+- [Event reference](https://docs.budibase.com/docs/event-reference.md)
+- [Audit logs 🔒](https://docs.budibase.com/docs/audit-logs.md)
+- [Backups 🔐](https://docs.budibase.com/docs/backups-1.md)
+- [Branding 🔒](https://docs.budibase.com/docs/branding.md)
+- [V2 reCAPTCHA 🔒](https://docs.budibase.com/docs/v2-recaptcha.md)
+- [Translations 🔒](https://docs.budibase.com/docs/translations.md): Customise or translate Budibase’s default system text for your entire instance
+- [Public API](https://docs.budibase.com/docs/public-api.md): Information about the public API
+- [Multiplayer collaboration](https://docs.budibase.com/docs/multi-dev-collaboration.md): An in-depth look at multiplayer dev collaboration
+- [Embedded app](https://docs.budibase.com/docs/embedded-app.md): Embed a Budibase app as an iframe within your own webpages.
+- [Custom plugins](https://docs.budibase.com/docs/custom-plugin.md)
+- [Plugins quickstart](https://docs.budibase.com/docs/quickstart-plugins.md): Using our internal database to hit the ground running
+- [Custom component](https://docs.budibase.com/docs/custom-component.md): Write a custom svelte component
+- [Component schema](https://docs.budibase.com/docs/component-schema.md): Description of the component plugin schema
+- [Custom datasource](https://docs.budibase.com/docs/custom-datasource.md): Write a custom datasource integration
+- [Datasource schema](https://docs.budibase.com/docs/custom-datasource-schema.md): Description of the datasource plugin schema
+- [Custom automation step](https://docs.budibase.com/docs/custom-automations.md): Write a custom automation action
+- [Automation schema](https://docs.budibase.com/docs/automation-schema.md): Description of the automation action plugin schema
+- [Integrating with CI/CD 🔒](https://docs.budibase.com/docs/integrating-with-cicd.md): How to deploy apps between 2 or more Budibase instances
+- [Micro Frontend Example🔒](https://docs.budibase.com/docs/microfrontend-example.md)
+- [Install methods](https://docs.budibase.com/docs/hosting-methods.md): Use Budibase Cloud or run Budibase on your own self-hosted environment
+- [Ansible](https://docs.budibase.com/docs/ansible.md): Install the Budibase docker image via Ansible
+- [Azure App Service](https://docs.budibase.com/docs/azure-app-service.md): Run Budibase as an Azure App Service
+- [Azure Container Instances](https://docs.budibase.com/docs/azure-container-instances.md): Run Budibase on Azure with persistent storage on CIFS file share
+- [Budibase CLI Install](https://docs.budibase.com/docs/budibase-cli-setup.md): The budi CLI tool can be used to create a new docker-based installation and manage existing installs.
+- [DigitalOcean](https://docs.budibase.com/docs/digitalocean.md): One-click Budibase setup using DigitalOcean
+- [Docker](https://docs.budibase.com/docs/docker.md): Deploy Budibase using Docker
+- [Docker compose](https://docs.budibase.com/docs/docker-compose.md): Deploy Budibase using Docker compose
+- [Windows Server](https://docs.budibase.com/docs/windows-server.md): Deploy Budibase from a Windows Server environment
+- [Google Cloud Run](https://docs.budibase.com/docs/google-cloud-run.md): Installing Budibase on Google Cloud Run
+- [Kubernetes](https://docs.budibase.com/docs/kubernetes-k8s.md): Set up Budibase in your Kubernetes cluster.
+- [Linode](https://docs.budibase.com/docs/linode.md): Install Budibase on a Linode server
+- [Podman](https://docs.budibase.com/docs/podman.md)
+- [Portainer](https://docs.budibase.com/docs/portainer.md): Use the Budibase portainer template to allow rapid deployments.
+- [Hosting settings](https://docs.budibase.com/docs/hosting-settings.md): Information about Budibase hosting settings
+- [Reverse Proxy](https://docs.budibase.com/docs/reverse-proxy.md): How to configure a reverse proxy for Budibase
+- [Accessing CouchDB](https://docs.budibase.com/docs/accessing-couchdb.md): How to access Budibase's underlying database, CouchDB
+- [Accessing MinIO](https://docs.budibase.com/docs/accessing-minio.md): How to access MinIO
+- [IPv6](https://docs.budibase.com/docs/ipv6.md): IP version 6 info when self-hosting Budibase
+- [Updating Budibase](https://docs.budibase.com/docs/updating-budibase.md): Keep your self-hosted budibase instance up to date to take advantage of the newest features and bug fixes.
+- [Running Budibase behind company proxy](https://docs.budibase.com/docs/running-budibase-behind-company-proxy.md)
+- [Moving a Budibase installation](https://docs.budibase.com/docs/server-migration.md): How to use the Budibase CLI to export/import your whole self hosted installation
+- [Migrations](https://docs.budibase.com/docs/migrations.md): Information about self hosted migrations
+- [Budibase architecture](https://docs.budibase.com/docs/budibase-architecture.md): Covering the architecture that makes the Budibase platform work
+- [Budibase CLI Reference](https://docs.budibase.com/docs/budibase-cli-reference.md): This reference documents every command and flag available in the budibase command-line interface.
+- [Command Interface](https://docs.budibase.com/docs/command-interface.md): Easily navigate, perform actions, and access other functionalities through this interface.
+- [Contributing to Budibase](https://docs.budibase.com/docs/contributing-to-budibase.md): We love and appreciate contributions to Budibase, big or small. It gets us right in the feels ❤️
+- [Writing your own external data connector](https://docs.budibase.com/docs/writing-your-own-external-data-connector.md): Learn how to write your own external data connectors for Budibase.
+- [Deployment information](https://docs.budibase.com/docs/deployment-information.md): The where and the how of Budibase deployments
+- [Troubleshooting](https://docs.budibase.com/docs/troubleshooting.md): Having trouble? Sorry to hear that.
+- [Security](https://docs.budibase.com/docs/security.md)
+- [SQL troubleshooting](https://docs.budibase.com/docs/troubleshooting-sql.md): Troubleshooting issues with your SQL database
+- [Network access](https://docs.budibase.com/docs/whitelisting.md): Network access requirements for Budibase Cloud and self-hosted deployments.
+- [Self-hosted AI connectivity](https://docs.budibase.com/docs/self-hosted-ai-features.md)
+- [Self-hosted license connectivity](https://docs.budibase.com/docs/self-hosted-licensing.md)
+- [Cloud data source access](https://docs.budibase.com/docs/external-data-sources.md)
+- [Feature Flags](https://docs.budibase.com/docs/feature-flags.md): How to enable flagged features on your tenant
+
+## API Reference
+- [Create an application](https://docs.budibase.com/reference/appcreate.md)
+- [Update an application](https://docs.budibase.com/reference/appupdate.md)
+- [Delete an application](https://docs.budibase.com/reference/appdestroy.md)
+- [Retrieve an application](https://docs.budibase.com/reference/appgetbyid.md)
+- [Unpublish an application](https://docs.budibase.com/reference/appunpublish.md)
+- [Publish an application](https://docs.budibase.com/reference/apppublish.md)
+- [Import an app to an existing app 🔒](https://docs.budibase.com/reference/appimport.md): This endpoint is only available on a business or enterprise license.
+- [Export an app 🔒](https://docs.budibase.com/reference/appexport.md): This endpoint is only available on a business or enterprise license.
+- [Search for applications](https://docs.budibase.com/reference/appsearch.md): Based on application properties (currently only name) search for applications.
+- [Retrieve Budibase tenant metrics](https://docs.budibase.com/reference/metricsget.md): Output metrics in OpenMetrics format compatible with Prometheus
+- [Execute a query](https://docs.budibase.com/reference/queryexecute.md): Queries which have been created within a Budibase app can be executed using this,
+- [Search for queries](https://docs.budibase.com/reference/querysearch.md): Based on query properties (currently only name) search for queries.
+- [Assign a role to a list of users](https://docs.budibase.com/reference/roleassign.md): This is a business/enterprise only endpoint
+- [Un-assign a role from a list of users](https://docs.budibase.com/reference/roleunassign.md): This is a business/enterprise only endpoint
+- [Create a row](https://docs.budibase.com/reference/rowcreate.md): Creates a row within the specified table.
+- [Update a row](https://docs.budibase.com/reference/rowupdate.md): Updates a row within the specified table.
+- [Delete a row](https://docs.budibase.com/reference/rowdestroy.md): Deletes a row within the specified table.
+- [Retrieve a row](https://docs.budibase.com/reference/rowgetbyid.md): This gets a single row, it will be enriched with the full related rows, rather than the squashed "primaryDisplay" format returned by the search endpoint.
+- [Search for rows](https://docs.budibase.com/reference/rowsearch.md)
+- [Search for rows in a view](https://docs.budibase.com/reference/rowviewsearch.md)
+- [Create a table](https://docs.budibase.com/reference/tablecreate.md): Create a table, this could be internal or external.
+- [Update a table](https://docs.budibase.com/reference/tableupdate.md): Update a table, this could be internal or external.
+- [Delete a table](https://docs.budibase.com/reference/tabledestroy.md): Delete a table, this could be internal or external.
+- [Retrieve a table](https://docs.budibase.com/reference/tablegetbyid.md): Lookup a table, this could be internal or external.
+- [Search for tables](https://docs.budibase.com/reference/tablesearch.md): Based on table properties (currently only name) search for tables. This could be an internal or an external table.
+- [Create a user](https://docs.budibase.com/reference/usercreate.md)
+- [Update a user](https://docs.budibase.com/reference/userupdate.md)
+- [Delete a user](https://docs.budibase.com/reference/userdestroy.md)
+- [Retrieve a user](https://docs.budibase.com/reference/usergetbyid.md)
+- [Search for users](https://docs.budibase.com/reference/usersearch.md): Based on user properties (currently only name) search for users.
+- [Create a view](https://docs.budibase.com/reference/viewcreate.md): Create a view, this can be against an internal or external table.
+- [Update a view](https://docs.budibase.com/reference/viewupdate.md): Update a view, this can be against an internal or external table.
+- [Delete a view](https://docs.budibase.com/reference/viewdestroy.md): Delete a view, this can be against an internal or external table.
+- [Retrieve a view](https://docs.budibase.com/reference/viewgetbyid.md): Lookup a view, this could be internal or external.
+- [Search for views](https://docs.budibase.com/reference/viewsearch.md): Based on view properties (currently only name) search for views.
+- [Create a workspace](https://docs.budibase.com/reference/workspacecreate.md)
+- [Update a workspace](https://docs.budibase.com/reference/workspaceupdate.md)
+- [Delete a workspace](https://docs.budibase.com/reference/workspacedestroy.md)
+- [Retrieve a workspace](https://docs.budibase.com/reference/workspacegetbyid.md)
+- [Publish a workspace](https://docs.budibase.com/reference/workspacepublish.md)
+- [Unpublish a workspace](https://docs.budibase.com/reference/workspaceunpublish.md)
+- [Import a workspace to an existing workspace 🔒](https://docs.budibase.com/reference/workspaceimport.md): This endpoint is only available on an enterprise license.
+- [Export a workspace 🔒](https://docs.budibase.com/reference/workspaceexport.md): This endpoint is only available on an enterprise license.
+- [Search for workspaces](https://docs.budibase.com/reference/workspacesearch.md): Based on workspace properties (currently only name) search for workspaces.
+
+## Recipes
+- [Budibase CLI setup [NPM]](https://docs.budibase.com/recipes/budibase-cli-setup-npm.md)
+- [Update Budibase using CLI](https://docs.budibase.com/recipes/update-budibase-using-cli.md)

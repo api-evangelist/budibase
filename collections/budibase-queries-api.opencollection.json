@@ -1,0 +1,63 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Budibase Public Applications Queries API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-budibase-api-key",
+      "value": "{{x-budibase-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Queries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search for queries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://budibase.app/api/public/v1/queries",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Search for queries"
+        },
+        {
+          "info": {
+            "name": "Execute a query",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://budibase.app/api/public/v1/queries/:id/execute",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute a query"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

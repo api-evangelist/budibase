@@ -1,0 +1,143 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Budibase Public Applications Rows API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-budibase-api-key",
+      "value": "{{x-budibase-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Rows",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search for rows in a table",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://budibase.app/api/public/v1/tables/:id/rows",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Search for rows in a table"
+        },
+        {
+          "info": {
+            "name": "Create a row",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://budibase.app/api/public/v1/tables/:id/rows",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a row"
+        },
+        {
+          "info": {
+            "name": "Retrieve a row",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://budibase.app/api/public/v1/tables/:id/rows/:rowId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rowId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a row"
+        },
+        {
+          "info": {
+            "name": "Update a row",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://budibase.app/api/public/v1/tables/:id/rows/:rowId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rowId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a row"
+        },
+        {
+          "info": {
+            "name": "Delete a row",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://budibase.app/api/public/v1/tables/:id/rows/:rowId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rowId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a row"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

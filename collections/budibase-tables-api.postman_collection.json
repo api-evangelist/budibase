@@ -1,0 +1,541 @@
+{
+  "item": [
+    {
+      "id": "338f5e0e-aa1c-4be6-b9ef-801335931bdf",
+      "name": "Tables",
+      "description": {
+        "content": "Manage data tables inside an application.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5f2eba08-c449-4ee4-b471-166eda94c766",
+          "name": "Search for tables",
+          "request": {
+            "name": "Search for tables",
+            "description": {},
+            "url": {
+              "path": [
+                "tables"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"paginate\": \"<boolean>\",\n  \"bookmark\": \"<string>\",\n  \"sort\": {\n    \"order\": \"<string>\",\n    \"type\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2007e9ab-5a22-44c9-8aad-a0f0402a0ec5",
+              "name": "Search results",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tables"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-budibase-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"paginate\": \"<boolean>\",\n  \"bookmark\": \"<string>\",\n  \"sort\": {\n    \"order\": \"<string>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"name\": \"string\",\n      \"schema\": {\n        \"key_0\": {\n          \"name\": \"string\",\n          \"type\": \"string\",\n          \"constraints\": {}\n        },\n        \"key_1\": {\n          \"name\": \"string\",\n          \"type\": \"formula\",\n          \"constraints\": {}\n        },\n        \"key_2\": {\n          \"name\": \"string\",\n          \"type\": \"longform\",\n          \"constraints\": {}\n        }\n      },\n      \"_id\": \"string\",\n      \"createdAt\": \"1970-06-17T05:22:09.094Z\",\n      \"updatedAt\": \"2009-10-29T21:58:15.982Z\",\n      \"primaryDisplay\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"schema\": {\n        \"key_0\": {\n          \"name\": \"string\",\n          \"type\": \"number\",\n          \"constraints\": {}\n        }\n      },\n      \"_id\": \"string\",\n      \"createdAt\": \"1958-08-09T09:26:14.274Z\",\n      \"updatedAt\": \"1984-10-16T14:21:31.331Z\",\n      \"primaryDisplay\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dc66a16f-7a3d-4ad6-8499-ea3fad190089",
+          "name": "Create a table",
+          "request": {
+            "name": "Create a table",
+            "description": {},
+            "url": {
+              "path": [
+                "tables"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"schema\": {\n    \"key_0\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"constraints\": \"<object>\"\n    },\n    \"key_1\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"constraints\": \"<object>\"\n    }\n  },\n  \"primaryDisplay\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "aa598849-74de-484f-b56f-97363caa6630",
+              "name": "Created table",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tables"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-budibase-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"schema\": {\n    \"key_0\": {\n      \"name\": \"string\",\n      \"type\": \"number\",\n      \"constraints\": {}\n    }\n  },\n  \"primaryDisplay\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"schema\": {\n    \"key_0\": {\n      \"name\": \"string\",\n      \"type\": \"options\",\n      \"constraints\": {}\n    },\n    \"key_1\": {\n      \"name\": \"string\",\n      \"type\": \"datetime\",\n      \"constraints\": {}\n    }\n  },\n  \"_id\": \"string\",\n  \"createdAt\": \"1957-05-13T19:09:13.110Z\",\n  \"updatedAt\": \"1969-04-26T10:57:04.006Z\",\n  \"primaryDisplay\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "da89419f-b7fb-47fc-99e6-14d39260dff2",
+          "name": "Retrieve a table",
+          "request": {
+            "name": "Retrieve a table",
+            "description": {},
+            "url": {
+              "path": [
+                "tables",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dc7c1555-3ccb-4080-8492-0a5d04adc37e",
+              "name": "Table",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tables",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-budibase-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"schema\": {\n    \"key_0\": {\n      \"name\": \"string\",\n      \"type\": \"options\",\n      \"constraints\": {}\n    },\n    \"key_1\": {\n      \"name\": \"string\",\n      \"type\": \"datetime\",\n      \"constraints\": {}\n    }\n  },\n  \"_id\": \"string\",\n  \"createdAt\": \"1957-05-13T19:09:13.110Z\",\n  \"updatedAt\": \"1969-04-26T10:57:04.006Z\",\n  \"primaryDisplay\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eba4827d-ffbf-437c-a83c-22ea8191d5c9",
+          "name": "Update a table",
+          "request": {
+            "name": "Update a table",
+            "description": {},
+            "url": {
+              "path": [
+                "tables",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"schema\": {\n    \"key_0\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"constraints\": \"<object>\"\n    },\n    \"key_1\": {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"constraints\": \"<object>\"\n    }\n  },\n  \"primaryDisplay\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d9cbedf3-ca02-40d2-a222-ba1fcc7bd06c",
+              "name": "Updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tables",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-budibase-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"schema\": {\n    \"key_0\": {\n      \"name\": \"string\",\n      \"type\": \"number\",\n      \"constraints\": {}\n    }\n  },\n  \"primaryDisplay\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"schema\": {\n    \"key_0\": {\n      \"name\": \"string\",\n      \"type\": \"options\",\n      \"constraints\": {}\n    },\n    \"key_1\": {\n      \"name\": \"string\",\n      \"type\": \"datetime\",\n      \"constraints\": {}\n    }\n  },\n  \"_id\": \"string\",\n  \"createdAt\": \"1957-05-13T19:09:13.110Z\",\n  \"updatedAt\": \"1969-04-26T10:57:04.006Z\",\n  \"primaryDisplay\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "06e38e8f-7c70-4512-bf6b-57f12b719cb5",
+          "name": "Delete a table",
+          "request": {
+            "name": "Delete a table",
+            "description": {},
+            "url": {
+              "path": [
+                "tables",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8c27dfde-3755-4ed6-b830-ef2483f6bcb3",
+              "name": "Deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tables",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-budibase-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"schema\": {\n    \"key_0\": {\n      \"name\": \"string\",\n      \"type\": \"options\",\n      \"constraints\": {}\n    },\n    \"key_1\": {\n      \"name\": \"string\",\n      \"type\": \"datetime\",\n      \"constraints\": {}\n    }\n  },\n  \"_id\": \"string\",\n  \"createdAt\": \"1957-05-13T19:09:13.110Z\",\n  \"updatedAt\": \"1969-04-26T10:57:04.006Z\",\n  \"primaryDisplay\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://budibase.app/api/public/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-budibase-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e1a6fae2-9d28-42bb-a402-3abd6ce0a3df",
+    "name": "Budibase Public Applications Tables API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Budibase Public API provides programmatic access to Budibase applications, tables,\nrows, users, and queries. Authentication is via an API key in the `x-budibase-api-key`\nheader generated from the Budibase portal user dropdown menu.\n\nData endpoints (tables and rows) additionally require the `x-budibase-app-id` header\nidentifying the target application.\n\n\nContact Support:\n Name: Budibase",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,196 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Budibase Public Applications API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-budibase-api-key",
+      "value": "{{x-budibase-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Applications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search for applications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://budibase.app/api/public/v1/applications",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Search for applications"
+        },
+        {
+          "info": {
+            "name": "Create an application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://budibase.app/api/public/v1/applications",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an application"
+        },
+        {
+          "info": {
+            "name": "Retrieve an application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://budibase.app/api/public/v1/applications/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve an application"
+        },
+        {
+          "info": {
+            "name": "Update an application",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://budibase.app/api/public/v1/applications/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an application"
+        },
+        {
+          "info": {
+            "name": "Delete an application",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://budibase.app/api/public/v1/applications/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an application"
+        },
+        {
+          "info": {
+            "name": "Publish an application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://budibase.app/api/public/v1/applications/:id/publish",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Publish an application"
+        },
+        {
+          "info": {
+            "name": "Unpublish an application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://budibase.app/api/public/v1/applications/:id/unpublish",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Unpublish an application"
+        },
+        {
+          "info": {
+            "name": "Export an app (Business / Enterprise only)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://budibase.app/api/public/v1/applications/:id/export",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Export an app (Business / Enterprise only)"
+        },
+        {
+          "info": {
+            "name": "Import an app to an existing app (Business / Enterprise only)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://budibase.app/api/public/v1/applications/:id/import",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "appExport",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Import an app to an existing app (Business / Enterprise only)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
