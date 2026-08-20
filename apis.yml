@@ -31,6 +31,13 @@ tags:
   - Automation
   - Internal Tools
   - Low-Code
+  - Open-Source
+  - Workflow-Automation
+tags_raw:
+  - AI Agents
+  - Automation
+  - Internal Tools
+  - Low-Code
   - Open Source
   - Workflow Automation
 apis:
@@ -39,6 +46,8 @@ apis:
   description: Manage Budibase applications.
   humanURL: https://docs.budibase.com/docs/public-api
   tags:
+  - Application
+  tags_raw:
   - Applications
   properties:
   - type: OpenAPI
@@ -52,6 +61,8 @@ apis:
   description: Execute and search queries.
   humanURL: https://docs.budibase.com/docs/public-api
   tags:
+  - Query
+  tags_raw:
   - Queries
   properties:
   - type: OpenAPI
@@ -91,6 +102,8 @@ apis:
   description: Manage Budibase users.
   humanURL: https://docs.budibase.com/docs/public-api
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
