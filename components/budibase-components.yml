@@ -1,0 +1,123 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  https://docs.budibase.com/docs/embedded-app, https://docs.budibase.com/docs/chatbox,
+  https://docs.budibase.com/docs/components, https://docs.budibase.com/docs/component-schema,
+  https://registry.npmjs.org/@budibase/bbui
+description: >-
+  Budibase's client-side and embeddable surface. Two things are worth separating: the
+  IN-APP component library (what a builder drags onto a Budibase screen — large, but only
+  usable inside Budibase) and the genuinely EMBEDDABLE surface a third party can put on
+  their own page. The embeddable surface is exactly one thing: an iframe of a published
+  Budibase app. There is no drop-in JS widget, no web component and no npm-installable UI
+  SDK for embedding Budibase in someone else's product.
+families:
+  - name: Embedded app (iframe)
+    kind: hosted-embed
+    embeddable_externally: true
+    docs: https://docs.budibase.com/docs/embedded-app
+    description: >-
+      Embed an entire published Budibase app inside your own webpage via an iframe. The
+      snippet is generated in the workspace under Settings -> Apps -> Embed.
+    requirements:
+      - Only screens with Public access level render in an embed.
+      - Tables used by those screens need matching Public read/write access.
+      - The app must be published.
+    security_controls:
+      - name: Allowed domains
+        description: >-
+          Restricts which parent sites may frame the app by narrowing the frame-ancestors
+          CSP directive. If left empty, Budibase allows embedding from any origin — a
+          permissive default worth calling out.
+        values_example:
+          - https://example.com
+          - https://*.example.com
+      - name: Authenticate embedded users
+        description: >-
+          The host site passes a signed token on the embed URL and Budibase maps the
+          token's email to an existing Budibase user.
+        plan_gated: Enterprise
+    note: >-
+      This is a hosted embed, not a component library. The host page controls placement and
+      nothing else; all rendering happens inside Budibase.
+  - name: Chatbox
+    kind: in-app component
+    embeddable_externally: false
+    docs: https://docs.budibase.com/docs/chatbox
+    description: >-
+      Places the Budibase agent chat experience inside an app screen, reusing the Agent
+      chat configuration (agent availability, access roles, defaults, conversation
+      starters). Added from the AI category in the component picker.
+    settings:
+      - Intro text
+      - Input placeholder
+      - Send button label
+    prerequisites:
+      - Agents config completed
+      - At least one live agent enabled in Agent chat
+    note: >-
+      Reachable externally only by embedding the whole app that contains it, via the iframe
+      route above.
+  - name: In-app component library
+    kind: in-app components
+    embeddable_externally: false
+    docs: https://docs.budibase.com/docs/components
+    description: >-
+      The drag-and-drop component set available inside the Budibase design area — forms,
+      tables, cards, charts, calendar, embedded map, multi-step form block, custom HTML
+      Embed component and the pre-built Blocks.
+    notable_members:
+      - name: Blocks
+        docs: https://docs.budibase.com/docs/blocks
+        description: Pre-built composite components in the Design section.
+      - name: Multi-step form block
+        docs: https://docs.budibase.com/docs/multi-step-form-block
+      - name: Embed
+        docs: https://docs.budibase.com/docs/embed
+        description: Custom HTML embed component — puts third-party content INTO a Budibase screen.
+      - name: Embedded Map
+        docs: https://docs.budibase.com/docs/map
+      - name: Calendar
+        docs: https://docs.budibase.com/docs/calendar
+  - name: Custom component plugins
+    kind: extension-point
+    embeddable_externally: false
+    docs: https://docs.budibase.com/docs/custom-component
+    schema_docs: https://docs.budibase.com/docs/component-schema
+    description: >-
+      Budibase's extensibility path: write a Svelte component, describe it with the
+      documented component plugin schema, build it with `budi plugins --build` and install
+      it into the platform. Datasource and automation-action plugins use the same
+      mechanism with their own schemas.
+    scaffolding_repo: https://github.com/Budibase/budibase-skeleton
+    community_directory: https://github.com/Budibase/plugins
+    build_tool: '@budibase/cli (budi plugins)'
+loader_libraries:
+  - name: '@budibase/bbui'
+    registry: npm
+    version: 3.44.0
+    published: '2026-08-31'
+    url: https://www.npmjs.com/package/@budibase/bbui
+    description: >-
+      The shared UI component library used across Budibase's own projects. Published to npm
+      and technically installable, but it is Budibase's internal design system rather than
+      a documented embedding surface — no external usage guide is published.
+  - name: '@budibase/client'
+    registry: npm
+    version: 3.38.1
+    published: '2026-05-12'
+    url: https://www.npmjs.com/package/@budibase/client
+    description: >-
+      The Budibase app rendering runtime. Ships manifest.json exporting the definitions of
+      every available component — the closest thing to a machine-readable component catalog
+      Budibase publishes.
+gaps:
+  - >-
+    No web components, no React/Vue/Svelte wrapper package, and no CDN-hosted drop-in
+    script for putting a Budibase surface on a non-Budibase page. iframe is the whole story.
+  - >-
+    The component catalog exists as manifest.json inside @budibase/client but is not
+    published as documentation or a schema endpoint.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

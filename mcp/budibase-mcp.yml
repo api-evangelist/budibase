@@ -1,0 +1,199 @@
+generated: '2026-09-04'
+method: derived
+status: candidate
+source: openapi/budibase-public-api-openapi.yml
+description: >-
+  DERIVED CANDIDATE — Budibase does not publish an MCP server. This is a proposed tool
+  surface computed from the operations in Budibase's own Public API OpenAPI (v3.3.0), so
+  that the shape of an MCP server for Budibase is on record. It is NOT an agent surface
+  that exists today, and apis.yml points at it with type X-MCPServerCandidate, never
+  MCPServer.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: api-key
+  verified: searched
+search_evidence:
+- source: https://docs.budibase.com/llms.txt
+  result: >-
+    The complete 400-line documentation index contains no page mentioning MCP or Model
+    Context Protocol. Budibase documents AI Agents with "tools and permissions", but the
+    tools are internal automation steps, not an MCP server it hosts.
+  status: 200
+- source: https://budibase.com/llms.txt
+  result: Site-level llms.txt names only the pricing page and pricing.json. No MCP.
+  status: 200
+- source: https://github.com/Budibase
+  result: >-
+    All 30 public repositories in the Budibase GitHub organization enumerated; none is an
+    MCP server. Budibase/skills holds one agent skill for Budibase PR review, unrelated
+    to MCP.
+  status: 200
+- source: https://registry.npmjs.org/-/v1/search?text=budibase%20mcp
+  result: No @budibase MCP package published.
+  status: 200
+- source: https://docs.budibase.com/docs/mcp
+  result: 404
+  status: 404
+note: >-
+  No endpoint URL is asserted anywhere in this file. Budibase's API host sits behind
+  Cloudflare and answers unknown paths with 403/502 rather than 404, so a guessed MCP
+  path could easily be mistaken for a live surface — which is exactly why none was
+  guessed.
+auth_model:
+  scheme: apiKey
+  header: x-budibase-api-key
+  additional_headers:
+  - name: x-budibase-app-id
+    required_for: every data-plane operation (tables, rows, views)
+    note: >-
+      Any MCP server for Budibase must carry workspace/app scoping as a tool argument or
+      per-session binding; it is not derivable from the API key.
+candidate_tools:
+- name: budibase_search_workspaces
+  rest: [workspaceSearch]
+  consequence: read
+- name: budibase_get_workspace
+  rest: [workspaceGetById]
+  consequence: read
+- name: budibase_create_workspace
+  rest: [workspaceCreate]
+  consequence: write
+- name: budibase_update_workspace
+  rest: [workspaceUpdate]
+  consequence: write
+- name: budibase_delete_workspace
+  rest: [workspaceDestroy]
+  consequence: destructive
+- name: budibase_publish_workspace
+  rest: [workspacePublish]
+  consequence: write
+  reversible_by: workspaceUnpublish
+- name: budibase_unpublish_workspace
+  rest: [workspaceUnpublish]
+  consequence: write
+- name: budibase_export_workspace
+  rest: [workspaceExport]
+  consequence: read
+- name: budibase_import_workspace
+  rest: [workspaceImport]
+  consequence: destructive
+- name: budibase_search_applications
+  rest: [appSearch]
+  consequence: read
+- name: budibase_get_application
+  rest: [appGetById]
+  consequence: read
+- name: budibase_create_application
+  rest: [appCreate]
+  consequence: write
+- name: budibase_update_application
+  rest: [appUpdate]
+  consequence: write
+- name: budibase_delete_application
+  rest: [appDestroy]
+  consequence: destructive
+- name: budibase_publish_application
+  rest: [appPublish]
+  consequence: write
+  reversible_by: appUnpublish
+- name: budibase_unpublish_application
+  rest: [appUnpublish]
+  consequence: write
+- name: budibase_export_application
+  rest: [appExport]
+  consequence: read
+- name: budibase_import_application
+  rest: [appImport]
+  consequence: destructive
+- name: budibase_search_tables
+  rest: [tableSearch]
+  consequence: read
+- name: budibase_get_table
+  rest: [tableGetById]
+  consequence: read
+- name: budibase_create_table
+  rest: [tableCreate]
+  consequence: write
+- name: budibase_update_table
+  rest: [tableUpdate]
+  consequence: write
+- name: budibase_delete_table
+  rest: [tableDestroy]
+  consequence: destructive
+- name: budibase_search_rows
+  rest: [rowSearch]
+  consequence: read
+- name: budibase_get_row
+  rest: [rowGetById]
+  consequence: read
+- name: budibase_create_row
+  rest: [rowCreate]
+  consequence: write
+- name: budibase_update_row
+  rest: [rowUpdate]
+  consequence: write
+- name: budibase_delete_row
+  rest: [rowDestroy]
+  consequence: destructive
+- name: budibase_search_view_rows
+  rest: [rowViewSearch]
+  consequence: read
+- name: budibase_search_views
+  rest: [viewSearch]
+  consequence: read
+- name: budibase_get_view
+  rest: [viewGetById]
+  consequence: read
+- name: budibase_create_view
+  rest: [viewCreate]
+  consequence: write
+- name: budibase_update_view
+  rest: [viewUpdate]
+  consequence: write
+- name: budibase_delete_view
+  rest: [viewDestroy]
+  consequence: destructive
+- name: budibase_search_users
+  rest: [userSearch]
+  consequence: read
+- name: budibase_get_user
+  rest: [userGetById]
+  consequence: read
+- name: budibase_create_user
+  rest: [userCreate]
+  consequence: write
+- name: budibase_update_user
+  rest: [userUpdate]
+  consequence: write
+- name: budibase_delete_user
+  rest: [userDestroy]
+  consequence: destructive
+- name: budibase_assign_role
+  rest: [roleAssign]
+  consequence: write
+  reversible_by: roleUnAssign
+- name: budibase_unassign_role
+  rest: [roleUnAssign]
+  consequence: write
+- name: budibase_search_queries
+  rest: [querySearch]
+  consequence: read
+- name: budibase_execute_query
+  rest: [queryExecute]
+  consequence: write
+  note: >-
+    Executes a saved datasource query. Consequence depends on the underlying query, which
+    the Public API does not expose — a real MCP server would need to gate this.
+- name: budibase_get_metrics
+  rest: [metricsGet]
+  consequence: read
+coverage:
+  openapi_operations: 44
+  candidate_tools: 44
+  unmapped_operations: 0
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

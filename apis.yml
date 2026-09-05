@@ -38,7 +38,7 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/budibase.png
 url: https://raw.githubusercontent.com/api-evangelist/budibase/refs/heads/main/apis.yml
 created: '2026-03-27'
-modified: '2026-04-21'
+modified: '2026-09-04'
 specificationVersion: '0.23'
 tags:
   - AI Agents
@@ -59,6 +59,7 @@ apis:
   name: Budibase Applications API
   description: Manage Budibase applications.
   humanURL: https://docs.budibase.com/docs/public-api
+  baseURL: https://budibase.app/api/public/v1
   tags:
   - Application
   tags_raw:
@@ -74,6 +75,7 @@ apis:
   name: Budibase Queries API
   description: Execute and search queries.
   humanURL: https://docs.budibase.com/docs/public-api
+  baseURL: https://budibase.app/api/public/v1
   tags:
   - Query
   tags_raw:
@@ -89,6 +91,7 @@ apis:
   name: Budibase Rows API
   description: Manage rows inside a table.
   humanURL: https://docs.budibase.com/docs/public-api
+  baseURL: https://budibase.app/api/public/v1
   tags:
   - Rows
   properties:
@@ -102,6 +105,7 @@ apis:
   name: Budibase Tables API
   description: Manage data tables inside an application.
   humanURL: https://docs.budibase.com/docs/public-api
+  baseURL: https://budibase.app/api/public/v1
   tags:
   - Tables
   properties:
@@ -115,6 +119,7 @@ apis:
   name: Budibase Users API
   description: Manage Budibase users.
   humanURL: https://docs.budibase.com/docs/public-api
+  baseURL: https://budibase.app/api/public/v1
   tags:
   - User
   tags_raw:
@@ -126,6 +131,53 @@ apis:
     url: https://docs.budibase.com/docs/public-api
   - type: Authentication
     url: https://docs.budibase.com/docs/public-api#authentication
+- aid: budibase:budibase-public-api
+  name: Budibase Public API
+  description: >-
+    The complete Budibase Public API as Budibase itself publishes it — OpenAPI 3.1.0,
+    info.version 3.3.0, 44 operations across workspaces, applications, tables, rows, views,
+    users, roles, queries and metrics. Harvested verbatim on 2026-09-04 from
+    packages/server/specs/openapi.yaml in the Budibase monorepo, the location Budibase's
+    own Public API documentation directs integrators to. Supersedes the five per-tag splits
+    below in coverage: those describe 26 operations and omit workspaces, views, roles and
+    metrics entirely.
+  humanURL: https://docs.budibase.com/docs/public-api
+  baseURL: https://budibase.app/api/public/v1
+  tags:
+  - Application
+  - Tables
+  - Rows
+  - User
+  - Query
+  tags_raw:
+  - Workspaces
+  - Applications
+  - Tables
+  - Rows
+  - Views
+  - Users
+  - Roles
+  - Queries
+  - Metrics
+  properties:
+  - type: OpenAPI
+    url: openapi/budibase-public-api-openapi.yml
+  - type: Documentation
+    url: https://docs.budibase.com/docs/public-api
+  - type: APIReference
+    url: https://docs.budibase.com/reference
+  - type: Authentication
+    url: authentication/budibase-authentication.yml
+  - type: Overlay
+    url: overlays/budibase-public-api-overlay.yaml
+  - type: ErrorCatalog
+    url: errors/budibase-problem-types.yml
+  - type: DataModel
+    url: data-model/budibase-data-model.yml
+  - type: Conventions
+    url: conventions/budibase-conventions.yml
+  - type: RateLimits
+    url: rate-limits/budibase-rate-limits.yml
 common:
   - type: IssueTracker
     url: https://github.com/budibase/budibase/issues
@@ -247,7 +299,7 @@ common:
           - Response Mapping
           - Authentication Configuration
       - name: Self-Hosting
-        url: https://docs.budibase.com/docs/self-hosting
+        url: https://docs.budibase.com/docs/hosting-methods
         features:
           - Docker Deployment
           - Kubernetes Support
@@ -257,6 +309,63 @@ common:
           - Air-Gapped Deployments
   - type: LlmsText
     url: https://docs.budibase.com/llms.txt
+  - type: Packages
+    url: packages/budibase-packages.yml
+  - type: SDKs
+    url: packages/budibase-packages.yml
+  - type: CLI
+    url: cli/budibase-cli.yml
+  - type: Components
+    url: components/budibase-components.yml
+  - type: Conventions
+    url: conventions/budibase-conventions.yml
+  - type: ErrorCatalog
+    url: errors/budibase-problem-types.yml
+  - type: DataModel
+    url: data-model/budibase-data-model.yml
+  - type: RateLimits
+    url: rate-limits/budibase-rate-limits.yml
+  - type: Plans
+    url: plans/budibase-plans-pricing.yml
+  - type: Lifecycle
+    url: lifecycle/budibase-lifecycle.yml
+  - type: StatusPage
+    url: https://status.budibase.com
+  - type: ChangeLog
+    url: changelog/budibase-changelog.yml
+  - type: Conformance
+    url: conformance/budibase-conformance.yml
+  - type: Compliance
+    url: conformance/budibase-conformance.yml
+  - type: VulnerabilityDisclosure
+    url: security/budibase-vulnerability-disclosure.yml
+  - type: Security
+    url: https://github.com/Budibase/budibase/security/advisories/new
+  - type: Webhooks
+    url: asyncapi/budibase-webhooks.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: X-MCPServerCandidate
+    url: mcp/budibase-mcp.yml
+  - type: Overlay
+    url: overlays/budibase-public-api-overlay.yaml
+  - type: LLMsTxt
+    url: llms/budibase-llms.txt
+  - type: APIReference
+    url: https://docs.budibase.com/reference
+  - type: GettingStarted
+    url: https://docs.budibase.com/docs/quickstart
+  - type: DeveloperPortal
+    url: https://docs.budibase.com/docs/public-api
+  - type: GitHubOrganization
+    url: https://github.com/Budibase
+
+x-enrichment:
+  date: '2026-09-04'
+  status: enriched
+  artifacts_added: 24
+  pass: local-v3
+
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

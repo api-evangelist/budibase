@@ -1,0 +1,114 @@
+generated: '2026-09-04'
+method: probed
+source: >-
+  Live error responses observed from https://budibase.app/api/public/v1 on 2026-09-04,
+  cross-checked against openapi/budibase-public-api-openapi.yml
+description: >-
+  Error catalog for the Budibase Public API. Budibase's own OpenAPI documents NO error
+  responses at all — all 44 operations declare only 200 or 204 — so nothing here could be
+  derived from the contract. Every entry below was obtained by making real unauthenticated
+  or deliberately-malformed requests against the production host and recording what came
+  back. That makes this catalog accurate but necessarily incomplete: it covers the errors
+  reachable without credentials, not the full set.
+format: proprietary
+rfc9457: false
+content_type: application/json
+envelope:
+  shape:
+    message: Human-readable description of what went wrong.
+    status: Integer HTTP status, repeated inside the body.
+  example:
+    message: Invalid API key provided, please check the x-budibase-api-key header.
+    status: 400
+  note: >-
+    Two fields only. There is no machine-readable error code, no error type URI, no field
+    pointer, and no request/correlation identifier — so a client cannot branch on anything
+    but the HTTP status and a free-text string that is not contractually stable. This is
+    the single largest agent-readiness gap in the Budibase API surface.
+spec_gap:
+  openapi_documented_error_responses: 0
+  openapi_documented_success_responses: 44
+  detail: >-
+    packages/server/specs/openapi.yaml declares 40 "200" and 4 "204" responses across 44
+    operations and not one 4xx or 5xx. A generated client (including Budibase's own
+    @budibase/sdk) therefore has no typed error model.
+problem_types:
+  - status: 400
+    title: Invalid API key
+    message: Invalid API key provided, please check the x-budibase-api-key header.
+    cause: The x-budibase-api-key header is absent or does not resolve to a user.
+    remediation: >-
+      Generate a key from the Budibase portal user dropdown ("View API key"). Note that
+      generating a new key invalidates the previous one.
+    docs: https://docs.budibase.com/docs/public-api
+    observed: true
+    observed_request: POST /api/public/v1/applications/search
+    note: >-
+      Budibase answers a missing/invalid credential with 400, not 401. A client written to
+      the usual convention — retry auth on 401 — will not fire on the Budibase auth
+      failure. This is a real interoperability trap.
+  - status: 400
+    title: Invalid app ID
+    message: Invalid app ID provided, please check the x-budibase-app-id header.
+    cause: >-
+      A data-plane operation (tables, rows, views) was called without a resolvable
+      x-budibase-app-id / workspace ID header.
+    remediation: >-
+      Take the workspace ID from the builder URL after /builder/workspace/. Strip the
+      "_dev_" segment to target published data.
+    docs: https://docs.budibase.com/docs/public-api
+    observed: true
+    observed_request: POST /api/public/v1/tables/ta_fake/rows/search
+  - status: 401
+    title: Session not authenticated
+    message: Session not authenticated
+    cause: >-
+      Returned on some resource-scoped reads when neither a valid API key nor a builder
+      session is present.
+    remediation: Supply a valid x-budibase-api-key header.
+    observed: true
+    observed_request: GET /api/public/v1/applications/app_fake123
+    note: >-
+      The API uses BOTH 400 and 401 for credential failures depending on the route, with
+      no documented rule for which. Clients must treat 400 and 401 as equivalent auth
+      outcomes.
+  - status: 403
+    title: Workspace ID required
+    message: This request required a workspace id.
+    cause: The operation needs workspace context and no x-budibase-app-id header was sent.
+    remediation: Send the x-budibase-app-id header.
+    observed: true
+    observed_request: GET /api/public/v1/metrics
+  - status: 403
+    title: Admin/Builder only endpoint
+    message: Workspace Admin/Builder user only endpoint.
+    cause: The calling user's RBAC role is below Admin/Builder for the target workspace.
+    remediation: >-
+      Use a key belonging to a user with the Admin or Builder role in that workspace.
+      Budibase scopes API keys to the RBAC settings of the owning user; there are no
+      independent API scopes.
+    docs: https://docs.budibase.com/docs/public-api
+    observed: true
+    observed_request: GET /api/public/v1/metrics with x-budibase-app-id
+  - status: 404
+    title: Not Found
+    message: Not Found
+    cause: The path does not exist under /api/public/v1.
+    remediation: Check the path against the Public API OpenAPI.
+    observed: true
+    observed_request: GET /api/public/v1/nonexistent
+    note: >-
+      Unlike every other error, the 404 body is the plain text "Not Found" with no JSON
+      envelope. A client that unconditionally JSON-parses the error body will throw here.
+findings:
+  - >-
+    Three different status codes (400, 401, 403) are used for what is, from the caller's
+    side, one condition: "your credentials or your workspace context are wrong". The
+    distinguishing information lives only in an English sentence.
+  - >-
+    Documenting the existing errors in the OpenAPI would be a low-cost, high-value change
+    for Budibase — the responses already exist and are already consistent in shape; only
+    the contract is silent.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

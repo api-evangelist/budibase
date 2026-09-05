@@ -1,0 +1,207 @@
+generated: '2026-09-04'
+method: derived
+source: openapi/budibase-public-api-openapi.yml
+description: >-
+  Entity-relationship graph of the Budibase Public API, derived from the schemas and path
+  parameters of Budibase's own OpenAPI (v3.3.0). Budibase is a meta-platform: its API
+  manages the CONTAINERS for customer data (workspaces, apps, tables, views) while the
+  rows inside those tables have no fixed shape at all — the row schema is
+  `additionalProperties`, defined per table by the customer. That is the defining feature
+  of this data model and the reason a generic client can go only so far.
+entities:
+  - name: Workspace
+    id_prefix: app_ / app_dev_
+    id_field: _id
+    path: /workspaces/{workspaceId}
+    schema: workspace
+    description: >-
+      The top-level container. Introduced by the 2025-08-19 Workspaces release and now the
+      root of the hierarchy. Its ID is what travels in the x-budibase-app-id header.
+    fields:
+      - name
+      - url
+    operations: [workspaceCreate, workspaceUpdate, workspaceDestroy, workspaceGetById, workspaceSearch, workspacePublish, workspaceUnpublish, workspaceImport, workspaceExport]
+    note: >-
+      Workspace and Application share an ID space and both accept publish/unpublish/
+      import/export. The API exposes them as two resources over what is substantially one
+      concept, a legacy of the rename.
+  - name: Application
+    id_prefix: app_ / app_dev_
+    id_field: _id
+    path: /applications/{appId}
+    schema: application / applicationOutput
+    fields:
+      - name
+      - url
+      - _id
+      - status (development | published)
+      - createdAt
+      - updatedAt
+      - version
+      - tenantId
+    operations: [appCreate, appUpdate, appDestroy, appGetById, appSearch, appPublish, appUnpublish, appImport, appExport]
+    note: >-
+      The dev/published duality is encoded in the ID itself — app_dev_XXX and app_XXX are
+      the same logical app in two states. A client must decide which copy it means before
+      it can address anything.
+  - name: Table
+    id_prefix: ta_
+    id_field: _id
+    path: /tables/{tableId}
+    schema: table / tableOutput
+    fields:
+      - name
+      - primaryDisplay
+      - schema (column definitions)
+    operations: [tableCreate, tableUpdate, tableDestroy, tableGetById, tableSearch]
+    description: >-
+      Carries the column schema that gives Rows their shape. Column types include a `link`
+      type — this is where table-to-table relationships are actually declared, not in the
+      API surface.
+  - name: Row
+    id_prefix: none (opaque _id)
+    id_field: _id
+    path: /tables/{tableId}/rows/{rowId}
+    schema: row / rowOutput / searchOutput
+    operations: [rowCreate, rowUpdate, rowDestroy, rowGetById, rowSearch, rowViewSearch]
+    description: >-
+      Schemaless at the contract level — `row` is declared as an object with
+      additionalProperties of any type, "depending on the table schema". Also carries _rev
+      (CouchDB revision), reflecting the CouchDB storage underneath.
+    note: >-
+      No generated client can type a row. Any consumer that wants typed access must first
+      read the parent Table's schema and construct types at runtime.
+  - name: View
+    id_prefix: none
+    id_field: _id
+    path: /views/{viewId}
+    schema: view / viewOutput
+    fields:
+      - name
+      - tableId
+      - type (standard | calculation)
+      - primaryDisplay
+      - query (logicalOperator, filter groups, onEmptyFilter)
+      - schema
+    operations: [viewCreate, viewUpdate, viewDestroy, viewGetById, viewSearch, rowViewSearch]
+  - name: User
+    id_prefix: us_
+    id_field: _id
+    path: /users/{userId}
+    schema: user / userOutput
+    fields:
+      - email (unique)
+      - password (write-only, never returned)
+      - status (active)
+      - firstName
+      - lastName
+      - forceResetPassword
+      - builder
+      - admin
+      - roles
+    operations: [userCreate, userUpdate, userDestroy, userGetById, userSearch]
+  - name: Role assignment
+    path: /roles/assign, /roles/unassign
+    schema: rolesAssign / rolesUnAssign / rolesOutput
+    fields:
+      - appBuilder.appId
+      - builder (bool)
+      - admin (bool)
+      - role.roleId (BASIC, ADMIN or custom)
+      - role.appId
+      - userIds[]
+    operations: [roleAssign, roleUnAssign]
+    description: >-
+      Not a resource with an ID — a bulk operation binding many users to a role within an
+      app. The only genuinely batch-shaped operation in the API.
+  - name: Query
+    id_prefix: query_
+    id_field: _id
+    path: /queries/{queryId}
+    schema: query / executeQuery / executeQueryOutput / querySearch
+    operations: [querySearch, queryExecute]
+    description: >-
+      A saved query against a connected external datasource. Executing one runs whatever
+      the query does against the customer's own database, which is why its consequence
+      class cannot be determined from the API.
+  - name: Metrics
+    path: /metrics
+    operations: [metricsGet]
+    description: Workspace-scoped operational metrics. Requires Admin/Builder role.
+relationships:
+  - from: Workspace
+    to: Application
+    type: has_many
+    via: shared app_/app_dev_ ID space
+    confidence: medium
+    note: The contract does not declare the link; it is inferred from the shared ID space and duplicated operations.
+  - from: Application
+    to: Table
+    type: has_many
+    via: x-budibase-app-id header
+    confidence: high
+    note: >-
+      The parent link is carried in a HEADER, not in the table body or path. Tables have no
+      appId field — an agent holding a table ID cannot tell which app owns it.
+  - from: Table
+    to: Row
+    type: has_many
+    via: path parameter tableId
+    confidence: high
+  - from: Table
+    to: View
+    type: has_many
+    via: view.tableId
+    confidence: high
+  - from: View
+    to: Row
+    type: has_many
+    via: rowViewSearch on /views/{viewId}/rows/search
+    confidence: high
+  - from: Table
+    to: Table
+    type: has_many
+    via: schema column of type "link"
+    confidence: high
+    note: >-
+      Customer-defined table-to-table relationships live inside the column schema, so the
+      real ERD of any Budibase instance is data, not contract.
+  - from: User
+    to: Application
+    type: has_many
+    via: roles / roleAssign role.appId
+    confidence: high
+  - from: Query
+    to: Datasource
+    type: belongs_to
+    via: not exposed
+    confidence: low
+    note: >-
+      Datasources are managed in the builder, not the Public API. The query's parent
+      datasource is invisible to an API consumer.
+id_conventions:
+  source: >-
+    Prefixes documented at https://docs.budibase.com/docs/public-api and visible in the
+    OpenAPI parameter examples.
+  prefixes:
+  - prefix: app_
+    entity: published Application / Workspace
+  - prefix: app_dev_
+    entity: development Application / Workspace
+  - prefix: ta_
+    entity: Table
+  - prefix: us_
+    entity: User
+  - prefix: query_
+    entity: Query
+findings:
+  - >-
+    The parent-child link between an Application and everything under it is expressed as a
+    request HEADER. That is unusual and it means resource IDs in this API are not
+    self-describing: /tables/ta_abc is ambiguous without out-of-band context.
+  - >-
+    Rows are typed only at runtime. This is inherent to a low-code platform and not a
+    defect, but it caps how far tooling built on the contract alone can go.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

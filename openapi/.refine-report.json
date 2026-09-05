@@ -17,6 +17,13 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "budibase-applications-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "budibase-queries-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "budibase-rows-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "budibase-tables-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "budibase-users-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }

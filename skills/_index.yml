@@ -1,0 +1,55 @@
+generated: '2026-09-04'
+method: generated
+source: openapi/budibase-public-api-openapi.yml
+provider: Budibase
+api: Budibase Public API
+description: >-
+  Packaged agent skills for the Budibase Public API. Each skill is grounded in operationIds
+  taken verbatim from Budibase's own OpenAPI 3.1.0 (packages/server/specs/openapi.yaml,
+  info.version 3.3.0) and carries the cross-cutting rules an agent must respect: a
+  10-request-per-second ceiling, no idempotency mechanism, auth failures returned as 400,
+  and destructive operations with no undo.
+provider_published_skills:
+  - name: prqa
+    repo: https://github.com/Budibase/skills
+    path: agents/skills/prqa/PRQA.md
+    status: 200
+    scope: >-
+      Budibase publishes one agent skill of its own, for pull-request QA on the Budibase
+      codebase. It is an internal engineering skill and does not describe the Public API,
+      so it is recorded here rather than mirrored into this directory.
+skills:
+  - file: budibase-provision-workspace-app.md
+    name: budibase-provision-workspace-app
+    summary: Create, verify, publish and unpublish a Budibase workspace and application.
+    operations: [workspaceCreate, workspaceGetById, appCreate, appGetById, appPublish, appUnpublish, workspacePublish, workspaceUnpublish]
+  - file: budibase-read-and-write-rows.md
+    name: budibase-read-and-write-rows
+    summary: >-
+      Discover a table schema at runtime, search rows with the structured query language,
+      paginate with bookmark/hasNextPage, and write rows safely.
+    operations: [tableSearch, tableGetById, rowSearch, rowGetById, rowCreate, rowUpdate, rowDestroy, rowViewSearch]
+  - file: budibase-manage-users-and-roles.md
+    name: budibase-manage-users-and-roles
+    summary: Provision users and grant or revoke per-app and global roles; safe offboarding.
+    operations: [userSearch, userGetById, userCreate, userUpdate, userDestroy, roleAssign, roleUnAssign]
+operation_coverage:
+  total_operations: 44
+  operations_referenced: 23
+  uncovered:
+    - Query execution (querySearch, queryExecute) — consequence depends on the customer's
+      own datasource query, which the Public API does not expose, so no safe generic skill
+      can be written for it.
+    - Views (viewCreate, viewUpdate, viewDestroy, viewGetById, viewSearch) — covered
+      partially via rowViewSearch.
+    - Import/export (appImport, appExport, workspaceImport, workspaceExport) — referenced
+      as the rollback mechanism in the other skills rather than given their own.
+    - metricsGet.
+cross_links:
+  conventions: conventions/budibase-conventions.yml
+  errors: errors/budibase-problem-types.yml
+  rate_limits: rate-limits/budibase-rate-limits.yml
+  authentication: authentication/budibase-authentication.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

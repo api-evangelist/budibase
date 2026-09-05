@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Budibase Public Applications Users API
   description: 'The Budibase Public API provides programmatic access to Budibase applications, tables,
@@ -120,29 +120,6 @@ paths:
           description: Deleted
 components:
   schemas:
-    UserInput:
-      type: object
-      required:
-      - email
-      properties:
-        email:
-          type: string
-        password:
-          type: string
-        roles:
-          type: object
-          additionalProperties:
-            type: string
-        builder:
-          type: object
-          properties:
-            global:
-              type: boolean
-        admin:
-          type: object
-          properties:
-            global:
-              type: boolean
     User:
       allOf:
       - $ref: '#/components/schemas/UserInput'
@@ -178,6 +155,29 @@ components:
               enum:
               - string
               - number
+    UserInput:
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        roles:
+          type: object
+          additionalProperties:
+            type: string
+        builder:
+          type: object
+          properties:
+            global:
+              type: boolean
+        admin:
+          type: object
+          properties:
+            global:
+              type: boolean
   parameters:
     IdPath:
       name: id

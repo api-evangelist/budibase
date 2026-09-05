@@ -1,0 +1,83 @@
+generated: '2026-09-04'
+method: searched
+source: https://github.com/Budibase/budibase/releases.atom and https://budibase.com/changelog
+description: >-
+  Budibase publishes change information in two places that do different jobs: a dated,
+  machine-readable release feed on GitHub covering every platform tag, and a curated
+  product changelog on the marketing site. Neither is an API changelog — no entry states
+  whether /api/public/v1 changed.
+schemes:
+  - name: platform-releases
+    scheme: semver
+    url: https://github.com/Budibase/budibase/releases
+    feed: https://github.com/Budibase/budibase/releases.atom
+    format: atom
+    current_version: 3.44.1-cloud.3
+    current_date: '2026-09-03'
+    latest_stable: 3.44.0
+    latest_stable_date: '2026-08-31'
+    cadence: weekly minor plus interleaved -cloud.N builds
+  - name: product-changelog
+    scheme: dated-narrative
+    url: https://budibase.com/changelog
+    format: html
+    feed: none
+    latest_entry_date: '2026-06-11'
+entries:
+  - version: 3.44.1-cloud.3
+    date: '2026-09-03'
+    type: cloud-build
+    url: https://github.com/Budibase/budibase/releases/tag/v3.44.1-cloud.3
+  - version: 3.44.1-cloud.2
+    date: '2026-09-02'
+    type: cloud-build
+    url: https://github.com/Budibase/budibase/releases/tag/v3.44.1-cloud.2
+  - version: 3.44.1-cloud.1
+    date: '2026-08-31'
+    type: cloud-build
+    url: https://github.com/Budibase/budibase/releases/tag/v3.44.1-cloud.1
+  - version: 3.44.0
+    date: '2026-08-31'
+    type: minor
+    url: https://github.com/Budibase/budibase/releases/tag/v3.44.0
+    note: >-
+      Matches the npm publish date of @budibase/sdk, @budibase/cli, @budibase/types,
+      @budibase/bbui, @budibase/backend-core and @budibase/string-templates 3.44.0.
+  - version: 3.43.0
+    date: '2026-08-24'
+    type: minor
+    url: https://github.com/Budibase/budibase/releases/tag/v3.43.0
+  - version: 3.42.0
+    date: '2026-08-17'
+    type: minor
+    url: https://github.com/Budibase/budibase/releases/tag/v3.42.0
+product_highlights:
+  - title: Digital Sovereignty isn't Just for the Public Sector
+    date: '2026-06-11'
+    url: https://budibase.com/changelog
+  - title: Supporting EU Digital Sovereignty
+    date: '2026-04-21'
+    url: https://budibase.com/changelog
+  - title: Introducing Budibase Agents (Beta)
+    date: '2026-03-12'
+    url: https://budibase.com/changelog
+    note: >-
+      The AI Agents product this profile's tags reflect entered beta here.
+  - title: Budibase 2026 - the AI Workflow Toolkit
+    date: '2025-12-08'
+    url: https://budibase.com/changelog
+  - title: Workspaces
+    date: '2025-08-19'
+    url: https://budibase.com/changelog
+    note: >-
+      The release that introduced the workspace concept now carried in the API as
+      /workspaces and the x-budibase-app-id header.
+breaking_changes:
+  api: none recorded
+  note: >-
+    No release note in the observed window announces a breaking change to
+    /api/public/v1. Absence of an announcement is not proof of absence of a change,
+    because Budibase does not annotate releases by API impact.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

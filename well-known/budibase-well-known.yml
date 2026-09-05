@@ -1,0 +1,117 @@
+generated: '2026-09-04'
+method: probed
+source: live HTTPS probes of the named /.well-known/ paths on every host this record knows
+description: >-
+  Probe of the RFC 8615 well-known surface across every Budibase host in this record —
+  the registrable domain and its www alias, the docs host, the API/app host named in
+  every OpenAPI servers[] block, and the account/console host. NO well-known document
+  is served on any host. This file records an absence, not a presence: no WellKnown,
+  SecurityTxt or APICatalog pointer is wired in apis.yml, because Budibase publishes
+  none of these documents.
+result: none-served
+hosts:
+- host: budibase.com
+  role: registrable domain / marketing site
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  note: >-
+    Every path returns a genuine 404 with the site's HTML not-found page. budibase.com
+    DOES serve /llms.txt (200, text/plain) — saved as llms/budibase-site-llms.txt — but
+    that is not a /.well-known/ document.
+- host: www.budibase.com
+  role: www alias
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: docs.budibase.com
+  role: documentation host (ReadMe.com)
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: budibase.app
+  role: API host — the only concrete servers[] entry in the Public API OpenAPI
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+  - path: /.well-known/openid-configuration
+    status: 502
+  - path: /.well-known/oauth-authorization-server
+    status: 502
+  - path: /.well-known/api-catalog
+    status: 502
+  - path: /.well-known/ai-plugin.json
+    status: 502
+  - path: /.well-known/agent-card.json
+    status: 502
+  - path: /.well-known/agent.json
+    status: 502
+  note: >-
+    budibase.app sits behind Cloudflare and answers /.well-known/* with a 403 challenge
+    or an origin 502 rather than a clean 404. Re-probed twice with a browser User-Agent;
+    the codes are stable. Neither code carries a document, so this is a miss either way —
+    but it is an inconclusive miss rather than a proven absence.
+- host: account.budibase.app
+  role: account portal / signup + login host
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+false_positives_rejected:
+- url: https://account.budibase.app/openapi.json
+  status: 200
+  reason: >-
+    Returns the Budibase builder single-page-app HTML shell
+    (<!DOCTYPE html><html class="spectrum ...">), not a spec. Same 200-HTML answer for
+    /openapi.yaml and /swagger.json. This is the classic SPA catch-all false positive —
+    rejected, not saved.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

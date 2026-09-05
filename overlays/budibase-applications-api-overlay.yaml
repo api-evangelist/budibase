@@ -1,0 +1,106 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Budibase Public Applications API
+  version: 1.0.0
+extends: budibase-applications-api-openapi.yml
+x-generated: '2026-09-04'
+x-method: generated
+x-source: API Evangelist enrichment pipeline; every added value traces to a probe or a Budibase document
+  cited in the action description.
+x-note: Non-destructive. This overlay is never applied to openapi/budibase-applications-api-openapi.yml
+  — the original stays exactly as Budibase publishes it (the refined Applications split).
+actions:
+- target: $
+  description: Attach the provider documentation Budibase publishes for this API.
+  update:
+    externalDocs:
+      description: Budibase Public API documentation
+      url: https://docs.budibase.com/docs/public-api
+- target: $.info
+  description: Record the API Evangelist profile, the licence and the provider contact on the contract.
+  update:
+    x-apis-io-profile: https://apis.io/provider/budibase
+    x-provider: Budibase
+    contact:
+      name: Budibase
+      url: https://docs.budibase.com/docs/public-api
+    license:
+      name: GPL-3.0
+      url: https://github.com/Budibase/budibase/blob/master/LICENSE
+- target: $.info
+  description: 'Record the runtime facts Budibase does not document in the contract: the measured rate
+    limit, the absence of idempotency, and the error envelope.'
+  update:
+    x-rate-limit:
+      limit: 10
+      window: 1 second
+      headers:
+      - x-ratelimit-limit
+      - x-ratelimit-remaining
+      - x-ratelimit-reset
+      retry_after: false
+      method: probed
+      observed: '2026-09-04'
+      source: rate-limits/budibase-rate-limits.yml
+    x-idempotency:
+      supported: false
+      coverage: none
+      source: conventions/budibase-conventions.yml
+    x-error-envelope:
+      content_type: application/json
+      shape: '{ "message": <string>, "status": <int> }'
+      rfc9457: false
+      documented_in_spec: false
+      source: errors/budibase-problem-types.yml
+- target: $.paths.*[?(@.operationId)].responses
+  description: Budibase documents ZERO error responses across the whole contract. Add the errors this
+    pipeline actually observed against the production host on 2026-09-04, so a generated client has an
+    error model.
+  update:
+    '400':
+      description: Invalid API key or invalid app ID. Budibase returns 400 — not 401 — for a missing or
+        unrecognised x-budibase-api-key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/budibaseError'
+          examples:
+            invalidApiKey:
+              value:
+                message: Invalid API key provided, please check the x-budibase-api-key header.
+                status: 400
+    '401':
+      description: Session not authenticated.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/budibaseError'
+    '403':
+      description: Workspace ID missing, or the key owner lacks the Admin/Builder role.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/budibaseError'
+    '404':
+      description: 'Path not found. NOTE: this response body is plain text "Not Found", not the JSON envelope.'
+      content:
+        text/plain:
+          schema:
+            type: string
+- target: $.components.schemas
+  description: Define the observed error envelope so the added error responses resolve.
+  update:
+    budibaseError:
+      type: object
+      description: The Budibase error envelope, observed live 2026-09-04. Carries no machine-readable
+        code.
+      required:
+      - message
+      - status
+      properties:
+        message:
+          type: string
+          description: Human-readable description of the failure. Not contractually stable.
+        status:
+          type: integer
+          description: The HTTP status, repeated in the body.

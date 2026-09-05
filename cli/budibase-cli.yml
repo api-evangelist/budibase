@@ -1,0 +1,119 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  https://docs.budibase.com/docs/budibase-cli-reference,
+  https://docs.budibase.com/docs/budibase-cli-setup,
+  https://registry.npmjs.org/@budibase/cli
+description: >-
+  budi is Budibase's first-party command-line toolkit. Its scope is worth stating plainly:
+  it manages a SELF-HOSTED Budibase installation and builds plugins. It is not a client for
+  the Public API — no budi command calls /api/public/v1, and there is no CLI equivalent of
+  creating a row or publishing an app through the API.
+name: budi
+package: '@budibase/cli'
+registry: npm
+version: 3.44.0
+published: '2026-08-31'
+official: true
+docs: https://docs.budibase.com/docs/budibase-cli-reference
+setup_docs: https://docs.budibase.com/docs/budibase-cli-setup
+install:
+  - method: npm
+    command: npm install -g @budibase/cli
+    note: Documented at https://docs.budibase.com/recipes/budibase-cli-setup-npm
+prerequisites:
+  - Docker (the hosting commands drive a docker compose setup)
+commands:
+  - name: budi hosting
+    description: >-
+      Initialise and manage a self-hosted Budibase installation. Currently supports docker
+      compose setups only. Must be run from the directory where --init was run.
+    flags:
+      - flag: --init
+        purpose: >-
+          Initialise a self-hosted docker compose Budibase setup in the current directory;
+          pulls the images and everything required to start the server.
+      - flag: --start
+        purpose: Start the Budibase services.
+      - flag: --status
+        purpose: Check the current status of all running Budibase services.
+      - flag: --stop
+        purpose: Stop all currently running Budibase services.
+      - flag: --update
+        purpose: Pull the latest image versions required by the Budibase services.
+  - name: budi plugins
+    description: >-
+      Create, develop and manage custom coded components and datasources.
+    flags:
+      - flag: --init
+        purpose: >-
+          Pull down the Budibase project skeleton for a datasource or component and
+          initialise it in the current directory. Takes an argument: datasource or component.
+      - flag: --build
+        purpose: Build the datasource or component in the current directory using rollup.
+      - flag: --watch
+        purpose: Watch the component/datasource and automatically rebuild on change.
+    related_docs: https://docs.budibase.com/docs/custom-datasource
+  - name: budi backups
+    description: >-
+      Completely back up and restore a self-hosted Budibase installation as a .tar.gz that
+      can be imported into a different installation.
+    flags:
+      - flag: --export
+        purpose: Export the installation, apps and configuration to a .tar.gz file.
+      - flag: --import
+        purpose: Import a .tar.gz into an existing installation.
+      - flag: --env
+        purpose: >-
+          Path to an .env file supplying the credentials for --import/--export. Without it
+          the CLI prompts interactively.
+    required_env:
+      - name: COUCH_DB_URL
+        description: Full URL for the running CouchDB service, including credentials.
+      - name: MINIO_ACCESS_KEY
+        description: MinIO / S3-compatible object store access key.
+      - name: MINIO_SECRET_KEY
+        description: MinIO / S3-compatible object store secret key.
+      - name: MINIO_URL
+        description: URL the object store runs on.
+      - name: MAIN_PORT
+        description: Port the Budibase instance is hosted on. Defaults to 10000.
+    related_docs: https://docs.budibase.com/docs/backups-1
+    note: >-
+      This is the only whole-installation rollback mechanism Budibase ships, and it is
+      operator-facing rather than API-facing — see the reversibility block in
+      conventions/budibase-conventions.yml.
+  - name: budi analytics
+    description: Opt in or out of Budibase CLI analytics.
+    flags:
+      - flag: --optIn
+        purpose: Opt in to Budibase CLI analytics.
+      - flag: --optOut
+        purpose: Opt out of Budibase CLI analytics.
+key_flows:
+  - name: Stand up a self-hosted install
+    steps:
+      - npm install -g @budibase/cli
+      - budi hosting --init
+      - budi hosting --start
+      - budi hosting --status
+  - name: Move an installation between hosts
+    steps:
+      - budi backups --export --env /path/to/env/file
+      - budi backups --import mybackup.tar.gz --env /path/to/env/file
+    docs: https://docs.budibase.com/docs/server-migration
+  - name: Build a custom datasource plugin
+    steps:
+      - budi plugins --init datasource
+      - budi plugins --watch
+      - budi plugins --build
+gaps:
+  - >-
+    No authentication, no API-key handling and no Public API surface. A developer who wants
+    to script against Budibase data uses curl or @budibase/sdk, not budi.
+  - >-
+    No machine-readable command manifest (no --json, no completion spec published), so the
+    command surface above is transcribed from the docs page rather than introspected.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

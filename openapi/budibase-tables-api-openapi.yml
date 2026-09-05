@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Budibase Public Applications Tables API
   description: 'The Budibase Public API provides programmatic access to Budibase applications, tables,
@@ -124,6 +124,28 @@ paths:
                 $ref: '#/components/schemas/TableOutput'
 components:
   schemas:
+    NameSearch:
+      type: object
+      properties:
+        name:
+          type: string
+        paginate:
+          type: boolean
+        bookmark:
+          type: string
+        sort:
+          type: object
+          properties:
+            order:
+              type: string
+              enum:
+              - ascending
+              - descending
+            type:
+              type: string
+              enum:
+              - string
+              - number
     Column:
       type: object
       properties:
@@ -157,28 +179,6 @@ components:
             type: string
             format: date-time
       - $ref: '#/components/schemas/TableInput'
-    NameSearch:
-      type: object
-      properties:
-        name:
-          type: string
-        paginate:
-          type: boolean
-        bookmark:
-          type: string
-        sort:
-          type: object
-          properties:
-            order:
-              type: string
-              enum:
-              - ascending
-              - descending
-            type:
-              type: string
-              enum:
-              - string
-              - number
     TableInput:
       type: object
       required:

@@ -1,0 +1,94 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  https://docs.budibase.com/docs/webhook, https://docs.budibase.com/docs/synchronous-automations,
+  https://docs.budibase.com/llms.txt
+description: >-
+  Budibase's event surface, and the direction matters. Budibase is a webhook RECEIVER, not
+  a webhook publisher. It generates a per-automation trigger URL that an external system
+  POSTs to; it does not let you subscribe to Budibase resource events and it will not call
+  your endpoint when a row changes. Anyone expecting the usual "subscribe to
+  row.created" model will not find one.
+asyncapi_published: false
+asyncapi_search:
+  - url: https://docs.budibase.com/llms.txt
+    status: 200
+    result: >-
+      No AsyncAPI, event catalog, event reference or subscription page anywhere in the
+      400+ page documentation index.
+  - url: https://github.com/Budibase
+    status: 200
+    result: No asyncapi spec in any of the 30 public repositories.
+direction: inbound
+webhooks:
+  supported: true
+  model: automation-trigger
+  docs: https://docs.budibase.com/docs/webhook
+  description: >-
+    A Budibase automation can use Webhook as its trigger. Budibase mints two URLs for it:
+    a Schema URL used once to teach Budibase the payload shape, and a Trigger URL the
+    external system calls thereafter.
+  setup:
+    - step: Create an automation and select Webhook as the trigger.
+    - step: >-
+        Click "Set Up Webhook" to reveal the Schema URL, then POST an example payload to
+        it. Budibase infers the payload schema from that one request and returns 200 OK.
+    - step: >-
+        Copy the Trigger URL into the external system's webhook configuration
+        (content type application/json).
+    - step: Publish the automation to make the trigger live.
+  payload_binding: >-
+    Fields of the received payload become automation bindings, e.g. {{ trigger.action }}.
+  schema_definition: inferred-by-example
+  schema_note: >-
+    The payload contract is established by SENDING one example, not by declaring a schema.
+    There is no way to publish, version or validate that schema afterwards, and no way for
+    a caller to discover it.
+  authentication:
+    documented: false
+    signature_verification: not documented
+    note: >-
+      The documentation describes no shared secret, HMAC signature header or IP allowlist
+      for inbound trigger URLs. Security appears to rest on the URL being unguessable.
+  response:
+    default: asynchronous — the automation runs after the trigger returns
+    synchronous_option:
+      supported: true
+      docs: https://docs.budibase.com/docs/synchronous-automations
+      description: >-
+        Synchronous automations return collected data directly in the HTTP response to the
+        webhook caller, turning the trigger URL into a request/response endpoint.
+      plan_gated: >-
+        Available on Pro, Premium, Business and Enterprise; NOT available on the
+        self-hosted open-source edition. Source: https://budibase.com/pricing.json
+        ("Synchronous webhooks").
+  observability:
+    docs: https://docs.budibase.com/docs/logs
+    description: Automation history shows each triggered run.
+    retention_by_plan:
+      open_source: 1 day
+      pro: 1 day
+      premium: 7 days
+      business: 30 days
+      enterprise: unlimited
+    source: https://budibase.com/pricing.json
+outbound_events:
+  supported: false
+  detail: >-
+    There is no event subscription API, no callback registration, and no
+    resource-lifecycle event stream. A consumer wanting to react to Budibase data changes
+    must either poll rowSearch or build an automation inside Budibase that calls out.
+  workaround: >-
+    Budibase's own automation actions can make outbound HTTP calls, so a builder can hand-
+    construct outbound notifications per table. That is configuration inside the product,
+    not an API contract, and it is invisible to anyone reading the OpenAPI.
+findings:
+  - >-
+    Budibase has a real, documented, plan-differentiated webhook surface — and it points
+    the opposite way from the one an API integrator usually needs.
+  - >-
+    An AsyncAPI document would have little to describe today, because the event shapes are
+    per-customer and inferred at setup time rather than defined by Budibase.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

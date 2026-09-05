@@ -3,11 +3,19 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
 provider: Budibase
 providerId: budibase
+generated: '2026-09-04'
+method: probed
+source: https://budibase.com/pricing.json
+docs: https://budibase.com/pricing
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
+modified: '2026-09-04'
+provenance_note: >-
+  REPLACED 2026-09-04. The previous version of this file was a bulk-sweep scaffold dated
+  2026-05-04 carrying invented tiers ("Free / Professional / Enterprise") and invented
+  quotas (1,000 and 100,000 requests per month). None of those numbers came from
+  Budibase. Every figure below is read from the machine-readable pricing document
+  Budibase publishes at https://budibase.com/pricing.json and advertises in its own
+  https://budibase.com/llms.txt as "Canonical structured pricing data for agents".
 tags:
   - AI Agents
   - Automation
@@ -15,131 +23,361 @@ tags:
   - Low-Code
   - Open Source
   - Workflow Automation
-description: Machine-readable plans and pricing scaffold for this API provider. Conforms to the API Commons
-  Plans schema. Tier limits and prices are scaffold defaults; replace with provider-published values.
+description: >-
+  Budibase plans and pricing, read from the provider's own agent-facing pricing endpoint.
+  Budibase prices the PLATFORM (creators, end users, automation actions, AI credits), not
+  API calls. Access to the Public API is a plan-gated feature rather than a metered one:
+  it is included on every paid Cloud tier, excluded from the self-hosted open-source
+  edition, and an "Expanded public API" is Enterprise-only.
+plan_count: 5
+currency: USD
+billing_periods:
+  - monthly
+  - annual
+metered_units:
+  - name: automation actions
+    note: The primary consumption unit; each tier includes a monthly allowance.
+  - name: AI credits
+    note: Consumed by Budibase AI agents, models, retrieval and messaging channels.
+  - name: creators
+    note: Seats that can build. Additional creators are billed per month on Premium and above.
+  - name: end users
+    note: App consumers. Billed per additional end user per month on every paid tier.
+api_access_by_plan:
+  public_api:
+    open_source: false
+    pro: true
+    premium: true
+    business: true
+    enterprise: true
+  expanded_public_api:
+    open_source: false
+    pro: false
+    premium: false
+    business: false
+    enterprise: true
+  note: >-
+    Read verbatim from the "Public API" and "Expanded public API" rows of pricing.json,
+    category Extensibility. The self-hosted open-source edition does NOT include the
+    Public API, which is the single most consequential fact for anyone planning to
+    integrate with Budibase for free.
 plans:
-  - id: budibase-free
-    name: Free
-    type: freemium
-    description: Free entry tier for the Budibase API surface. Intended for evaluation, prototyping, and
-      low-volume integrations. Real limits and pricing must be reconciled with the provider's published
-      plan documentation.
+  - id: budibase-open-source
+    name: Open Source
+    type: free
+    hosting: Self-hosted
+    price: 0
+    currency: USD
+    period: month
     entries:
-      - label: API Requests
-        description: Monthly API request quota across all included endpoints
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 1000
+      - label: Base price
+        name: base_price
+        type: recurring
+        price: '0.00'
         timeFrame: month
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the free tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 10
-        timeFrame: minute
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
+      - label: Included automation actions
+        name: included_actions
+        type: quota
+        limit: unlimited
+        timeFrame: month
+      - label: Included AI credits
+        name: included_ai_credits
+        type: quota
+        limit: 0
+        timeFrame: month
+      - label: Creators
+        name: included_creators
+        type: seats
+        limit: unlimited
+      - label: Budibase DB rows
+        name: db_rows
+        type: quota
+        limit: unlimited
+      - label: Workspaces
+        name: workspaces
+        type: quota
+        limit: 1
     elements:
-      - name: Public Documentation
-      - name: Community Support
-      - name: Sandbox Access
-      - name: Budibase REST API
+      - name: Public API
+        included: false
+      - name: Budibase AI
+        included: false
+      - name: Workspace backups
+        included: false
+      - name: Synchronous webhooks
+        included: false
+      - name: SSO
+        included: true
+      - name: Support
+        detail: Community
   - id: budibase-pro
-    name: Professional
+    name: Pro
     type: paid
-    description: Production tier for Budibase. Provides higher quotas, priority support, and access to
-      the broader API portfolio. Pricing placeholder; align with the provider's pricing page.
+    hosting: Budibase Cloud
+    price: 23
+    price_annual: 19
+    currency: USD
+    period: month
+    price_note: >-
+      Pro is published as two rungs: $23/mo (5K actions) and $35/mo (10K actions) monthly,
+      or $19/mo and $29/mo billed annually. The headline price is the entry rung.
     entries:
-      - label: API Requests
-        description: Monthly API request quota
-        name: api_requests
+      - label: Base price (monthly, 5K actions)
+        name: base_price_monthly
+        type: recurring
+        price: '23.00'
+        timeFrame: month
+      - label: Base price (monthly, 10K actions)
+        name: base_price_monthly_10k
+        type: recurring
+        price: '35.00'
+        timeFrame: month
+      - label: Base price (annual, 5K actions)
+        name: base_price_annual
+        type: recurring
+        price: '19.00'
+        timeFrame: month
+      - label: Base price (annual, 10K actions)
+        name: base_price_annual_10k
+        type: recurring
+        price: '29.00'
+        timeFrame: month
+      - label: Included automation actions
+        name: included_actions
         type: quota
-        metric: requests
-        limit: 100000
+        limit: 5000
+        limit_upper: 10000
         timeFrame: month
-        geo: global
-        domains: []
-        unit: 1
-        price: TBD
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the professional tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 100
-        timeFrame: minute
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Overage
-        description: Per-request price after monthly quota is exceeded
-        name: overage
+      - label: Included AI credits
+        name: included_ai_credits
+        type: quota
+        limit: 2000
+        timeFrame: month
+      - label: Included creators
+        name: included_creators
+        type: seats
+        limit: 1
+      - label: Additional end user
+        name: additional_end_user
         type: metered
-        metric: requests
-        limit: -1
+        price: '6.00'
+        price_annual: '5.00'
         timeFrame: month
-        geo: global
-        domains: []
-        unit: 1000
-        price: TBD
-        userMultiplied: false
+      - label: Budibase DB rows
+        name: db_rows
+        type: quota
+        limit: 50000
+      - label: Workspaces
+        name: workspaces
+        type: quota
+        limit: 1
+      - label: Automation log retention
+        name: log_retention
+        type: retention
+        limit: 1 day
     elements:
-      - name: All Production Endpoints
-      - name: Email Support
-      - name: SLA Targets
-      - name: Webhook Subscriptions
-      - name: Budibase REST API
+      - name: Public API
+        included: true
+      - name: Expanded public API
+        included: false
+      - name: Budibase AI
+        included: true
+      - name: Workspace backups
+        included: false
+      - name: Support
+        detail: Community
+  - id: budibase-premium
+    name: Premium
+    type: paid
+    hosting: Budibase Cloud
+    price: 59
+    price_annual: 49
+    currency: USD
+    period: month
+    price_note: >-
+      Two rungs: $59/mo (20K actions) and $95/mo (50K actions); $49 and $79 billed annually.
+    entries:
+      - label: Base price (monthly, 20K actions)
+        name: base_price_monthly
+        type: recurring
+        price: '59.00'
+        timeFrame: month
+      - label: Base price (monthly, 50K actions)
+        name: base_price_monthly_50k
+        type: recurring
+        price: '95.00'
+        timeFrame: month
+      - label: Base price (annual, 20K actions)
+        name: base_price_annual
+        type: recurring
+        price: '49.00'
+        timeFrame: month
+      - label: Base price (annual, 50K actions)
+        name: base_price_annual_50k
+        type: recurring
+        price: '79.00'
+        timeFrame: month
+      - label: Included automation actions
+        name: included_actions
+        type: quota
+        limit: 20000
+        limit_upper: 50000
+        timeFrame: month
+      - label: Included AI credits
+        name: included_ai_credits
+        type: quota
+        limit: 10000
+        timeFrame: month
+      - label: Included creators
+        name: included_creators
+        type: seats
+        limit: 1
+      - label: Additional creator
+        name: additional_creator
+        type: metered
+        price: '60.00'
+        price_annual: '50.00'
+        timeFrame: month
+      - label: Additional end user
+        name: additional_end_user
+        type: metered
+        price: '6.00'
+        price_annual: '5.00'
+        timeFrame: month
+      - label: Budibase DB rows
+        name: db_rows
+        type: quota
+        limit: 250000
+      - label: Workspaces
+        name: workspaces
+        type: quota
+        limit: unlimited
+      - label: Automation log retention
+        name: log_retention
+        type: retention
+        limit: 7 days
+      - label: Workspace backup retention
+        name: backup_retention
+        type: retention
+        limit: 7 days
+    elements:
+      - name: Public API
+        included: true
+      - name: Expanded public API
+        included: false
+      - name: Workspace backups
+        included: true
+      - name: Support
+        detail: Community
+  - id: budibase-business
+    name: Business
+    type: paid
+    hosting: Budibase Cloud
+    price: 359
+    price_annual: 299
+    currency: USD
+    period: month
+    entries:
+      - label: Base price (monthly)
+        name: base_price_monthly
+        type: recurring
+        price: '359.00'
+        timeFrame: month
+      - label: Base price (annual)
+        name: base_price_annual
+        type: recurring
+        price: '299.00'
+        timeFrame: month
+      - label: Included automation actions
+        name: included_actions
+        type: quota
+        limit: 250000
+        timeFrame: month
+      - label: Included AI credits
+        name: included_ai_credits
+        type: quota
+        limit: 50000
+        timeFrame: month
+      - label: Included creators
+        name: included_creators
+        type: seats
+        limit: 3
+      - label: Additional creator
+        name: additional_creator
+        type: metered
+        price: '60.00'
+        price_annual: '50.00'
+        timeFrame: month
+      - label: Additional end user
+        name: additional_end_user
+        type: metered
+        price: '6.00'
+        price_annual: '5.00'
+        timeFrame: month
+      - label: Budibase DB rows
+        name: db_rows
+        type: quota
+        limit: 500000
+      - label: Automation log retention
+        name: log_retention
+        type: retention
+        limit: 30 days
+      - label: Workspace backup retention
+        name: backup_retention
+        type: retention
+        limit: unlimited
+    elements:
+      - name: Public API
+        included: true
+      - name: Expanded public API
+        included: false
+      - name: Enforceable SSO
+        included: true
+      - name: Translations
+        included: true
+      - name: Support
+        detail: Email
   - id: budibase-enterprise
     name: Enterprise
     type: enterprise
-    description: Custom-negotiated tier for Budibase. Includes dedicated capacity, contractual SLAs, security
-      review, data residency options, and named technical account management.
+    hosting: Budibase Cloud or Self-hosted
+    price: custom
+    currency: USD
+    period: month
     entries:
-      - label: API Requests
-        description: Negotiated request volume; -1 indicates uncapped subject to fair use
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: -1
+      - label: Base price
+        name: base_price
+        type: recurring
+        price: custom
         timeFrame: month
-        geo: configurable
-        domains: []
-        unit: 1
-        price: custom
-        userMultiplied: false
-      - label: Rate Limit
-        description: Negotiated burst and steady-state rate
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 1000
-        timeFrame: minute
-        geo: configurable
-        domains: []
-        unit: 1
-        price: custom
-        userMultiplied: false
+      - label: Included automation actions
+        name: included_actions
+        type: quota
+        limit: custom
+        note: Unlimited on the self-hosted Enterprise variant.
+        timeFrame: month
+      - label: Included AI credits
+        name: included_ai_credits
+        type: quota
+        limit: custom
+        timeFrame: month
+      - label: Budibase DB rows
+        name: db_rows
+        type: quota
+        limit: unlimited
     elements:
-      - name: Unlimited / Negotiated Volume
-      - name: 24/7 Dedicated Support
-      - name: Contractual SLA
-      - name: Security & Compliance Review
-      - name: Dedicated Account Manager
-      - name: Custom Data Residency
-      - name: Budibase REST API
+      - name: Public API
+        included: true
+      - name: Expanded public API
+        included: true
+      - name: Audit logs
+        included: true
+      - name: Active directory sync (SCIM)
+        included: true
+      - name: SLA
+        detail: 2 business days
+      - name: Support
+        detail: Priority
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

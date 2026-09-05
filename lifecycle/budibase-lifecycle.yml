@@ -1,0 +1,104 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  https://github.com/Budibase/budibase/releases, https://budibase.com/changelog,
+  https://status.budibase.com, https://github.com/Budibase/budibase/blob/master/SECURITY.md
+description: >-
+  Versioning, release cadence, support policy and operational transparency for Budibase.
+  Budibase runs a fast, publicly-tagged release train on GitHub and a Better Stack status
+  page, but publishes no API deprecation policy and emits no Deprecation or Sunset headers.
+versioning:
+  api:
+    style: path-prefix
+    current: v1
+    stable_since: 2022 or earlier
+    breaking_changes_observed: none
+    note: >-
+      /api/public/v1 has never been superseded. The API contract is remarkably stable; the
+      churn is all in the platform underneath it.
+  platform:
+    style: semver
+    current: 3.44.0
+    released: '2026-08-31'
+    tags_source: https://github.com/Budibase/budibase/releases
+    cadence: >-
+      A minor release roughly weekly, plus tagged -cloud.N builds between them. Observed
+      2026-08-17 v3.42.0, 2026-08-24 v3.43.0, 2026-08-31 v3.44.0, with v3.44.1-cloud.3 on
+      2026-09-03.
+    note: >-
+      The OpenAPI's info.version (3.3.0) does NOT track this train and has not moved with
+      it — a consumer diffing spec versions to detect API change will see nothing.
+release_notes:
+  - name: GitHub Releases
+    url: https://github.com/Budibase/budibase/releases
+    dated: true
+    machine_readable: https://github.com/Budibase/budibase/releases.atom
+    scope: platform, every tag
+  - name: Product changelog
+    url: https://budibase.com/changelog
+    dated: true
+    scope: >-
+      Curated product announcements, not per-release notes. Most recent entries
+      2026-06-11, 2026-04-21, 2026-03-12.
+    note: >-
+      This is a narrative updates feed, several months behind the release tags. It is not
+      an API changelog and does not record API changes.
+deprecation:
+  policy_published: false
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  detail: >-
+    Budibase publishes no API deprecation or sunset policy, gives no notice period, and
+    returns neither the RFC 8594 Sunset header nor the Deprecation header. Individual
+    documentation pages carry ad-hoc markers ("Deprecated in v2.33.3" on the Sections
+    component), but there is no policy behind them and no such marker appears in the
+    OpenAPI — zero of 44 operations are flagged deprecated.
+  security_support_policy:
+    url: https://github.com/Budibase/budibase/blob/master/SECURITY.md
+    statement: >-
+      "As an open source product, we will only patch the latest major version for security
+      vulnerabilities. Previous versions of budibase will not be retroactively patched."
+    note: >-
+      This is a support-window statement, not a deprecation policy, and it is the closest
+      thing Budibase publishes. Its practical effect on a self-hoster is significant: there
+      is no long-term-support branch.
+  deprecated_operations_in_spec: 0
+status_page:
+  exists: true
+  url: https://status.budibase.com
+  provider: Better Stack
+  status: 200
+  verified: '2026-09-04'
+  incident_history: true
+  subscribe: true
+  machine_readable_feed: not published
+sla:
+  published: true
+  detail: >-
+    An SLA is a plan feature, not a public document. pricing.json records "SLAs: 2 business
+    days" for Enterprise and "no" for Pro, Premium, Business and Open Source. No uptime
+    percentage is published for any tier.
+  source: https://budibase.com/pricing.json
+support:
+  channels:
+    - name: Community (Discord)
+      url: https://discord.com/invite/budibase-733030666647765003
+      plans: [open_source, pro, premium]
+    - name: Email
+      url: https://budibase.com/support
+      plans: [business]
+    - name: Priority
+      plans: [enterprise]
+  source: https://budibase.com/pricing.json
+findings:
+  - >-
+    Release transparency is strong and API-change transparency is absent. Every platform
+    tag is public and dated, but nothing tells an API consumer whether a given release
+    touched /api/public/v1.
+  - >-
+    A published deprecation policy would be the single cheapest operational improvement
+    available to Budibase — the release discipline to support one already exists.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

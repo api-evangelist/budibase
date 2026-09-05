@@ -1,0 +1,259 @@
+generated: '2026-09-04'
+method: derived
+source: >-
+  openapi/budibase-public-api-openapi.yml (Budibase Public API v3.3.0), enriched from
+  https://docs.budibase.com/docs/public-api and live responses observed 2026-09-04
+description: >-
+  Cross-cutting runtime semantics of the Budibase Public API — how it authenticates,
+  paginates, versions, signals rate limits, shapes errors, and whether a write can be
+  taken back. Everything asserted here traces to Budibase's own OpenAPI, its own docs, or
+  a response this pipeline observed; where Budibase publishes nothing, that is recorded as
+  a gap rather than filled in.
+api: Budibase Public API
+base_url: https://budibase.app/api/public/v1
+authentication:
+  style: api-key-header
+  header: x-budibase-api-key
+  scheme_name: ApiKeyAuth
+  scoping: >-
+    A key inherits the RBAC role of the user who generated it. There are no independent
+    API scopes and no way to mint a reduced-privilege key.
+  rotation: >-
+    Generating a new key from the portal user dropdown immediately invalidates the
+    previous one. There is no overlap window, so rotation is a hard cutover.
+  additional_context_header:
+    name: x-budibase-app-id
+    required_for: all table, row and view operations
+    description: >-
+      The workspace/app ID. Prefixed app_dev_ for the development copy and app_ for the
+      published copy; the same logical resource has two different IDs depending on which
+      copy you mean.
+  docs: https://docs.budibase.com/docs/public-api
+  see_also: authentication/budibase-authentication.yml
+idempotency:
+  supported: false
+  coverage: none
+  mechanism: null
+  header: null
+  retention: null
+  detail: >-
+    Budibase publishes no idempotency mechanism. There is no Idempotency-Key header, no
+    client-supplied request identifier, and no documented replay-safe semantics anywhere
+    in the OpenAPI or the documentation. Of the 44 operations, 27 are mutating
+    (create/update/delete/publish/import/execute) and none of them is replay-protected.
+  practical_consequence: >-
+    An agent that retries a timed-out POST /tables/{tableId}/rows will create a duplicate
+    row. The only defence available to a caller is to search for the row first, which is
+    itself a second request against a 10-per-second budget.
+pagination:
+  style: bookmark-cursor
+  applies_to:
+    - rowSearch
+    - rowViewSearch
+  request_fields:
+    - name: bookmark
+      in: body
+      description: Cursor returned by the previous page.
+    - name: limit
+      in: body
+      description: Rows to return per page.
+    - name: paginate
+      in: body
+      description: Whether to paginate at all.
+  response_fields:
+    - name: data
+      description: The array of results.
+    - name: bookmark
+      description: Cursor to pass to the next call. String or integer — the spec declares oneOf.
+    - name: hasNextPage
+      description: Boolean, whether another page exists.
+  second_style:
+    style: page-and-limit
+    applies_to:
+      - queryExecute
+    request_fields:
+      - name: pagination.page
+      - name: pagination.limit
+    note: >-
+      Only supported for REST-type saved queries. This is a SECOND, incompatible
+      pagination model inside the same API — bookmark/hasNextPage for rows, page/limit for
+      query execution. A generic client cannot use one paging loop for both.
+  gaps:
+    - >-
+      Search operations other than rows (appSearch, tableSearch, userSearch, viewSearch,
+      workspaceSearch, querySearch) return a bare data[] with no bookmark and no total.
+      There is no documented way to page them, and no stated ceiling on how many results
+      they return.
+    - >-
+      bookmark is typed oneOf[string, integer], so a strongly-typed client has to handle
+      both.
+filtering:
+  style: structured-query-object
+  description: >-
+    rowSearch takes a query object with typed operators — string (starts-with), fuzzy
+    (substring), range, equal, notEqual, empty, notEmpty, oneOf, contains, notContains,
+    containsAny — plus allOr to switch AND/OR, and sort/sortOrder/sortType. Views add
+    logicalOperator (all/any), filter groups and onEmptyFilter.
+  note: >-
+    This is a genuinely expressive filter language and it is fully described in the
+    contract, which is the strongest part of the Budibase spec.
+field_expansion:
+  supported: false
+  note: No sparse-fieldset or expand parameter. Row shape is governed by the table schema.
+metadata:
+  supported: false
+  note: >-
+    No customer-defined metadata field on any resource. Budibase's own resources carry
+    _id, _rev, createdAt, updatedAt and tenantId.
+request_tracing:
+  request_id_header: null
+  correlation_id: null
+  detail: >-
+    No request ID is returned on success or on error. Observed responses carry only
+    Cloudflare's cf-ray, which is edge infrastructure rather than a Budibase support
+    handle. A caller reporting a failed request has nothing first-party to quote.
+versioning:
+  style: path-prefix
+  current: v1
+  path: /api/public/v1
+  spec_version: 3.3.0
+  platform_version: 3.44.x
+  detail: >-
+    The URL has carried /v1 since the API was introduced and there has been no v2. The
+    OpenAPI's info.version (3.3.0) tracks the PLATFORM release train, not the API
+    contract, so it moves without the interface changing — do not read it as an API
+    version.
+  media_type_versioning: false
+  header_versioning: false
+error_envelope:
+  content_type: application/json
+  shape: '{ "message": <string>, "status": <int> }'
+  rfc9457: false
+  documented_in_spec: false
+  see_also: errors/budibase-problem-types.yml
+  note: >-
+    Consistent in shape but carries no machine-readable code. The OpenAPI documents zero
+    error responses.
+rate_limit_signaling:
+  headers:
+    - x-ratelimit-limit
+    - x-ratelimit-remaining
+    - x-ratelimit-reset
+  retry_after: false
+  documented: false
+  observed_limit: 10 requests per 1-second window (unauthenticated)
+  see_also: rate-limits/budibase-rate-limits.yml
+  note: >-
+    The headers are emitted on every response including errors, so the runtime signal is
+    good. Nothing documents it, and there is no Retry-After to back off against.
+dry_run_mode:
+  supported: false
+  detail: >-
+    No preview, validate-only or simulate parameter on any operation. An agent cannot
+    rehearse a write.
+bulk_operations:
+  supported: false
+  detail: >-
+    Rows, tables, users and views are all created and updated one at a time. Combined with
+    a 10-request-per-second ceiling, any bulk load is slow by construction.
+reversibility:
+  grade: documented
+  summary: >-
+    Budibase ships genuine paired inverse operations for its deployment and permission
+    surfaces — publish/unpublish, assign/unassign, export/import — but publishes no time
+    window for any of them, and its destructive operations have no undo at all. A
+    reversal path exists; a stated window does not, so this grades `documented` rather
+    than `verified`.
+  write_surfaces:
+    - operation: appPublish
+      path: POST /applications/{appId}/publish
+      reversal: appUnpublish
+      reversal_path: POST /applications/{appId}/unpublish
+      window: not stated
+      docs: https://docs.budibase.com/docs/public-api
+      note: A true inverse. Unpublishing takes the live app down; it does not restore a prior version.
+    - operation: workspacePublish
+      path: POST /workspaces/{workspaceId}/publish
+      reversal: workspaceUnpublish
+      reversal_path: POST /workspaces/{workspaceId}/unpublish
+      window: not stated
+    - operation: roleAssign
+      path: POST /roles/assign
+      reversal: roleUnAssign
+      reversal_path: POST /roles/unassign
+      window: not stated
+      note: >-
+        The cleanest inverse pair in the API — the same body shape assigns and unassigns
+        builder, admin and per-app roles.
+    - operation: appDestroy
+      path: DELETE /applications/{appId}
+      reversal: none
+      window: none
+      note: >-
+        No trash, no soft delete, no restore endpoint. The only recovery path is an
+        out-of-band workspace backup, which is a Premium-and-above plan feature with 7-day
+        retention on Premium and unlimited on Business — see plans/budibase-plans-pricing.yml.
+        That is a billing-tier dependency on reversibility, not an API capability.
+    - operation: workspaceDestroy
+      path: DELETE /workspaces/{workspaceId}
+      reversal: none
+      window: none
+    - operation: tableDestroy
+      path: DELETE /tables/{tableId}
+      reversal: none
+      window: none
+    - operation: rowDestroy
+      path: DELETE /tables/{tableId}/rows/{rowId}
+      reversal: none
+      window: none
+      note: >-
+        The highest-frequency destructive operation in the API and the one with no undo.
+        An agent deleting rows is doing something permanent on the first call.
+    - operation: viewDestroy
+      path: DELETE /views/{viewId}
+      reversal: none
+      window: none
+    - operation: userDestroy
+      path: DELETE /users/{userId}
+      reversal: none
+      window: none
+    - operation: rowUpdate
+      path: PUT /tables/{tableId}/rows/{rowId}
+      reversal: none
+      window: none
+      note: >-
+        Full-document PUT with no prior-value return and no revision-based rollback exposed
+        through the Public API, so an overwrite cannot be undone from what the caller holds.
+  backup_path:
+    exists: true
+    kind: out-of-band
+    api_exposed: false
+    mechanisms:
+      - name: Workspace backups
+        plan_gated: Premium and above
+        retention: 7 days (Premium), unlimited (Business, Enterprise)
+        source: https://budibase.com/pricing.json
+      - name: appExport / workspaceExport
+        api_exposed: true
+        note: >-
+          POST /applications/{appId}/export and /workspaces/{workspaceId}/export produce a
+          restorable artifact, and the matching import operations restore it. An agent CAN
+          therefore construct its own before-state snapshot prior to a destructive call —
+          this is the closest thing Budibase offers to a rollback, and it is not described
+          as one anywhere in the docs.
+      - name: budi backups --export / --import
+        api_exposed: false
+        scope: whole self-hosted installation
+        source: https://docs.budibase.com/docs/budibase-cli-reference
+  recommendation: >-
+    For any agent performing destructive work: call appExport or workspaceExport first and
+    keep the artifact. It is the only reversal mechanism the API itself provides.
+cross_links:
+  errors: errors/budibase-problem-types.yml
+  lifecycle: lifecycle/budibase-lifecycle.yml
+  authentication: authentication/budibase-authentication.yml
+  rate_limits: rate-limits/budibase-rate-limits.yml
+  plans: plans/budibase-plans-pricing.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
