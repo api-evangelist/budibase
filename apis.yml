@@ -137,6 +137,8 @@ apis:
   humanURL: https://docs.budibase.com/docs/public-api
   baseURL: https://budibase.app/api/public/v1
   tags:
+  - Metrics
+  tags_raw:
   - metrics
   properties:
   - type: OpenAPI
@@ -161,6 +163,8 @@ apis:
   humanURL: https://docs.budibase.com/docs/public-api
   baseURL: https://budibase.app/api/public/v1
   tags:
+  - Roles
+  tags_raw:
   - roles
   properties:
   - type: OpenAPI
@@ -185,6 +189,8 @@ apis:
   humanURL: https://docs.budibase.com/docs/public-api
   baseURL: https://budibase.app/api/public/v1
   tags:
+  - Views
+  tags_raw:
   - views
   properties:
   - type: OpenAPI
@@ -209,6 +215,8 @@ apis:
   humanURL: https://docs.budibase.com/docs/public-api
   baseURL: https://budibase.app/api/public/v1
   tags:
+  - Workspace
+  tags_raw:
   - workspaces
   properties:
   - type: OpenAPI
