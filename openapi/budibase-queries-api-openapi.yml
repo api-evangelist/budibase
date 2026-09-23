@@ -1,25 +1,8 @@
 openapi: 3.2.0
 info:
-  title: Budibase Public Applications Queries API
-  description: 'The Budibase Public API provides programmatic access to Budibase applications, tables,
-
-    rows, users, and queries. Authentication is via an API key in the `x-budibase-api-key`
-
-    header generated from the Budibase portal user dropdown menu.
-
-
-    Data endpoints (tables and rows) additionally require the `x-budibase-app-id` header
-
-    identifying the target application.
-
-    '
+  title: Budibase Queries API
   version: '1.0'
-  contact:
-    name: Budibase
-    url: https://docs.budibase.com/docs/public-api
-  license:
-    name: GPL-3.0
-    url: https://github.com/Budibase/budibase/blob/master/LICENSE
+  description: 'Operations tagged Queries across 2 of this provider''s published API definitions: budibase-openapi.yml, budibase-queries-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://budibase.app/api/public/v1
   description: Budibase Cloud Public API
@@ -29,8 +12,6 @@ servers:
     selfhosted:
       default: budibase.example.com
       description: Hostname of the self-hosted Budibase instance
-security:
-- apiKeyAuth: []
 tags:
 - name: Queries
   description: Execute and search queries.
@@ -59,6 +40,17 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Query'
+      security:
+      - apiKeyAuth: []
+    servers:
+    - url: https://budibase.app/api/public/v1
+      description: Budibase Cloud Public API
+    - url: https://{selfhosted}/api/public/v1
+      description: Self-hosted Budibase
+      variables:
+        selfhosted:
+          default: budibase.example.com
+          description: Hostname of the self-hosted Budibase instance
   /queries/{id}/execute:
     parameters:
     - $ref: '#/components/parameters/IdPath'
@@ -92,23 +84,118 @@ paths:
                     items:
                       type: object
                       additionalProperties: true
+      security:
+      - apiKeyAuth: []
+    servers:
+    - url: https://budibase.app/api/public/v1
+      description: Budibase Cloud Public API
+    - url: https://{selfhosted}/api/public/v1
+      description: Self-hosted Budibase
+      variables:
+        selfhosted:
+          default: budibase.example.com
+          description: Hostname of the self-hosted Budibase instance
+  /queries/{queryId}:
+    servers:
+    - url: https://budibase.app/api/public/v1
+      description: Budibase Cloud API
+      variables:
+        apiKey:
+          default: <user API key>
+          description: The API key of the user to assume for API call.
+        appId:
+          default: <App ID>
+          description: The ID of the app the calls will be executed within the context of, this should start with app_ (production) or app_dev (development).
+    post:
+      operationId: queryExecute
+      summary: Execute a query
+      description: Queries which have been created within a Budibase app can be executed using this,
+      tags:
+      - Queries
+      parameters:
+      - $ref: '#/components/parameters/queryId'
+      - $ref: '#/components/parameters/appId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/executeQuery'
+      responses:
+        '200':
+          description: Returns the result of the query execution.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/executeQueryOutput'
+              examples:
+                REST:
+                  $ref: '#/components/examples/restResponse'
+                SQL:
+                  $ref: '#/components/examples/sqlResponse'
+      security:
+      - ApiKeyAuth: []
+  /queries/search:
+    servers:
+    - url: https://budibase.app/api/public/v1
+      description: Budibase Cloud API
+      variables:
+        apiKey:
+          default: <user API key>
+          description: The API key of the user to assume for API call.
+        appId:
+          default: <App ID>
+          description: The ID of the app the calls will be executed within the context of, this should start with app_ (production) or app_dev (development).
+    post:
+      operationId: querySearch
+      summary: Search for queries
+      description: Based on query properties (currently only name) search for queries.
+      tags:
+      - Queries
+      parameters:
+      - $ref: '#/components/parameters/appId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/nameSearch'
+      responses:
+        '200':
+          description: Returns the queries found based on the search parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/querySearch'
+              examples:
+                queries:
+                  $ref: '#/components/examples/queries'
+      security:
+      - ApiKeyAuth: []
 components:
+  parameters:
+    IdPath:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    appId:
+      in: header
+      name: x-budibase-app-id
+      required: true
+      description: The ID of the app which this request is targeting.
+      schema:
+        default: '{{appId}}'
+        type: string
+    queryId:
+      in: path
+      name: queryId
+      required: true
+      description: The ID of the query which this request is targeting.
+      schema:
+        type: string
   schemas:
-    Query:
-      type: object
-      properties:
-        _id:
-          type: string
-        name:
-          type: string
-        datasourceId:
-          type: string
-        queryVerb:
-          type: string
-        parameters:
-          type: array
-          items:
-            type: object
     NameSearch:
       type: object
       properties:
@@ -131,16 +218,180 @@ components:
               enum:
               - string
               - number
-  parameters:
-    IdPath:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: string
+    Query:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        datasourceId:
+          type: string
+        queryVerb:
+          type: string
+        parameters:
+          type: array
+          items:
+            type: object
+    executeQueryOutput:
+      type: object
+      properties:
+        data:
+          description: The data response from the query.
+          type: array
+          items:
+            type: object
+        extra:
+          description: Extra information that is not part of the main data, e.g. headers.
+          type: object
+          properties:
+            headers:
+              description: If carrying out a REST request, this will contain the response headers.
+              type: object
+            raw:
+              description: The raw query response, as a string.
+              type: string
+        pagination:
+          description: If pagination is supported, this will contain the bookmark/anchor information for it.
+          type: object
+      required:
+      - data
+    querySearch:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              _id:
+                description: The ID of the query.
+                type: string
+              datasourceId:
+                description: The ID of the datasource the query belongs to.
+                type: string
+              parameters:
+                description: The bindings which are required to perform this query.
+                type: array
+                items:
+                  type: string
+              fields:
+                description: The fields that are used to perform this query, e.g. the sql statement
+                type: object
+              queryVerb:
+                description: The verb that describes this query.
+                enum:
+                - create
+                - read
+                - update
+                - delete
+              name:
+                description: The name of the query.
+                type: string
+              schema:
+                description: The schema of the data returned when the query is executed.
+                type: object
+              transformer:
+                description: The JavaScript transformer function, applied after the query responds with data.
+                type: string
+              readable:
+                description: Whether the query has readable data.
+                type: boolean
+            required:
+            - name
+            - schema
+            - _id
+      required:
+      - data
+    executeQuery:
+      description: The parameters required for executing a query.
+      type: object
+      properties:
+        parameters:
+          type: object
+          description: This contains the required parameters for the query, this depends on query type, setup and bindings.
+          additionalProperties:
+            description: Key value properties of any type, depending on the query output schema.
+        pagination:
+          type: object
+          description: For supported query types (currently on REST) pagination can be performed using these properties.
+          properties:
+            page:
+              type: string
+              description: The page which has been returned from a previous query.
+            limit:
+              type: number
+              description: The number of rows to return per page.
+    nameSearch:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name to be used when searching - this will be used in a case insensitive starts with match.
+      required:
+      - name
+  examples:
+    sqlResponse:
+      value:
+        data:
+        - personid: 1
+          lastname: Hughes
+          firstname: Mike
+          address: 123 Fake Street
+          city: Belfast
+        - personid: 2
+          lastname: Smith
+          firstname: John
+          address: 64 Updown Road
+          city: Dublin
+    restResponse:
+      value:
+        data:
+        - value: <html lang='en-GB'></html>
+        pagination:
+          cursor: '2'
+        raw: <html lang='en-GB'></html>
+        headers:
+          content-type: text/html; charset=ISO-8859-1
+    queries:
+      value:
+        data:
+        - _id: query_datasource_plus_4d8be0c506b9465daf4bf84d890fdab6_454854487c574d45bc4029b1e153219e
+          datasourceId: datasource_plus_4d8be0c506b9465daf4bf84d890fdab6
+          parameters: []
+          fields:
+            sql: select * from persons
+          queryVerb: read
+          name: Help
+          schema:
+            personid:
+              name: personid
+              type: string
+            lastname:
+              name: lastname
+              type: string
+            firstname:
+              name: firstname
+              type: string
+            address:
+              name: address
+              type: string
+            city:
+              name: city
+              type: string
+          transformer: return data
+          readable: true
   securitySchemes:
     apiKeyAuth:
       type: apiKey
       in: header
       name: x-budibase-api-key
       description: API key generated from the Budibase portal user dropdown menu.
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-budibase-api-key
+      description: Your individual API key, this will provide access based on the configured RBAC settings of your user.
+x-refined-from:
+- budibase-openapi.yml
+- budibase-queries-api-openapi.yml

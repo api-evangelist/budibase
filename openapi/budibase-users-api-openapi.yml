@@ -1,25 +1,8 @@
 openapi: 3.2.0
 info:
-  title: Budibase Public Applications Users API
-  description: 'The Budibase Public API provides programmatic access to Budibase applications, tables,
-
-    rows, users, and queries. Authentication is via an API key in the `x-budibase-api-key`
-
-    header generated from the Budibase portal user dropdown menu.
-
-
-    Data endpoints (tables and rows) additionally require the `x-budibase-app-id` header
-
-    identifying the target application.
-
-    '
+  title: Budibase Users API
   version: '1.0'
-  contact:
-    name: Budibase
-    url: https://docs.budibase.com/docs/public-api
-  license:
-    name: GPL-3.0
-    url: https://github.com/Budibase/budibase/blob/master/LICENSE
+  description: 'Operations tagged Users across 2 of this provider''s published API definitions: budibase-openapi.yml, budibase-users-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://budibase.app/api/public/v1
   description: Budibase Cloud Public API
@@ -29,8 +12,6 @@ servers:
     selfhosted:
       default: budibase.example.com
       description: Hostname of the self-hosted Budibase instance
-security:
-- apiKeyAuth: []
 tags:
 - name: Users
   description: Manage Budibase users.
@@ -59,6 +40,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/User'
+      security:
+      - apiKeyAuth: []
     post:
       tags:
       - Users
@@ -77,6 +60,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+      security:
+      - apiKeyAuth: []
+    servers:
+    - url: https://budibase.app/api/public/v1
+      description: Budibase Cloud Public API
+    - url: https://{selfhosted}/api/public/v1
+      description: Self-hosted Budibase
+      variables:
+        selfhosted:
+          default: budibase.example.com
+          description: Hostname of the self-hosted Budibase instance
   /users/{id}:
     parameters:
     - $ref: '#/components/parameters/IdPath'
@@ -92,6 +86,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+      security:
+      - apiKeyAuth: []
     put:
       tags:
       - Users
@@ -110,6 +106,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+      security:
+      - apiKeyAuth: []
     delete:
       tags:
       - Users
@@ -118,8 +116,151 @@ paths:
       responses:
         '200':
           description: Deleted
+      security:
+      - apiKeyAuth: []
+    servers:
+    - url: https://budibase.app/api/public/v1
+      description: Budibase Cloud Public API
+    - url: https://{selfhosted}/api/public/v1
+      description: Self-hosted Budibase
+      variables:
+        selfhosted:
+          default: budibase.example.com
+          description: Hostname of the self-hosted Budibase instance
+  /users/{userId}:
+    servers:
+    - url: https://budibase.app/api/public/v1
+      description: Budibase Cloud API
+      variables:
+        apiKey:
+          default: <user API key>
+          description: The API key of the user to assume for API call.
+        appId:
+          default: <App ID>
+          description: The ID of the app the calls will be executed within the context of, this should start with app_ (production) or app_dev (development).
+    put:
+      operationId: userUpdate
+      summary: Update a user
+      tags:
+      - Users
+      parameters:
+      - $ref: '#/components/parameters/userId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
+      responses:
+        '200':
+          description: Returns the updated user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userOutput'
+              examples:
+                user:
+                  $ref: '#/components/examples/user'
+      security:
+      - ApiKeyAuth: []
+    delete:
+      operationId: userDestroy
+      summary: Delete a user
+      tags:
+      - Users
+      parameters:
+      - $ref: '#/components/parameters/userId'
+      responses:
+        '200':
+          description: Returns the deleted user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userOutput'
+              examples:
+                user:
+                  $ref: '#/components/examples/user'
+      security:
+      - ApiKeyAuth: []
+    get:
+      operationId: userGetById
+      summary: Retrieve a user
+      tags:
+      - Users
+      parameters:
+      - $ref: '#/components/parameters/userId'
+      responses:
+        '200':
+          description: Returns the retrieved user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userOutput'
+              examples:
+                user:
+                  $ref: '#/components/examples/user'
+      security:
+      - ApiKeyAuth: []
+  /users/search:
+    servers:
+    - url: https://budibase.app/api/public/v1
+      description: Budibase Cloud API
+      variables:
+        apiKey:
+          default: <user API key>
+          description: The API key of the user to assume for API call.
+        appId:
+          default: <App ID>
+          description: The ID of the app the calls will be executed within the context of, this should start with app_ (production) or app_dev (development).
+    post:
+      operationId: userSearch
+      summary: Search for users
+      description: Based on user properties (currently only name) search for users.
+      tags:
+      - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/nameSearch'
+      responses:
+        '200':
+          description: Returns the found users based on search parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userSearch'
+              examples:
+                users:
+                  $ref: '#/components/examples/users'
+      security:
+      - ApiKeyAuth: []
 components:
   schemas:
+    UserInput:
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        roles:
+          type: object
+          additionalProperties:
+            type: string
+        builder:
+          type: object
+          properties:
+            global:
+              type: boolean
+        admin:
+          type: object
+          properties:
+            global:
+              type: boolean
     User:
       allOf:
       - $ref: '#/components/schemas/UserInput'
@@ -155,29 +296,169 @@ components:
               enum:
               - string
               - number
-    UserInput:
+    userSearch:
       type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              email:
+                description: The email address of the user, this must be unique.
+                type: string
+              password:
+                description: The password of the user if using password based login - this will never be returned. This can be left out of subsequent requests (updates) and will be enriched back into the user structure.
+                type: string
+              status:
+                description: The status of the user, if they are active.
+                type: string
+                enum:
+                - active
+              firstName:
+                description: The first name of the user
+                type: string
+              lastName:
+                description: The last name of the user
+                type: string
+              forceResetPassword:
+                description: If set to true forces the user to reset their password on first login.
+                type: boolean
+              builder:
+                description: Describes if the user is a builder user or not. This field can only be set on a business or enterprise license.
+                type: object
+                properties:
+                  global:
+                    description: If set to true the user will be able to build any app in the system.
+                    type: boolean
+              admin:
+                description: Describes if the user is an admin user or not. This field can only be set on a business or enterprise license.
+                type: object
+                properties:
+                  global:
+                    description: If set to true the user will be able to administrate the system.
+                    type: boolean
+              roles:
+                description: Contains the roles of the user per app (assuming they are not a builder user). This field can only be set on a business or enterprise license.
+                type: object
+                additionalProperties:
+                  type: string
+                  description: A map of app ID (production app ID, minus the _dev component) to a role ID, e.g. ADMIN.
+              _id:
+                description: The ID of the user.
+                type: string
+            required:
+            - email
+            - _id
       required:
-      - email
+      - data
+    user:
+      type: object
       properties:
         email:
+          description: The email address of the user, this must be unique.
           type: string
         password:
+          description: The password of the user if using password based login - this will never be returned. This can be left out of subsequent requests (updates) and will be enriched back into the user structure.
           type: string
+        status:
+          description: The status of the user, if they are active.
+          type: string
+          enum:
+          - active
+        firstName:
+          description: The first name of the user
+          type: string
+        lastName:
+          description: The last name of the user
+          type: string
+        forceResetPassword:
+          description: If set to true forces the user to reset their password on first login.
+          type: boolean
+        builder:
+          description: Describes if the user is a builder user or not. This field can only be set on a business or enterprise license.
+          type: object
+          properties:
+            global:
+              description: If set to true the user will be able to build any app in the system.
+              type: boolean
+        admin:
+          description: Describes if the user is an admin user or not. This field can only be set on a business or enterprise license.
+          type: object
+          properties:
+            global:
+              description: If set to true the user will be able to administrate the system.
+              type: boolean
         roles:
+          description: Contains the roles of the user per app (assuming they are not a builder user). This field can only be set on a business or enterprise license.
           type: object
           additionalProperties:
             type: string
-        builder:
+            description: A map of app ID (production app ID, minus the _dev component) to a role ID, e.g. ADMIN.
+      required:
+      - email
+    nameSearch:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name to be used when searching - this will be used in a case insensitive starts with match.
+      required:
+      - name
+    userOutput:
+      type: object
+      properties:
+        data:
           type: object
           properties:
-            global:
+            email:
+              description: The email address of the user, this must be unique.
+              type: string
+            password:
+              description: The password of the user if using password based login - this will never be returned. This can be left out of subsequent requests (updates) and will be enriched back into the user structure.
+              type: string
+            status:
+              description: The status of the user, if they are active.
+              type: string
+              enum:
+              - active
+            firstName:
+              description: The first name of the user
+              type: string
+            lastName:
+              description: The last name of the user
+              type: string
+            forceResetPassword:
+              description: If set to true forces the user to reset their password on first login.
               type: boolean
-        admin:
-          type: object
-          properties:
-            global:
-              type: boolean
+            builder:
+              description: Describes if the user is a builder user or not. This field can only be set on a business or enterprise license.
+              type: object
+              properties:
+                global:
+                  description: If set to true the user will be able to build any app in the system.
+                  type: boolean
+            admin:
+              description: Describes if the user is an admin user or not. This field can only be set on a business or enterprise license.
+              type: object
+              properties:
+                global:
+                  description: If set to true the user will be able to administrate the system.
+                  type: boolean
+            roles:
+              description: Contains the roles of the user per app (assuming they are not a builder user). This field can only be set on a business or enterprise license.
+              type: object
+              additionalProperties:
+                type: string
+                description: A map of app ID (production app ID, minus the _dev component) to a role ID, e.g. ADMIN.
+            _id:
+              description: The ID of the user.
+              type: string
+          required:
+          - email
+          - _id
+      required:
+      - data
   parameters:
     IdPath:
       name: id
@@ -185,9 +466,69 @@ components:
       required: true
       schema:
         type: string
+    userId:
+      in: path
+      name: userId
+      required: true
+      description: The ID of the user which this request is targeting.
+      schema:
+        type: string
+  examples:
+    user:
+      value:
+        data:
+          _id: us_693a73206518477283a8d5ae31103252
+          email: test@example.com
+          roles:
+            app_957b12f943d348faa61db7e18e088d0f: BASIC
+          builder:
+            global: false
+          admin:
+            global: true
+          tenantId: default
+          status: active
+          budibaseAccess: true
+          csrfToken: 9c70291d-7137-48f9-9166-99ab5473a3d4
+          userId: us_693a73206518477283a8d5ae31103252
+          roleId: ADMIN
+          role:
+            _id: ADMIN
+            name: Admin
+            permissionId: admin
+            inherits: POWER
+    users:
+      value:
+        data:
+        - _id: us_693a73206518477283a8d5ae31103252
+          email: test@example.com
+          roles:
+            app_957b12f943d348faa61db7e18e088d0f: BASIC
+          builder:
+            global: false
+          admin:
+            global: true
+          tenantId: default
+          status: active
+          budibaseAccess: true
+          csrfToken: 9c70291d-7137-48f9-9166-99ab5473a3d4
+          userId: us_693a73206518477283a8d5ae31103252
+          roleId: ADMIN
+          role:
+            _id: ADMIN
+            name: Admin
+            permissionId: admin
+            inherits: POWER
   securitySchemes:
     apiKeyAuth:
       type: apiKey
       in: header
       name: x-budibase-api-key
       description: API key generated from the Budibase portal user dropdown menu.
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-budibase-api-key
+      description: Your individual API key, this will provide access based on the configured RBAC settings of your user.
+x-refined-from:
+- budibase-openapi.yml
+- budibase-users-api-openapi.yml

@@ -1,0 +1,159 @@
+openapi: 3.2.0
+info:
+  title: Budibase Roles API
+  description: The public API for Budibase apps and its services.
+  version: 3.3.0
+servers:
+- url: https://budibase.app/api/public/v1
+  description: Budibase Cloud API
+  variables:
+    apiKey:
+      default: <user API key>
+      description: The API key of the user to assume for API call.
+    appId:
+      default: <App ID>
+      description: The ID of the app the calls will be executed within the context of, this should start with app_ (production) or app_dev (development).
+security:
+- ApiKeyAuth: []
+tags:
+- name: Roles
+paths:
+  /roles/assign:
+    post:
+      operationId: roleAssign
+      summary: Assign a role to a list of users
+      description: This is a business/enterprise only endpoint
+      tags:
+      - Roles
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/rolesAssign'
+      responses:
+        '200':
+          description: Returns a list of updated user IDs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rolesOutput'
+  /roles/unassign:
+    post:
+      operationId: roleUnAssign
+      summary: Un-assign a role from a list of users
+      description: This is a business/enterprise only endpoint
+      tags:
+      - Roles
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/rolesUnAssign'
+      responses:
+        '200':
+          description: Returns a list of updated user IDs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rolesOutput'
+components:
+  schemas:
+    rolesOutput:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            userIds:
+              description: The updated users' IDs
+              type: array
+              items:
+                type: string
+          required:
+          - userIds
+      required:
+      - data
+    rolesUnAssign:
+      type: object
+      properties:
+        appBuilder:
+          type: object
+          properties:
+            appId:
+              description: The app that the users should have app builder privileges granted for.
+              type: string
+          description: Allow setting users to builders per app.
+          required:
+          - appId
+        builder:
+          type: boolean
+          description: Add/remove global builder permissions from the list of users.
+        admin:
+          type: boolean
+          description: Add/remove global admin permissions from the list of users.
+        role:
+          type: object
+          properties:
+            roleId:
+              description: The role ID, such as BASIC, ADMIN or a custom role ID.
+              type: string
+            appId:
+              description: The app that the role relates to.
+              type: string
+          description: Add/remove a per-app role, such as BASIC, ADMIN etc.
+          required:
+          - roleId
+          - appId
+        userIds:
+          description: The user IDs to be updated to add/remove the specified roles.
+          type: array
+          items:
+            type: string
+      required:
+      - userIds
+    rolesAssign:
+      type: object
+      properties:
+        appBuilder:
+          type: object
+          properties:
+            appId:
+              description: The app that the users should have app builder privileges granted for.
+              type: string
+          description: Allow setting users to builders per app.
+          required:
+          - appId
+        builder:
+          type: boolean
+          description: Add/remove global builder permissions from the list of users.
+        admin:
+          type: boolean
+          description: Add/remove global admin permissions from the list of users.
+        role:
+          type: object
+          properties:
+            roleId:
+              description: The role ID, such as BASIC, ADMIN or a custom role ID.
+              type: string
+            appId:
+              description: The app that the role relates to.
+              type: string
+          description: Add/remove a per-app role, such as BASIC, ADMIN etc.
+          required:
+          - roleId
+          - appId
+        userIds:
+          description: The user IDs to be updated to add/remove the specified roles.
+          type: array
+          items:
+            type: string
+      required:
+      - userIds
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-budibase-api-key
+      description: Your individual API key, this will provide access based on the configured RBAC settings of your user.

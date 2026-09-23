@@ -1,28 +1,49 @@
 {
   "provider": "budibase",
   "sources": [
+    "_original/budibase-openapi.yml",
     "budibase-applications-api-openapi.yml",
+    "budibase-metrics-api-openapi.yml",
     "budibase-queries-api-openapi.yml",
+    "budibase-roles-api-openapi.yml",
     "budibase-rows-api-openapi.yml",
     "budibase-tables-api-openapi.yml",
-    "budibase-users-api-openapi.yml"
+    "budibase-users-api-openapi.yml",
+    "budibase-views-api-openapi.yml",
+    "budibase-workspaces-api-openapi.yml"
   ],
   "outputs": [
     "budibase-applications-api-openapi.yml",
     "budibase-queries-api-openapi.yml",
     "budibase-rows-api-openapi.yml",
     "budibase-tables-api-openapi.yml",
-    "budibase-users-api-openapi.yml"
+    "budibase-users-api-openapi.yml",
+    "budibase-metrics-api-openapi.yml",
+    "budibase-roles-api-openapi.yml",
+    "budibase-views-api-openapi.yml",
+    "budibase-workspaces-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
-  "warnings": [],
+  "warnings": [
+    "budibase-applications-api-openapi.yml: previously refined output kept for 8 operation(s) no archived document covers (e.g. /applications/search post, /applications/{appId} delete, /applications/{appId} get); its other 9 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "budibase-metrics-api-openapi.yml: previously refined output kept for 1 operation(s) no archived document covers (e.g. /metrics get); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "budibase-queries-api-openapi.yml: previously refined output kept for 2 operation(s) no archived document covers (e.g. /queries/search post, /queries/{queryId} post); its other 2 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "budibase-roles-api-openapi.yml: previously refined output kept for 2 operation(s) no archived document covers (e.g. /roles/assign post, /roles/unassign post); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "budibase-rows-api-openapi.yml: previously refined output kept for 6 operation(s) no archived document covers (e.g. /tables/{tableId}/rows post, /tables/{tableId}/rows/search post, /tables/{tableId}/rows/{rowId} delete); its other 5 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "budibase-tables-api-openapi.yml: previously refined output kept for 4 operation(s) no archived document covers (e.g. /tables/search post, /tables/{tableId} delete, /tables/{tableId} get); its other 5 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "budibase-users-api-openapi.yml: previously refined output kept for 4 operation(s) no archived document covers (e.g. /users/search post, /users/{userId} delete, /users/{userId} get); its other 5 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "budibase-views-api-openapi.yml: previously refined output kept for 5 operation(s) no archived document covers (e.g. /views post, /views/search post, /views/{viewId} delete); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "budibase-workspaces-api-openapi.yml: previously refined output kept for 9 operation(s) no archived document covers (e.g. /workspaces post, /workspaces/search post, /workspaces/{workspaceId} delete); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth."
+  ],
   "notes": [
-    "budibase-applications-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "budibase-queries-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "budibase-rows-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "budibase-tables-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "budibase-users-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "budibase-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tag 'Applications' spans 2 source specs (budibase-openapi.yml, budibase-applications-api-openapi.yml): per-path servers applied",
+    "tag 'Queries' spans 2 source specs (budibase-openapi.yml, budibase-queries-api-openapi.yml): per-path servers applied",
+    "tag 'Rows' spans 2 source specs (budibase-openapi.yml, budibase-rows-api-openapi.yml): per-path servers applied",
+    "tag 'Tables' spans 2 source specs (budibase-openapi.yml, budibase-tables-api-openapi.yml): per-path servers applied",
+    "tag 'Users' spans 2 source specs (budibase-openapi.yml, budibase-users-api-openapi.yml): per-path servers applied",
     "apis.yml register: already-registered"
   ],
   "skipped": []

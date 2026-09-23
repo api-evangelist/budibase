@@ -1,0 +1,399 @@
+openapi: 3.2.0
+info:
+  title: Budibase Workspaces API
+  description: The public API for Budibase apps and its services.
+  version: 3.3.0
+servers:
+- url: https://budibase.app/api/public/v1
+  description: Budibase Cloud API
+  variables:
+    apiKey:
+      default: <user API key>
+      description: The API key of the user to assume for API call.
+    appId:
+      default: <App ID>
+      description: The ID of the app the calls will be executed within the context of, this should start with app_ (production) or app_dev (development).
+security:
+- ApiKeyAuth: []
+tags:
+- name: Workspaces
+paths:
+  /workspaces:
+    post:
+      operationId: workspaceCreate
+      summary: Create a workspace
+      tags:
+      - Workspaces
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/workspace'
+      responses:
+        '200':
+          description: Returns the created workspace.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/workspaceOutput'
+              examples:
+                workspace:
+                  $ref: '#/components/examples/workspace'
+  /workspaces/{workspaceId}:
+    put:
+      operationId: workspaceUpdate
+      summary: Update a workspace
+      tags:
+      - Workspaces
+      parameters:
+      - $ref: '#/components/parameters/workspaceId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/workspace'
+      responses:
+        '200':
+          description: Returns the updated workspace.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/workspaceOutput'
+              examples:
+                workspace:
+                  $ref: '#/components/examples/workspace'
+    delete:
+      operationId: workspaceDestroy
+      summary: Delete a workspace
+      tags:
+      - Workspaces
+      parameters:
+      - $ref: '#/components/parameters/workspaceId'
+      responses:
+        '200':
+          description: Returns the deleted workspace.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/workspaceOutput'
+              examples:
+                workspace:
+                  $ref: '#/components/examples/workspace'
+    get:
+      operationId: workspaceGetById
+      summary: Retrieve a workspace
+      tags:
+      - Workspaces
+      parameters:
+      - $ref: '#/components/parameters/workspaceId'
+      responses:
+        '200':
+          description: Returns the retrieved workspace.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/workspaceOutput'
+              examples:
+                workspace:
+                  $ref: '#/components/examples/workspace'
+  /workspaces/{workspaceId}/publish:
+    post:
+      operationId: workspacePublish
+      summary: Publish a workspace
+      tags:
+      - Workspaces
+      parameters:
+      - $ref: '#/components/parameters/workspaceId'
+      responses:
+        '200':
+          description: Returns the deployment object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deploymentOutput'
+              examples:
+                deployment:
+                  $ref: '#/components/examples/deploymentOutput'
+  /workspaces/{workspaceId}/unpublish:
+    post:
+      operationId: workspaceUnpublish
+      summary: Unpublish a workspace
+      tags:
+      - Workspaces
+      parameters:
+      - $ref: '#/components/parameters/workspaceId'
+      responses:
+        '204':
+          description: The workspace was published successfully.
+  /workspaces/{workspaceId}/import:
+    post:
+      operationId: workspaceImport
+      summary: Import a workspace to an existing workspace 🔒
+      description: This endpoint is only available on an enterprise license.
+      tags:
+      - Workspaces
+      parameters:
+      - $ref: '#/components/parameters/workspaceId'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                encryptedPassword:
+                  description: Password for the file if it is encrypted.
+                  type: string
+                file:
+                  description: The export to import.
+                  type: string
+                  format: binary
+              required:
+              - file
+      responses:
+        '204':
+          description: Workspace has been updated.
+  /workspaces/{workspaceId}/export:
+    post:
+      operationId: workspaceExport
+      summary: Export a workspace 🔒
+      description: This endpoint is only available on an enterprise license.
+      tags:
+      - Workspaces
+      parameters:
+      - $ref: '#/components/parameters/workspaceId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/workspaceExport'
+      responses:
+        '200':
+          description: A gzip tarball containing the workspace export, encrypted if password provided.
+          content:
+            application/gzip:
+              schema:
+                type: string
+                format: binary
+                example: Tarball containing database and object store contents...
+  /workspaces/search:
+    post:
+      operationId: workspaceSearch
+      summary: Search for workspaces
+      description: Based on workspace properties (currently only name) search for workspaces.
+      tags:
+      - Workspaces
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/nameSearch'
+      responses:
+        '200':
+          description: Returns the workspaces that were found based on the search parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/workspaceSearch'
+              examples:
+                workspaces:
+                  $ref: '#/components/examples/workspaces'
+components:
+  schemas:
+    workspace:
+      type: object
+      properties:
+        name:
+          description: The name of the app.
+          type: string
+        url:
+          description: The URL by which the app is accessed, this must be URL encoded.
+          type: string
+      required:
+      - name
+    workspaceExport:
+      type: object
+      properties:
+        encryptPassword:
+          description: An optional password used to encrypt the export.
+          type: string
+        excludeRows:
+          description: Set whether the internal table rows should be excluded from the export.
+          type: boolean
+      required:
+      - encryptPassword
+      - excludeRows
+    workspaceSearch:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                description: The name of the app.
+                type: string
+              url:
+                description: The URL by which the app is accessed, this must be URL encoded.
+                type: string
+              _id:
+                description: The ID of the app.
+                type: string
+              status:
+                description: The status of the app, stating it if is the development or published version.
+                type: string
+                enum:
+                - development
+                - published
+              createdAt:
+                description: States when the app was created, will be constant. Stored in ISO format.
+                type: string
+              updatedAt:
+                description: States the last time the app was updated - stored in ISO format.
+                type: string
+              version:
+                description: States the version of the Budibase client this app is currently based on.
+                type: string
+              tenantId:
+                description: In a multi-tenant environment this will state the tenant this app is within.
+                type: string
+              lockedBy:
+                description: The user this app is currently being built by.
+                type: object
+            required:
+            - _id
+            - name
+            - url
+            - status
+            - createdAt
+            - updatedAt
+            - version
+      required:
+      - data
+    nameSearch:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name to be used when searching - this will be used in a case insensitive starts with match.
+      required:
+      - name
+    deploymentOutput:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            _id:
+              description: The ID of the app.
+              type: string
+            status:
+              description: Status of the deployment, whether it succeeded or failed
+              type: string
+              enum:
+              - SUCCESS
+              - FAILURE
+            appUrl:
+              description: The URL of the published app
+              type: string
+          required:
+          - _id
+          - status
+          - appUrl
+      required:
+      - data
+    workspaceOutput:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            name:
+              description: The name of the app.
+              type: string
+            url:
+              description: The URL by which the app is accessed, this must be URL encoded.
+              type: string
+            _id:
+              description: The ID of the app.
+              type: string
+            status:
+              description: The status of the app, stating it if is the development or published version.
+              type: string
+              enum:
+              - development
+              - published
+            createdAt:
+              description: States when the app was created, will be constant. Stored in ISO format.
+              type: string
+            updatedAt:
+              description: States the last time the app was updated - stored in ISO format.
+              type: string
+            version:
+              description: States the version of the Budibase client this app is currently based on.
+              type: string
+            tenantId:
+              description: In a multi-tenant environment this will state the tenant this app is within.
+              type: string
+            lockedBy:
+              description: The user this app is currently being built by.
+              type: object
+          required:
+          - _id
+          - name
+          - url
+          - status
+          - createdAt
+          - updatedAt
+          - version
+      required:
+      - data
+  parameters:
+    workspaceId:
+      in: path
+      name: workspaceId
+      required: true
+      description: The ID of the workspace which this request is targeting.
+      schema:
+        default: '{{workspaceId}}'
+        type: string
+  examples:
+    workspaces:
+      value:
+        data:
+        - _id: app_metadata
+          appId: app_dev_957b12f943d348faa61db7e18e088d0f
+          version: 1.0.58-alpha.0
+          name: App name
+          url: /url
+          tenantId: default
+          updatedAt: 2022-02-22 13:00:54.035000+00:00
+          createdAt: 2022-02-11 18:02:26.961000+00:00
+          status: development
+    deploymentOutput:
+      value:
+        data:
+          _id: ef12381f934b4f129675cdbb76eff3c2
+          status: SUCCESS
+          appUrl: /app-url
+    workspace:
+      value:
+        data:
+          _id: app_metadata
+          appId: app_dev_957b12f943d348faa61db7e18e088d0f
+          version: 1.0.58-alpha.0
+          name: App name
+          url: /url
+          tenantId: default
+          updatedAt: 2022-02-22 13:00:54.035000+00:00
+          createdAt: 2022-02-11 18:02:26.961000+00:00
+          status: development
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-budibase-api-key
+      description: Your individual API key, this will provide access based on the configured RBAC settings of your user.

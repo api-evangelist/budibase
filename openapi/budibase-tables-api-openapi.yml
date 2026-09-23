@@ -1,25 +1,8 @@
 openapi: 3.2.0
 info:
-  title: Budibase Public Applications Tables API
-  description: 'The Budibase Public API provides programmatic access to Budibase applications, tables,
-
-    rows, users, and queries. Authentication is via an API key in the `x-budibase-api-key`
-
-    header generated from the Budibase portal user dropdown menu.
-
-
-    Data endpoints (tables and rows) additionally require the `x-budibase-app-id` header
-
-    identifying the target application.
-
-    '
+  title: Budibase Tables API
   version: '1.0'
-  contact:
-    name: Budibase
-    url: https://docs.budibase.com/docs/public-api
-  license:
-    name: GPL-3.0
-    url: https://github.com/Budibase/budibase/blob/master/LICENSE
+  description: 'Operations tagged Tables across 2 of this provider''s published API definitions: budibase-openapi.yml, budibase-tables-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://budibase.app/api/public/v1
   description: Budibase Cloud Public API
@@ -29,8 +12,6 @@ servers:
     selfhosted:
       default: budibase.example.com
       description: Hostname of the self-hosted Budibase instance
-security:
-- apiKeyAuth: []
 tags:
 - name: Tables
   description: Manage data tables inside an application.
@@ -59,6 +40,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/TableOutput'
+      security:
+      - apiKeyAuth: []
     post:
       tags:
       - Tables
@@ -77,6 +60,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TableOutput'
+      security:
+      - apiKeyAuth: []
+    servers:
+    - url: https://budibase.app/api/public/v1
+      description: Budibase Cloud Public API
+    - url: https://{selfhosted}/api/public/v1
+      description: Self-hosted Budibase
+      variables:
+        selfhosted:
+          default: budibase.example.com
+          description: Hostname of the self-hosted Budibase instance
   /tables/{id}:
     parameters:
     - $ref: '#/components/parameters/IdPath'
@@ -92,6 +86,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TableOutput'
+      security:
+      - apiKeyAuth: []
     put:
       tags:
       - Tables
@@ -110,6 +106,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TableOutput'
+      security:
+      - apiKeyAuth: []
     delete:
       tags:
       - Tables
@@ -122,30 +120,152 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TableOutput'
+      security:
+      - apiKeyAuth: []
+    servers:
+    - url: https://budibase.app/api/public/v1
+      description: Budibase Cloud Public API
+    - url: https://{selfhosted}/api/public/v1
+      description: Self-hosted Budibase
+      variables:
+        selfhosted:
+          default: budibase.example.com
+          description: Hostname of the self-hosted Budibase instance
+  /tables/{tableId}:
+    servers:
+    - url: https://budibase.app/api/public/v1
+      description: Budibase Cloud API
+      variables:
+        apiKey:
+          default: <user API key>
+          description: The API key of the user to assume for API call.
+        appId:
+          default: <App ID>
+          description: The ID of the app the calls will be executed within the context of, this should start with app_ (production) or app_dev (development).
+    put:
+      operationId: tableUpdate
+      summary: Update a table
+      description: Update a table, this could be internal or external.
+      tags:
+      - Tables
+      parameters:
+      - $ref: '#/components/parameters/tableId'
+      - $ref: '#/components/parameters/appId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/table'
+            examples:
+              table:
+                $ref: '#/components/examples/table'
+      responses:
+        '200':
+          description: Returns the updated table.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tableOutput'
+              examples:
+                table:
+                  $ref: '#/components/examples/table'
+      security:
+      - ApiKeyAuth: []
+    delete:
+      operationId: tableDestroy
+      summary: Delete a table
+      description: Delete a table, this could be internal or external.
+      tags:
+      - Tables
+      parameters:
+      - $ref: '#/components/parameters/tableId'
+      - $ref: '#/components/parameters/appId'
+      responses:
+        '200':
+          description: Returns the deleted table.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tableOutput'
+              examples:
+                table:
+                  $ref: '#/components/examples/table'
+      security:
+      - ApiKeyAuth: []
+    get:
+      operationId: tableGetById
+      summary: Retrieve a table
+      description: Lookup a table, this could be internal or external.
+      tags:
+      - Tables
+      parameters:
+      - $ref: '#/components/parameters/tableId'
+      - $ref: '#/components/parameters/appId'
+      responses:
+        '200':
+          description: Returns the retrieved table.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tableOutput'
+              examples:
+                table:
+                  $ref: '#/components/examples/table'
+      security:
+      - ApiKeyAuth: []
+  /tables/search:
+    servers:
+    - url: https://budibase.app/api/public/v1
+      description: Budibase Cloud API
+      variables:
+        apiKey:
+          default: <user API key>
+          description: The API key of the user to assume for API call.
+        appId:
+          default: <App ID>
+          description: The ID of the app the calls will be executed within the context of, this should start with app_ (production) or app_dev (development).
+    post:
+      operationId: tableSearch
+      summary: Search for tables
+      description: Based on table properties (currently only name) search for tables. This could be an internal or an external table.
+      tags:
+      - Tables
+      parameters:
+      - $ref: '#/components/parameters/appId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/nameSearch'
+      responses:
+        '200':
+          description: Returns the found tables, based on the search parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tableSearch'
+              examples:
+                tables:
+                  $ref: '#/components/examples/tables'
+      security:
+      - ApiKeyAuth: []
 components:
   schemas:
-    NameSearch:
+    TableInput:
       type: object
+      required:
+      - name
+      - schema
       properties:
         name:
           type: string
-        paginate:
-          type: boolean
-        bookmark:
+        primaryDisplay:
           type: string
-        sort:
+        schema:
           type: object
-          properties:
-            order:
-              type: string
-              enum:
-              - ascending
-              - descending
-            type:
-              type: string
-              enum:
-              - string
-              - number
+          additionalProperties:
+            $ref: '#/components/schemas/Column'
     Column:
       type: object
       properties:
@@ -179,20 +299,575 @@ components:
             type: string
             format: date-time
       - $ref: '#/components/schemas/TableInput'
-    TableInput:
+    NameSearch:
+      type: object
+      properties:
+        name:
+          type: string
+        paginate:
+          type: boolean
+        bookmark:
+          type: string
+        sort:
+          type: object
+          properties:
+            order:
+              type: string
+              enum:
+              - ascending
+              - descending
+            type:
+              type: string
+              enum:
+              - string
+              - number
+    tableOutput:
+      type: object
+      properties:
+        data:
+          description: The table to be created/updated.
+          type: object
+          required:
+          - name
+          - schema
+          - _id
+          properties:
+            name:
+              description: The name of the table.
+              type: string
+            primaryDisplay:
+              type: string
+              description: The name of the column which should be used in relationship tags when relating to this table.
+            schema:
+              type: object
+              additionalProperties:
+                oneOf:
+                - type: object
+                  properties:
+                    type:
+                      type: string
+                      enum:
+                      - link
+                      description: A relationship column.
+                    constraints:
+                      type: object
+                      description: A constraint can be applied to the column which will be validated against when a row is saved.
+                      properties:
+                        type:
+                          type: string
+                        presence:
+                          oneOf:
+                          - type: boolean
+                            description: Defines whether the column is required or not.
+                          - type: object
+                            description: Defines whether the column is required or not.
+                            properties:
+                              allowEmpty:
+                                type: boolean
+                                description: Defines whether the value is allowed to be empty or not.
+                        inclusion:
+                          type: array
+                          description: Defines the valid values for this column.
+                    name:
+                      type: string
+                      description: The name of the column.
+                    autocolumn:
+                      type: boolean
+                      description: Defines whether the column is automatically generated.
+                    width:
+                      type: number
+                      description: Defines the width of the column in the data UI.
+                    fieldName:
+                      type: string
+                      description: The name of the column which a relationship column is related to in another table.
+                    tableId:
+                      type: string
+                      description: The ID of the table which a relationship column is related to.
+                    relationshipType:
+                      type: string
+                      enum:
+                      - one-to-many
+                      - many-to-one
+                      - many-to-many
+                      description: Defines the type of relationship that this column will be used for.
+                    through:
+                      type: string
+                      description: When using a SQL table that contains many to many relationships this defines the table the relationships are linked through.
+                    foreignKey:
+                      type: string
+                      description: When using a SQL table that contains a one to many relationship this defines the foreign key.
+                    throughFrom:
+                      type: string
+                      description: When using a SQL table that utilises a through table, this defines the primary key in the through table for this table.
+                    throughTo:
+                      type: string
+                      description: When using a SQL table that utilises a through table, this defines the primary key in the through table for the related table.
+                - type: object
+                  properties:
+                    type:
+                      type: string
+                      enum:
+                      - formula
+                      description: A formula column.
+                    constraints:
+                      type: object
+                      description: A constraint can be applied to the column which will be validated against when a row is saved.
+                      properties:
+                        type:
+                          type: string
+                        presence:
+                          oneOf:
+                          - type: boolean
+                            description: Defines whether the column is required or not.
+                          - type: object
+                            description: Defines whether the column is required or not.
+                            properties:
+                              allowEmpty:
+                                type: boolean
+                                description: Defines whether the value is allowed to be empty or not.
+                        inclusion:
+                          type: array
+                          description: Defines the valid values for this column.
+                    name:
+                      type: string
+                      description: The name of the column.
+                    autocolumn:
+                      type: boolean
+                      description: Defines whether the column is automatically generated.
+                    width:
+                      type: number
+                      description: Defines the width of the column in the data UI.
+                    formula:
+                      type: string
+                      description: Defines a Handlebars or JavaScript formula to use, note that Javascript formulas are expected to be provided in the base64 format.
+                    formulaType:
+                      type: string
+                      enum:
+                      - static
+                      - dynamic
+                      description: Defines whether this is a static or dynamic formula.
+                - type: object
+                  properties:
+                    type:
+                      type: string
+                      enum:
+                      - string
+                      - longform
+                      - options
+                      - number
+                      - boolean
+                      - array
+                      - datetime
+                      - attachment
+                      - attachment_single
+                      - auto
+                      - ai
+                      - json
+                      - internal
+                      - barcodeqr
+                      - signature_single
+                      - bigint
+                      - bb_reference
+                      - bb_reference_single
+                      description: Defines the type of the column, most explain themselves, a link column is a relationship.
+                    constraints:
+                      type: object
+                      description: A constraint can be applied to the column which will be validated against when a row is saved.
+                      properties:
+                        type:
+                          type: string
+                        presence:
+                          oneOf:
+                          - type: boolean
+                            description: Defines whether the column is required or not.
+                          - type: object
+                            description: Defines whether the column is required or not.
+                            properties:
+                              allowEmpty:
+                                type: boolean
+                                description: Defines whether the value is allowed to be empty or not.
+                        inclusion:
+                          type: array
+                          description: Defines the valid values for this column.
+                    name:
+                      type: string
+                      description: The name of the column.
+                    autocolumn:
+                      type: boolean
+                      description: Defines whether the column is automatically generated.
+                    width:
+                      type: number
+                      description: Defines the width of the column in the data UI.
+            _id:
+              description: The ID of the table.
+              type: string
+      required:
+      - data
+    table:
+      description: The table to be created/updated.
       type: object
       required:
       - name
       - schema
       properties:
         name:
+          description: The name of the table.
           type: string
         primaryDisplay:
           type: string
+          description: The name of the column which should be used in relationship tags when relating to this table.
         schema:
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/Column'
+            oneOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - link
+                  description: A relationship column.
+                constraints:
+                  type: object
+                  description: A constraint can be applied to the column which will be validated against when a row is saved.
+                  properties:
+                    type:
+                      type: string
+                    presence:
+                      oneOf:
+                      - type: boolean
+                        description: Defines whether the column is required or not.
+                      - type: object
+                        description: Defines whether the column is required or not.
+                        properties:
+                          allowEmpty:
+                            type: boolean
+                            description: Defines whether the value is allowed to be empty or not.
+                    inclusion:
+                      type: array
+                      description: Defines the valid values for this column.
+                name:
+                  type: string
+                  description: The name of the column.
+                autocolumn:
+                  type: boolean
+                  description: Defines whether the column is automatically generated.
+                width:
+                  type: number
+                  description: Defines the width of the column in the data UI.
+                fieldName:
+                  type: string
+                  description: The name of the column which a relationship column is related to in another table.
+                tableId:
+                  type: string
+                  description: The ID of the table which a relationship column is related to.
+                relationshipType:
+                  type: string
+                  enum:
+                  - one-to-many
+                  - many-to-one
+                  - many-to-many
+                  description: Defines the type of relationship that this column will be used for.
+                through:
+                  type: string
+                  description: When using a SQL table that contains many to many relationships this defines the table the relationships are linked through.
+                foreignKey:
+                  type: string
+                  description: When using a SQL table that contains a one to many relationship this defines the foreign key.
+                throughFrom:
+                  type: string
+                  description: When using a SQL table that utilises a through table, this defines the primary key in the through table for this table.
+                throughTo:
+                  type: string
+                  description: When using a SQL table that utilises a through table, this defines the primary key in the through table for the related table.
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - formula
+                  description: A formula column.
+                constraints:
+                  type: object
+                  description: A constraint can be applied to the column which will be validated against when a row is saved.
+                  properties:
+                    type:
+                      type: string
+                    presence:
+                      oneOf:
+                      - type: boolean
+                        description: Defines whether the column is required or not.
+                      - type: object
+                        description: Defines whether the column is required or not.
+                        properties:
+                          allowEmpty:
+                            type: boolean
+                            description: Defines whether the value is allowed to be empty or not.
+                    inclusion:
+                      type: array
+                      description: Defines the valid values for this column.
+                name:
+                  type: string
+                  description: The name of the column.
+                autocolumn:
+                  type: boolean
+                  description: Defines whether the column is automatically generated.
+                width:
+                  type: number
+                  description: Defines the width of the column in the data UI.
+                formula:
+                  type: string
+                  description: Defines a Handlebars or JavaScript formula to use, note that Javascript formulas are expected to be provided in the base64 format.
+                formulaType:
+                  type: string
+                  enum:
+                  - static
+                  - dynamic
+                  description: Defines whether this is a static or dynamic formula.
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - string
+                  - longform
+                  - options
+                  - number
+                  - boolean
+                  - array
+                  - datetime
+                  - attachment
+                  - attachment_single
+                  - auto
+                  - ai
+                  - json
+                  - internal
+                  - barcodeqr
+                  - signature_single
+                  - bigint
+                  - bb_reference
+                  - bb_reference_single
+                  description: Defines the type of the column, most explain themselves, a link column is a relationship.
+                constraints:
+                  type: object
+                  description: A constraint can be applied to the column which will be validated against when a row is saved.
+                  properties:
+                    type:
+                      type: string
+                    presence:
+                      oneOf:
+                      - type: boolean
+                        description: Defines whether the column is required or not.
+                      - type: object
+                        description: Defines whether the column is required or not.
+                        properties:
+                          allowEmpty:
+                            type: boolean
+                            description: Defines whether the value is allowed to be empty or not.
+                    inclusion:
+                      type: array
+                      description: Defines the valid values for this column.
+                name:
+                  type: string
+                  description: The name of the column.
+                autocolumn:
+                  type: boolean
+                  description: Defines whether the column is automatically generated.
+                width:
+                  type: number
+                  description: Defines the width of the column in the data UI.
+    tableSearch:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            description: The table to be created/updated.
+            type: object
+            required:
+            - name
+            - schema
+            - _id
+            properties:
+              name:
+                description: The name of the table.
+                type: string
+              primaryDisplay:
+                type: string
+                description: The name of the column which should be used in relationship tags when relating to this table.
+              schema:
+                type: object
+                additionalProperties:
+                  oneOf:
+                  - type: object
+                    properties:
+                      type:
+                        type: string
+                        enum:
+                        - link
+                        description: A relationship column.
+                      constraints:
+                        type: object
+                        description: A constraint can be applied to the column which will be validated against when a row is saved.
+                        properties:
+                          type:
+                            type: string
+                          presence:
+                            oneOf:
+                            - type: boolean
+                              description: Defines whether the column is required or not.
+                            - type: object
+                              description: Defines whether the column is required or not.
+                              properties:
+                                allowEmpty:
+                                  type: boolean
+                                  description: Defines whether the value is allowed to be empty or not.
+                          inclusion:
+                            type: array
+                            description: Defines the valid values for this column.
+                      name:
+                        type: string
+                        description: The name of the column.
+                      autocolumn:
+                        type: boolean
+                        description: Defines whether the column is automatically generated.
+                      width:
+                        type: number
+                        description: Defines the width of the column in the data UI.
+                      fieldName:
+                        type: string
+                        description: The name of the column which a relationship column is related to in another table.
+                      tableId:
+                        type: string
+                        description: The ID of the table which a relationship column is related to.
+                      relationshipType:
+                        type: string
+                        enum:
+                        - one-to-many
+                        - many-to-one
+                        - many-to-many
+                        description: Defines the type of relationship that this column will be used for.
+                      through:
+                        type: string
+                        description: When using a SQL table that contains many to many relationships this defines the table the relationships are linked through.
+                      foreignKey:
+                        type: string
+                        description: When using a SQL table that contains a one to many relationship this defines the foreign key.
+                      throughFrom:
+                        type: string
+                        description: When using a SQL table that utilises a through table, this defines the primary key in the through table for this table.
+                      throughTo:
+                        type: string
+                        description: When using a SQL table that utilises a through table, this defines the primary key in the through table for the related table.
+                  - type: object
+                    properties:
+                      type:
+                        type: string
+                        enum:
+                        - formula
+                        description: A formula column.
+                      constraints:
+                        type: object
+                        description: A constraint can be applied to the column which will be validated against when a row is saved.
+                        properties:
+                          type:
+                            type: string
+                          presence:
+                            oneOf:
+                            - type: boolean
+                              description: Defines whether the column is required or not.
+                            - type: object
+                              description: Defines whether the column is required or not.
+                              properties:
+                                allowEmpty:
+                                  type: boolean
+                                  description: Defines whether the value is allowed to be empty or not.
+                          inclusion:
+                            type: array
+                            description: Defines the valid values for this column.
+                      name:
+                        type: string
+                        description: The name of the column.
+                      autocolumn:
+                        type: boolean
+                        description: Defines whether the column is automatically generated.
+                      width:
+                        type: number
+                        description: Defines the width of the column in the data UI.
+                      formula:
+                        type: string
+                        description: Defines a Handlebars or JavaScript formula to use, note that Javascript formulas are expected to be provided in the base64 format.
+                      formulaType:
+                        type: string
+                        enum:
+                        - static
+                        - dynamic
+                        description: Defines whether this is a static or dynamic formula.
+                  - type: object
+                    properties:
+                      type:
+                        type: string
+                        enum:
+                        - string
+                        - longform
+                        - options
+                        - number
+                        - boolean
+                        - array
+                        - datetime
+                        - attachment
+                        - attachment_single
+                        - auto
+                        - ai
+                        - json
+                        - internal
+                        - barcodeqr
+                        - signature_single
+                        - bigint
+                        - bb_reference
+                        - bb_reference_single
+                        description: Defines the type of the column, most explain themselves, a link column is a relationship.
+                      constraints:
+                        type: object
+                        description: A constraint can be applied to the column which will be validated against when a row is saved.
+                        properties:
+                          type:
+                            type: string
+                          presence:
+                            oneOf:
+                            - type: boolean
+                              description: Defines whether the column is required or not.
+                            - type: object
+                              description: Defines whether the column is required or not.
+                              properties:
+                                allowEmpty:
+                                  type: boolean
+                                  description: Defines whether the value is allowed to be empty or not.
+                          inclusion:
+                            type: array
+                            description: Defines the valid values for this column.
+                      name:
+                        type: string
+                        description: The name of the column.
+                      autocolumn:
+                        type: boolean
+                        description: Defines whether the column is automatically generated.
+                      width:
+                        type: number
+                        description: Defines the width of the column in the data UI.
+              _id:
+                description: The ID of the table.
+                type: string
+      required:
+      - data
+    nameSearch:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name to be used when searching - this will be used in a case insensitive starts with match.
+      required:
+      - name
   parameters:
     IdPath:
       name: id
@@ -200,9 +875,69 @@ components:
       required: true
       schema:
         type: string
+    tableId:
+      in: path
+      name: tableId
+      required: true
+      description: The ID of the table which this request is targeting.
+      schema:
+        type: string
+    appId:
+      in: header
+      name: x-budibase-app-id
+      required: true
+      description: The ID of the app which this request is targeting.
+      schema:
+        default: '{{appId}}'
+        type: string
+  examples:
+    table:
+      value:
+        data:
+          _id: ta_5b1649e42a5b41dea4ef7742a36a7a70
+          name: People
+          schema:
+            name:
+              type: string
+              name: name
+            age:
+              type: number
+              name: age
+            relationship:
+              type: link
+              name: relationship
+              tableId: ta_...
+              fieldName: relatedColumn
+              relationshipType: many-to-many
+    tables:
+      value:
+        data:
+        - _id: ta_5b1649e42a5b41dea4ef7742a36a7a70
+          name: People
+          schema:
+            name:
+              type: string
+              name: name
+            age:
+              type: number
+              name: age
+            relationship:
+              type: link
+              name: relationship
+              tableId: ta_...
+              fieldName: relatedColumn
+              relationshipType: many-to-many
   securitySchemes:
     apiKeyAuth:
       type: apiKey
       in: header
       name: x-budibase-api-key
       description: API key generated from the Budibase portal user dropdown menu.
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-budibase-api-key
+      description: Your individual API key, this will provide access based on the configured RBAC settings of your user.
+x-refined-from:
+- budibase-openapi.yml
+- budibase-tables-api-openapi.yml

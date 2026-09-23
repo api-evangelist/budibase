@@ -1,25 +1,8 @@
 openapi: 3.2.0
 info:
-  title: Budibase Public Applications API
-  description: 'The Budibase Public API provides programmatic access to Budibase applications, tables,
-
-    rows, users, and queries. Authentication is via an API key in the `x-budibase-api-key`
-
-    header generated from the Budibase portal user dropdown menu.
-
-
-    Data endpoints (tables and rows) additionally require the `x-budibase-app-id` header
-
-    identifying the target application.
-
-    '
+  title: Budibase Applications API
   version: '1.0'
-  contact:
-    name: Budibase
-    url: https://docs.budibase.com/docs/public-api
-  license:
-    name: GPL-3.0
-    url: https://github.com/Budibase/budibase/blob/master/LICENSE
+  description: 'Operations tagged Applications across 2 of this provider''s published API definitions: budibase-openapi.yml, budibase-applications-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://budibase.app/api/public/v1
   description: Budibase Cloud Public API
@@ -29,8 +12,6 @@ servers:
     selfhosted:
       default: budibase.example.com
       description: Hostname of the self-hosted Budibase instance
-security:
-- apiKeyAuth: []
 tags:
 - name: Applications
   description: Manage Budibase applications.
@@ -54,6 +35,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApplicationSearch'
+      security:
+      - apiKeyAuth: []
     post:
       tags:
       - Applications
@@ -72,6 +55,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApplicationOutput'
+      security:
+      - apiKeyAuth: []
+    servers:
+    - url: https://budibase.app/api/public/v1
+      description: Budibase Cloud Public API
+    - url: https://{selfhosted}/api/public/v1
+      description: Self-hosted Budibase
+      variables:
+        selfhosted:
+          default: budibase.example.com
+          description: Hostname of the self-hosted Budibase instance
   /applications/{id}:
     parameters:
     - $ref: '#/components/parameters/IdPath'
@@ -87,6 +81,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApplicationOutput'
+      security:
+      - apiKeyAuth: []
     put:
       tags:
       - Applications
@@ -105,6 +101,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApplicationOutput'
+      security:
+      - apiKeyAuth: []
     delete:
       tags:
       - Applications
@@ -117,6 +115,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApplicationOutput'
+      security:
+      - apiKeyAuth: []
+    servers:
+    - url: https://budibase.app/api/public/v1
+      description: Budibase Cloud Public API
+    - url: https://{selfhosted}/api/public/v1
+      description: Self-hosted Budibase
+      variables:
+        selfhosted:
+          default: budibase.example.com
+          description: Hostname of the self-hosted Budibase instance
   /applications/{id}/publish:
     parameters:
     - $ref: '#/components/parameters/IdPath'
@@ -137,6 +146,17 @@ paths:
                     type: string
                   appUrl:
                     type: string
+      security:
+      - apiKeyAuth: []
+    servers:
+    - url: https://budibase.app/api/public/v1
+      description: Budibase Cloud Public API
+    - url: https://{selfhosted}/api/public/v1
+      description: Self-hosted Budibase
+      variables:
+        selfhosted:
+          default: budibase.example.com
+          description: Hostname of the self-hosted Budibase instance
   /applications/{id}/unpublish:
     parameters:
     - $ref: '#/components/parameters/IdPath'
@@ -148,6 +168,17 @@ paths:
       responses:
         '204':
           description: Unpublished
+      security:
+      - apiKeyAuth: []
+    servers:
+    - url: https://budibase.app/api/public/v1
+      description: Budibase Cloud Public API
+    - url: https://{selfhosted}/api/public/v1
+      description: Self-hosted Budibase
+      variables:
+        selfhosted:
+          default: budibase.example.com
+          description: Hostname of the self-hosted Budibase instance
   /applications/{id}/export:
     parameters:
     - $ref: '#/components/parameters/IdPath'
@@ -164,6 +195,17 @@ paths:
               schema:
                 type: string
                 format: binary
+      security:
+      - apiKeyAuth: []
+    servers:
+    - url: https://budibase.app/api/public/v1
+      description: Budibase Cloud Public API
+    - url: https://{selfhosted}/api/public/v1
+      description: Self-hosted Budibase
+      variables:
+        selfhosted:
+          default: budibase.example.com
+          description: Hostname of the self-hosted Budibase instance
   /applications/{id}/import:
     parameters:
     - $ref: '#/components/parameters/IdPath'
@@ -185,8 +227,270 @@ paths:
       responses:
         '200':
           description: Import complete
+      security:
+      - apiKeyAuth: []
+    servers:
+    - url: https://budibase.app/api/public/v1
+      description: Budibase Cloud Public API
+    - url: https://{selfhosted}/api/public/v1
+      description: Self-hosted Budibase
+      variables:
+        selfhosted:
+          default: budibase.example.com
+          description: Hostname of the self-hosted Budibase instance
+  /applications/{appId}:
+    servers:
+    - url: https://budibase.app/api/public/v1
+      description: Budibase Cloud API
+      variables:
+        apiKey:
+          default: <user API key>
+          description: The API key of the user to assume for API call.
+        appId:
+          default: <App ID>
+          description: The ID of the app the calls will be executed within the context of, this should start with app_ (production) or app_dev (development).
+    put:
+      deprecated: true
+      operationId: appUpdate
+      summary: Update an application
+      tags:
+      - Applications
+      parameters:
+      - $ref: '#/components/parameters/appIdUrl'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/application'
+      responses:
+        '200':
+          description: Returns the updated application.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationOutput'
+              examples:
+                application:
+                  $ref: '#/components/examples/application'
+      security:
+      - ApiKeyAuth: []
+    delete:
+      deprecated: true
+      operationId: appDestroy
+      summary: Delete an application
+      tags:
+      - Applications
+      parameters:
+      - $ref: '#/components/parameters/appIdUrl'
+      responses:
+        '200':
+          description: Returns the deleted application.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationOutput'
+              examples:
+                application:
+                  $ref: '#/components/examples/application'
+      security:
+      - ApiKeyAuth: []
+    get:
+      deprecated: true
+      operationId: appGetById
+      summary: Retrieve an application
+      tags:
+      - Applications
+      parameters:
+      - $ref: '#/components/parameters/appIdUrl'
+      responses:
+        '200':
+          description: Returns the retrieved application.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationOutput'
+              examples:
+                application:
+                  $ref: '#/components/examples/application'
+      security:
+      - ApiKeyAuth: []
+  /applications/{appId}/unpublish:
+    servers:
+    - url: https://budibase.app/api/public/v1
+      description: Budibase Cloud API
+      variables:
+        apiKey:
+          default: <user API key>
+          description: The API key of the user to assume for API call.
+        appId:
+          default: <App ID>
+          description: The ID of the app the calls will be executed within the context of, this should start with app_ (production) or app_dev (development).
+    post:
+      deprecated: true
+      operationId: appUnpublish
+      summary: Unpublish an application
+      tags:
+      - Applications
+      parameters:
+      - $ref: '#/components/parameters/appIdUrl'
+      responses:
+        '204':
+          description: The app was published successfully.
+      security:
+      - ApiKeyAuth: []
+  /applications/{appId}/publish:
+    servers:
+    - url: https://budibase.app/api/public/v1
+      description: Budibase Cloud API
+      variables:
+        apiKey:
+          default: <user API key>
+          description: The API key of the user to assume for API call.
+        appId:
+          default: <App ID>
+          description: The ID of the app the calls will be executed within the context of, this should start with app_ (production) or app_dev (development).
+    post:
+      deprecated: true
+      operationId: appPublish
+      summary: Publish an application
+      tags:
+      - Applications
+      parameters:
+      - $ref: '#/components/parameters/appIdUrl'
+      responses:
+        '200':
+          description: Returns the deployment object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deploymentOutput'
+              examples:
+                deployment:
+                  $ref: '#/components/examples/deploymentOutput'
+      security:
+      - ApiKeyAuth: []
+  /applications/{appId}/import:
+    servers:
+    - url: https://budibase.app/api/public/v1
+      description: Budibase Cloud API
+      variables:
+        apiKey:
+          default: <user API key>
+          description: The API key of the user to assume for API call.
+        appId:
+          default: <App ID>
+          description: The ID of the app the calls will be executed within the context of, this should start with app_ (production) or app_dev (development).
+    post:
+      deprecated: true
+      operationId: appImport
+      summary: Import an app to an existing app 🔒
+      description: This endpoint is only available on a business or enterprise license.
+      tags:
+      - Applications
+      parameters:
+      - $ref: '#/components/parameters/appIdUrl'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                encryptedPassword:
+                  description: Password for the export if it is encrypted.
+                  type: string
+                appExport:
+                  description: The app export to import.
+                  type: string
+                  format: binary
+              required:
+              - appExport
+      responses:
+        '204':
+          description: Application has been updated.
+      security:
+      - ApiKeyAuth: []
+  /applications/{appId}/export:
+    servers:
+    - url: https://budibase.app/api/public/v1
+      description: Budibase Cloud API
+      variables:
+        apiKey:
+          default: <user API key>
+          description: The API key of the user to assume for API call.
+        appId:
+          default: <App ID>
+          description: The ID of the app the calls will be executed within the context of, this should start with app_ (production) or app_dev (development).
+    post:
+      deprecated: true
+      operationId: appExport
+      summary: Export an app 🔒
+      description: This endpoint is only available on a business or enterprise license.
+      tags:
+      - Applications
+      parameters:
+      - $ref: '#/components/parameters/appIdUrl'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/appExport'
+      responses:
+        '200':
+          description: A gzip tarball containing the app export, encrypted if password provided.
+          content:
+            application/gzip:
+              schema:
+                type: string
+                format: binary
+                example: Tarball containing database and object store contents...
+      security:
+      - ApiKeyAuth: []
+  /applications/search:
+    servers:
+    - url: https://budibase.app/api/public/v1
+      description: Budibase Cloud API
+      variables:
+        apiKey:
+          default: <user API key>
+          description: The API key of the user to assume for API call.
+        appId:
+          default: <App ID>
+          description: The ID of the app the calls will be executed within the context of, this should start with app_ (production) or app_dev (development).
+    post:
+      deprecated: true
+      operationId: appSearch
+      summary: Search for applications
+      description: Based on application properties (currently only name) search for applications.
+      tags:
+      - Applications
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/nameSearch'
+      responses:
+        '200':
+          description: Returns the applications that were found based on the search parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/applicationSearch'
+              examples:
+                applications:
+                  $ref: '#/components/examples/applications'
+      security:
+      - ApiKeyAuth: []
 components:
   schemas:
+    ApplicationSearch:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationOutput'
     ApplicationOutput:
       type: object
       properties:
@@ -204,13 +508,15 @@ components:
         updatedAt:
           type: string
           format: date-time
-    ApplicationSearch:
+    ApplicationCreate:
       type: object
+      required:
+      - name
       properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApplicationOutput'
+        name:
+          type: string
+        url:
+          type: string
     NameSearch:
       type: object
       properties:
@@ -233,15 +539,155 @@ components:
               enum:
               - string
               - number
-    ApplicationCreate:
+    appExport:
       type: object
+      properties:
+        encryptPassword:
+          description: An optional password used to encrypt the export.
+          type: string
+        excludeRows:
+          description: Set whether the internal table rows should be excluded from the export.
+          type: boolean
+      required:
+      - encryptPassword
+      - excludeRows
+    applicationSearch:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                description: The name of the app.
+                type: string
+              url:
+                description: The URL by which the app is accessed, this must be URL encoded.
+                type: string
+              _id:
+                description: The ID of the app.
+                type: string
+              status:
+                description: The status of the app, stating it if is the development or published version.
+                type: string
+                enum:
+                - development
+                - published
+              createdAt:
+                description: States when the app was created, will be constant. Stored in ISO format.
+                type: string
+              updatedAt:
+                description: States the last time the app was updated - stored in ISO format.
+                type: string
+              version:
+                description: States the version of the Budibase client this app is currently based on.
+                type: string
+              tenantId:
+                description: In a multi-tenant environment this will state the tenant this app is within.
+                type: string
+              lockedBy:
+                description: The user this app is currently being built by.
+                type: object
+            required:
+            - _id
+            - name
+            - url
+            - status
+            - createdAt
+            - updatedAt
+            - version
+      required:
+      - data
+    application:
+      type: object
+      properties:
+        name:
+          description: The name of the app.
+          type: string
+        url:
+          description: The URL by which the app is accessed, this must be URL encoded.
+          type: string
       required:
       - name
+    nameSearch:
+      type: object
       properties:
         name:
           type: string
-        url:
-          type: string
+          description: The name to be used when searching - this will be used in a case insensitive starts with match.
+      required:
+      - name
+    deploymentOutput:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            _id:
+              description: The ID of the app.
+              type: string
+            status:
+              description: Status of the deployment, whether it succeeded or failed
+              type: string
+              enum:
+              - SUCCESS
+              - FAILURE
+            appUrl:
+              description: The URL of the published app
+              type: string
+          required:
+          - _id
+          - status
+          - appUrl
+      required:
+      - data
+    applicationOutput:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            name:
+              description: The name of the app.
+              type: string
+            url:
+              description: The URL by which the app is accessed, this must be URL encoded.
+              type: string
+            _id:
+              description: The ID of the app.
+              type: string
+            status:
+              description: The status of the app, stating it if is the development or published version.
+              type: string
+              enum:
+              - development
+              - published
+            createdAt:
+              description: States when the app was created, will be constant. Stored in ISO format.
+              type: string
+            updatedAt:
+              description: States the last time the app was updated - stored in ISO format.
+              type: string
+            version:
+              description: States the version of the Budibase client this app is currently based on.
+              type: string
+            tenantId:
+              description: In a multi-tenant environment this will state the tenant this app is within.
+              type: string
+            lockedBy:
+              description: The user this app is currently being built by.
+              type: object
+          required:
+          - _id
+          - name
+          - url
+          - status
+          - createdAt
+          - updatedAt
+          - version
+      required:
+      - data
   parameters:
     IdPath:
       name: id
@@ -249,9 +695,56 @@ components:
       required: true
       schema:
         type: string
+    appIdUrl:
+      in: path
+      name: appId
+      required: true
+      description: The ID of the app which this request is targeting.
+      schema:
+        default: '{{appId}}'
+        type: string
+  examples:
+    applications:
+      value:
+        data:
+        - _id: app_metadata
+          appId: app_dev_957b12f943d348faa61db7e18e088d0f
+          version: 1.0.58-alpha.0
+          name: App name
+          url: /url
+          tenantId: default
+          updatedAt: 2022-02-22 13:00:54.035000+00:00
+          createdAt: 2022-02-11 18:02:26.961000+00:00
+          status: development
+    deploymentOutput:
+      value:
+        data:
+          _id: ef12381f934b4f129675cdbb76eff3c2
+          status: SUCCESS
+          appUrl: /app-url
+    application:
+      value:
+        data:
+          _id: app_metadata
+          appId: app_dev_957b12f943d348faa61db7e18e088d0f
+          version: 1.0.58-alpha.0
+          name: App name
+          url: /url
+          tenantId: default
+          updatedAt: 2022-02-22 13:00:54.035000+00:00
+          createdAt: 2022-02-11 18:02:26.961000+00:00
+          status: development
   securitySchemes:
     apiKeyAuth:
       type: apiKey
       in: header
       name: x-budibase-api-key
       description: API key generated from the Budibase portal user dropdown menu.
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-budibase-api-key
+      description: Your individual API key, this will provide access based on the configured RBAC settings of your user.
+x-refined-from:
+- budibase-openapi.yml
+- budibase-applications-api-openapi.yml
