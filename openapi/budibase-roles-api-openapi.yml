@@ -60,22 +60,7 @@ paths:
                 $ref: '#/components/schemas/rolesOutput'
 components:
   schemas:
-    rolesOutput:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            userIds:
-              description: The updated users' IDs
-              type: array
-              items:
-                type: string
-          required:
-          - userIds
-      required:
-      - data
-    rolesUnAssign:
+    rolesAssign:
       type: object
       properties:
         appBuilder:
@@ -113,7 +98,22 @@ components:
             type: string
       required:
       - userIds
-    rolesAssign:
+    rolesOutput:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            userIds:
+              description: The updated users' IDs
+              type: array
+              items:
+                type: string
+          required:
+          - userIds
+      required:
+      - data
+    rolesUnAssign:
       type: object
       properties:
         appBuilder:

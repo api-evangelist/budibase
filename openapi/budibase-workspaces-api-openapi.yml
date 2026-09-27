@@ -213,18 +213,60 @@ components:
           type: string
       required:
       - name
-    workspaceExport:
+    nameSearch:
       type: object
       properties:
-        encryptPassword:
-          description: An optional password used to encrypt the export.
+        name:
           type: string
-        excludeRows:
-          description: Set whether the internal table rows should be excluded from the export.
-          type: boolean
+          description: The name to be used when searching - this will be used in a case insensitive starts with match.
       required:
-      - encryptPassword
-      - excludeRows
+      - name
+    workspaceOutput:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            name:
+              description: The name of the app.
+              type: string
+            url:
+              description: The URL by which the app is accessed, this must be URL encoded.
+              type: string
+            _id:
+              description: The ID of the app.
+              type: string
+            status:
+              description: The status of the app, stating it if is the development or published version.
+              type: string
+              enum:
+              - development
+              - published
+            createdAt:
+              description: States when the app was created, will be constant. Stored in ISO format.
+              type: string
+            updatedAt:
+              description: States the last time the app was updated - stored in ISO format.
+              type: string
+            version:
+              description: States the version of the Budibase client this app is currently based on.
+              type: string
+            tenantId:
+              description: In a multi-tenant environment this will state the tenant this app is within.
+              type: string
+            lockedBy:
+              description: The user this app is currently being built by.
+              type: object
+          required:
+          - _id
+          - name
+          - url
+          - status
+          - createdAt
+          - updatedAt
+          - version
+      required:
+      - data
     workspaceSearch:
       type: object
       properties:
@@ -273,14 +315,6 @@ components:
             - version
       required:
       - data
-    nameSearch:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name to be used when searching - this will be used in a case insensitive starts with match.
-      required:
-      - name
     deploymentOutput:
       type: object
       properties:
@@ -305,74 +339,19 @@ components:
           - appUrl
       required:
       - data
-    workspaceOutput:
+    workspaceExport:
       type: object
       properties:
-        data:
-          type: object
-          properties:
-            name:
-              description: The name of the app.
-              type: string
-            url:
-              description: The URL by which the app is accessed, this must be URL encoded.
-              type: string
-            _id:
-              description: The ID of the app.
-              type: string
-            status:
-              description: The status of the app, stating it if is the development or published version.
-              type: string
-              enum:
-              - development
-              - published
-            createdAt:
-              description: States when the app was created, will be constant. Stored in ISO format.
-              type: string
-            updatedAt:
-              description: States the last time the app was updated - stored in ISO format.
-              type: string
-            version:
-              description: States the version of the Budibase client this app is currently based on.
-              type: string
-            tenantId:
-              description: In a multi-tenant environment this will state the tenant this app is within.
-              type: string
-            lockedBy:
-              description: The user this app is currently being built by.
-              type: object
-          required:
-          - _id
-          - name
-          - url
-          - status
-          - createdAt
-          - updatedAt
-          - version
+        encryptPassword:
+          description: An optional password used to encrypt the export.
+          type: string
+        excludeRows:
+          description: Set whether the internal table rows should be excluded from the export.
+          type: boolean
       required:
-      - data
-  parameters:
-    workspaceId:
-      in: path
-      name: workspaceId
-      required: true
-      description: The ID of the workspace which this request is targeting.
-      schema:
-        default: '{{workspaceId}}'
-        type: string
+      - encryptPassword
+      - excludeRows
   examples:
-    workspaces:
-      value:
-        data:
-        - _id: app_metadata
-          appId: app_dev_957b12f943d348faa61db7e18e088d0f
-          version: 1.0.58-alpha.0
-          name: App name
-          url: /url
-          tenantId: default
-          updatedAt: 2022-02-22 13:00:54.035000+00:00
-          createdAt: 2022-02-11 18:02:26.961000+00:00
-          status: development
     deploymentOutput:
       value:
         data:
@@ -391,6 +370,27 @@ components:
           updatedAt: 2022-02-22 13:00:54.035000+00:00
           createdAt: 2022-02-11 18:02:26.961000+00:00
           status: development
+    workspaces:
+      value:
+        data:
+        - _id: app_metadata
+          appId: app_dev_957b12f943d348faa61db7e18e088d0f
+          version: 1.0.58-alpha.0
+          name: App name
+          url: /url
+          tenantId: default
+          updatedAt: 2022-02-22 13:00:54.035000+00:00
+          createdAt: 2022-02-11 18:02:26.961000+00:00
+          status: development
+  parameters:
+    workspaceId:
+      in: path
+      name: workspaceId
+      required: true
+      description: The ID of the workspace which this request is targeting.
+      schema:
+        default: '{{workspaceId}}'
+        type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

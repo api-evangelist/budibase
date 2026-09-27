@@ -137,91 +137,6 @@ paths:
                 views:
                   $ref: '#/components/examples/views'
 components:
-  examples:
-    view:
-      value:
-        data:
-          name: peopleView
-          tableId: ta_896a325f7e8147d2a2cda93c5d236511
-          schema:
-            name:
-              visible: true
-              readonly: false
-              order: 1
-              width: 300
-            age:
-              visible: true
-              readonly: true
-              order: 2
-              width: 200
-            salary:
-              visible: false
-              readonly: false
-          query:
-            logicalOperator: all
-            onEmptyFilter: none
-            groups:
-            - logicalOperator: any
-              filters:
-              - operator: string
-                field: name
-                value: John
-              - operator: range
-                field: age
-                value:
-                  low: 18
-                  high: 100
-          primaryDisplay: name
-    views:
-      value:
-        data:
-        - name: peopleView
-          tableId: ta_896a325f7e8147d2a2cda93c5d236511
-          schema:
-            name:
-              visible: true
-              readonly: false
-              order: 1
-              width: 300
-            age:
-              visible: true
-              readonly: true
-              order: 2
-              width: 200
-            salary:
-              visible: false
-              readonly: false
-          query:
-            logicalOperator: all
-            onEmptyFilter: none
-            groups:
-            - logicalOperator: any
-              filters:
-              - operator: string
-                field: name
-                value: John
-              - operator: range
-                field: age
-                value:
-                  low: 18
-                  high: 100
-          primaryDisplay: name
-  parameters:
-    appId:
-      in: header
-      name: x-budibase-app-id
-      required: true
-      description: The ID of the app which this request is targeting.
-      schema:
-        default: '{{appId}}'
-        type: string
-    viewId:
-      in: path
-      name: viewId
-      required: true
-      description: The ID of the view which this request is targeting.
-      schema:
-        type: string
   schemas:
     viewSearch:
       type: object
@@ -447,6 +362,14 @@ components:
                 type: string
       required:
       - data
+    nameSearch:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name to be used when searching - this will be used in a case insensitive starts with match.
+      required:
+      - name
     view:
       description: The view to be created/updated.
       type: object
@@ -660,14 +583,6 @@ components:
                 distinct:
                   type: boolean
                   description: Can be used in tandem with the count calculation type, to count unique entries.
-    nameSearch:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name to be used when searching - this will be used in a case insensitive starts with match.
-      required:
-      - name
     viewOutput:
       type: object
       properties:
@@ -890,6 +805,91 @@ components:
               type: string
       required:
       - data
+  parameters:
+    viewId:
+      in: path
+      name: viewId
+      required: true
+      description: The ID of the view which this request is targeting.
+      schema:
+        type: string
+    appId:
+      in: header
+      name: x-budibase-app-id
+      required: true
+      description: The ID of the app which this request is targeting.
+      schema:
+        default: '{{appId}}'
+        type: string
+  examples:
+    view:
+      value:
+        data:
+          name: peopleView
+          tableId: ta_896a325f7e8147d2a2cda93c5d236511
+          schema:
+            name:
+              visible: true
+              readonly: false
+              order: 1
+              width: 300
+            age:
+              visible: true
+              readonly: true
+              order: 2
+              width: 200
+            salary:
+              visible: false
+              readonly: false
+          query:
+            logicalOperator: all
+            onEmptyFilter: none
+            groups:
+            - logicalOperator: any
+              filters:
+              - operator: string
+                field: name
+                value: John
+              - operator: range
+                field: age
+                value:
+                  low: 18
+                  high: 100
+          primaryDisplay: name
+    views:
+      value:
+        data:
+        - name: peopleView
+          tableId: ta_896a325f7e8147d2a2cda93c5d236511
+          schema:
+            name:
+              visible: true
+              readonly: false
+              order: 1
+              width: 300
+            age:
+              visible: true
+              readonly: true
+              order: 2
+              width: 200
+            salary:
+              visible: false
+              readonly: false
+          query:
+            logicalOperator: all
+            onEmptyFilter: none
+            groups:
+            - logicalOperator: any
+              filters:
+              - operator: string
+                field: name
+                value: John
+              - operator: range
+                field: age
+                value:
+                  low: 18
+                  high: 100
+          primaryDisplay: name
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

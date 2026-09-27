@@ -336,6 +336,42 @@ paths:
       security:
       - ApiKeyAuth: []
 components:
+  parameters:
+    IdPath:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    tableId:
+      in: path
+      name: tableId
+      required: true
+      description: The ID of the table which this request is targeting.
+      schema:
+        type: string
+    viewId:
+      in: path
+      name: viewId
+      required: true
+      description: The ID of the view which this request is targeting.
+      schema:
+        type: string
+    appId:
+      in: header
+      name: x-budibase-app-id
+      required: true
+      description: The ID of the app which this request is targeting.
+      schema:
+        default: '{{appId}}'
+        type: string
+    rowId:
+      in: path
+      name: rowId
+      required: true
+      description: The ID of the row which this request is targeting.
+      schema:
+        type: string
   schemas:
     Row:
       type: object
@@ -376,6 +412,24 @@ components:
       type: object
       additionalProperties:
         description: Key value properties of any type, depending on the table schema.
+    searchOutput:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          description: An array of rows, these will each contain an _id field which can be used to update or delete them.
+          type: array
+          items:
+            type: object
+        bookmark:
+          description: If pagination in use, this should be provided.
+          oneOf:
+          - type: string
+          - type: integer
+        hasNextPage:
+          description: If pagination in use, this will determine if there is another page to fetch.
+          type: boolean
     rowOutput:
       type: object
       properties:
@@ -396,24 +450,6 @@ components:
           - _id
       required:
       - data
-    searchOutput:
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          description: An array of rows, these will each contain an _id field which can be used to update or delete them.
-          type: array
-          items:
-            type: object
-        bookmark:
-          description: If pagination in use, this should be provided.
-          oneOf:
-          - type: string
-          - type: integer
-        hasNextPage:
-          description: If pagination in use, this will determine if there is another page to fetch.
-          type: boolean
     rowSearch:
       type: object
       properties:
@@ -512,52 +548,20 @@ components:
               description: Defines whether the column should be treated as a string or as numbers when sorting.
       required:
       - query
-  parameters:
-    IdPath:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: string
-    tableId:
-      in: path
-      name: tableId
-      required: true
-      description: The ID of the table which this request is targeting.
-      schema:
-        type: string
-    appId:
-      in: header
-      name: x-budibase-app-id
-      required: true
-      description: The ID of the app which this request is targeting.
-      schema:
-        default: '{{appId}}'
-        type: string
-    viewId:
-      in: path
-      name: viewId
-      required: true
-      description: The ID of the view which this request is targeting.
-      schema:
-        type: string
-    rowId:
-      in: path
-      name: rowId
-      required: true
-      description: The ID of the row which this request is targeting.
-      schema:
-        type: string
   examples:
-    inputRow:
+    rows:
       value:
-        _id: ro_ta_5b1649e42a5b41dea4ef7742a36a7a70_e6dc7e38cf1343b2b56760265201cda4
-        type: row
-        tableId: ta_5b1649e42a5b41dea4ef7742a36a7a70
-        name: Mike
-        age: 30
-        relationship:
-        - ro_ta_...
+        data:
+        - _id: ro_ta_5b1649e42a5b41dea4ef7742a36a7a70_e6dc7e38cf1343b2b56760265201cda4
+          type: row
+          tableId: ta_5b1649e42a5b41dea4ef7742a36a7a70
+          name: Mike
+          age: 30
+          relationship:
+          - primaryDisplay: Joe
+            _id: ro_ta_...
+        hasNextPage: true
+        bookmark: 10
     row:
       value:
         data:
@@ -569,6 +573,15 @@ components:
           relationship:
           - primaryDisplay: Joe
             _id: ro_ta_...
+    inputRow:
+      value:
+        _id: ro_ta_5b1649e42a5b41dea4ef7742a36a7a70_e6dc7e38cf1343b2b56760265201cda4
+        type: row
+        tableId: ta_5b1649e42a5b41dea4ef7742a36a7a70
+        name: Mike
+        age: 30
+        relationship:
+        - ro_ta_...
     enrichedRow:
       value:
         data:
@@ -583,19 +596,6 @@ components:
             internal:
             - _id: ro_ta_5b1649e42a5b41dea4ef7742a36a7a70_e6dc7e38cf1343b2b56760265201cda4
               primaryDisplay: eg
-    rows:
-      value:
-        data:
-        - _id: ro_ta_5b1649e42a5b41dea4ef7742a36a7a70_e6dc7e38cf1343b2b56760265201cda4
-          type: row
-          tableId: ta_5b1649e42a5b41dea4ef7742a36a7a70
-          name: Mike
-          age: 30
-          relationship:
-          - primaryDisplay: Joe
-            _id: ro_ta_...
-        hasNextPage: true
-        bookmark: 10
   securitySchemes:
     apiKeyAuth:
       type: apiKey

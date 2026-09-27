@@ -10,6 +10,10 @@ description: >-
 type: Index
 deliveryModel:
   model: unknown
+  license_evidence:
+    repo: budibase/budibase
+    spdx: NOASSERTION
+    stars: 28305
   open_source: unknown
   commercial: true
   callable_host: true
@@ -19,7 +23,7 @@ deliveryModel:
   - openapi
   - pricing
   - repository-unlicensed
-  generated: '2026-08-28'
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: freemium
@@ -48,8 +52,8 @@ tags:
   - Automation
   - Internal Tools
   - Low-Code
-  - Open-Source
-  - Workflow-Automation
+  - Open Source
+  - Workflow Automation
 tags_raw:
   - AI Agents
   - Automation
@@ -57,6 +61,8 @@ tags_raw:
   - Low-Code
   - Open Source
   - Workflow Automation
+  - Open-Source
+  - Workflow-Automation
 apis:
 - aid: budibase:budibase-applications-api
   name: Budibase Applications API

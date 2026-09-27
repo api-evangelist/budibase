@@ -484,13 +484,6 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
-    ApplicationSearch:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApplicationOutput'
     ApplicationOutput:
       type: object
       properties:
@@ -517,6 +510,13 @@ components:
           type: string
         url:
           type: string
+    ApplicationSearch:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationOutput'
     NameSearch:
       type: object
       properties:
@@ -599,49 +599,6 @@ components:
             - version
       required:
       - data
-    application:
-      type: object
-      properties:
-        name:
-          description: The name of the app.
-          type: string
-        url:
-          description: The URL by which the app is accessed, this must be URL encoded.
-          type: string
-      required:
-      - name
-    nameSearch:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name to be used when searching - this will be used in a case insensitive starts with match.
-      required:
-      - name
-    deploymentOutput:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            _id:
-              description: The ID of the app.
-              type: string
-            status:
-              description: Status of the deployment, whether it succeeded or failed
-              type: string
-              enum:
-              - SUCCESS
-              - FAILURE
-            appUrl:
-              description: The URL of the published app
-              type: string
-          required:
-          - _id
-          - status
-          - appUrl
-      required:
-      - data
     applicationOutput:
       type: object
       properties:
@@ -688,6 +645,49 @@ components:
           - version
       required:
       - data
+    nameSearch:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name to be used when searching - this will be used in a case insensitive starts with match.
+      required:
+      - name
+    deploymentOutput:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            _id:
+              description: The ID of the app.
+              type: string
+            status:
+              description: Status of the deployment, whether it succeeded or failed
+              type: string
+              enum:
+              - SUCCESS
+              - FAILURE
+            appUrl:
+              description: The URL of the published app
+              type: string
+          required:
+          - _id
+          - status
+          - appUrl
+      required:
+      - data
+    application:
+      type: object
+      properties:
+        name:
+          description: The name of the app.
+          type: string
+        url:
+          description: The URL by which the app is accessed, this must be URL encoded.
+          type: string
+      required:
+      - name
   parameters:
     IdPath:
       name: id
@@ -704,10 +704,10 @@ components:
         default: '{{appId}}'
         type: string
   examples:
-    applications:
+    application:
       value:
         data:
-        - _id: app_metadata
+          _id: app_metadata
           appId: app_dev_957b12f943d348faa61db7e18e088d0f
           version: 1.0.58-alpha.0
           name: App name
@@ -722,10 +722,10 @@ components:
           _id: ef12381f934b4f129675cdbb76eff3c2
           status: SUCCESS
           appUrl: /app-url
-    application:
+    applications:
       value:
         data:
-          _id: app_metadata
+        - _id: app_metadata
           appId: app_dev_957b12f943d348faa61db7e18e088d0f
           version: 1.0.58-alpha.0
           name: App name
