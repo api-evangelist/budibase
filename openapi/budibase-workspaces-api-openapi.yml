@@ -202,17 +202,6 @@ paths:
                   $ref: '#/components/examples/workspaces'
 components:
   schemas:
-    workspace:
-      type: object
-      properties:
-        name:
-          description: The name of the app.
-          type: string
-        url:
-          description: The URL by which the app is accessed, this must be URL encoded.
-          type: string
-      required:
-      - name
     nameSearch:
       type: object
       properties:
@@ -351,6 +340,26 @@ components:
       required:
       - encryptPassword
       - excludeRows
+    workspace:
+      type: object
+      properties:
+        name:
+          description: The name of the app.
+          type: string
+        url:
+          description: The URL by which the app is accessed, this must be URL encoded.
+          type: string
+      required:
+      - name
+  parameters:
+    workspaceId:
+      in: path
+      name: workspaceId
+      required: true
+      description: The ID of the workspace which this request is targeting.
+      schema:
+        default: '{{workspaceId}}'
+        type: string
   examples:
     deploymentOutput:
       value:
@@ -358,18 +367,6 @@ components:
           _id: ef12381f934b4f129675cdbb76eff3c2
           status: SUCCESS
           appUrl: /app-url
-    workspace:
-      value:
-        data:
-          _id: app_metadata
-          appId: app_dev_957b12f943d348faa61db7e18e088d0f
-          version: 1.0.58-alpha.0
-          name: App name
-          url: /url
-          tenantId: default
-          updatedAt: 2022-02-22 13:00:54.035000+00:00
-          createdAt: 2022-02-11 18:02:26.961000+00:00
-          status: development
     workspaces:
       value:
         data:
@@ -382,15 +379,18 @@ components:
           updatedAt: 2022-02-22 13:00:54.035000+00:00
           createdAt: 2022-02-11 18:02:26.961000+00:00
           status: development
-  parameters:
-    workspaceId:
-      in: path
-      name: workspaceId
-      required: true
-      description: The ID of the workspace which this request is targeting.
-      schema:
-        default: '{{workspaceId}}'
-        type: string
+    workspace:
+      value:
+        data:
+          _id: app_metadata
+          appId: app_dev_957b12f943d348faa61db7e18e088d0f
+          version: 1.0.58-alpha.0
+          name: App name
+          url: /url
+          tenantId: default
+          updatedAt: 2022-02-22 13:00:54.035000+00:00
+          createdAt: 2022-02-11 18:02:26.961000+00:00
+          status: development
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

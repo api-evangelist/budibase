@@ -60,7 +60,7 @@ paths:
                 $ref: '#/components/schemas/rolesOutput'
 components:
   schemas:
-    rolesAssign:
+    rolesUnAssign:
       type: object
       properties:
         appBuilder:
@@ -113,7 +113,7 @@ components:
           - userIds
       required:
       - data
-    rolesUnAssign:
+    rolesAssign:
       type: object
       properties:
         appBuilder:
