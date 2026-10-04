@@ -245,6 +245,9 @@ apis:
   - type: RateLimits
     url: rate-limits/budibase-rate-limits.yml
 common:
+  - type: CapabilityMap
+    url: capabilities/budibase-capability-edges.yml
+    name: Budibase Business Capability Map
   - type: IssueTracker
     url: https://github.com/budibase/budibase/issues
   - type: Releases
