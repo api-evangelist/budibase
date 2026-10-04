@@ -201,15 +201,62 @@ paths:
                 workspaces:
                   $ref: '#/components/examples/workspaces'
 components:
+  examples:
+    workspaces:
+      value:
+        data:
+        - _id: app_metadata
+          appId: app_dev_957b12f943d348faa61db7e18e088d0f
+          version: 1.0.58-alpha.0
+          name: App name
+          url: /url
+          tenantId: default
+          updatedAt: 2022-02-22 13:00:54.035000+00:00
+          createdAt: 2022-02-11 18:02:26.961000+00:00
+          status: development
+    deploymentOutput:
+      value:
+        data:
+          _id: ef12381f934b4f129675cdbb76eff3c2
+          status: SUCCESS
+          appUrl: /app-url
+    workspace:
+      value:
+        data:
+          _id: app_metadata
+          appId: app_dev_957b12f943d348faa61db7e18e088d0f
+          version: 1.0.58-alpha.0
+          name: App name
+          url: /url
+          tenantId: default
+          updatedAt: 2022-02-22 13:00:54.035000+00:00
+          createdAt: 2022-02-11 18:02:26.961000+00:00
+          status: development
   schemas:
-    nameSearch:
+    deploymentOutput:
       type: object
       properties:
-        name:
-          type: string
-          description: The name to be used when searching - this will be used in a case insensitive starts with match.
+        data:
+          type: object
+          properties:
+            _id:
+              description: The ID of the app.
+              type: string
+            status:
+              description: Status of the deployment, whether it succeeded or failed
+              type: string
+              enum:
+              - SUCCESS
+              - FAILURE
+            appUrl:
+              description: The URL of the published app
+              type: string
+          required:
+          - _id
+          - status
+          - appUrl
       required:
-      - name
+      - data
     workspaceOutput:
       type: object
       properties:
@@ -256,6 +303,17 @@ components:
           - version
       required:
       - data
+    workspace:
+      type: object
+      properties:
+        name:
+          description: The name of the app.
+          type: string
+        url:
+          description: The URL by which the app is accessed, this must be URL encoded.
+          type: string
+      required:
+      - name
     workspaceSearch:
       type: object
       properties:
@@ -304,30 +362,14 @@ components:
             - version
       required:
       - data
-    deploymentOutput:
+    nameSearch:
       type: object
       properties:
-        data:
-          type: object
-          properties:
-            _id:
-              description: The ID of the app.
-              type: string
-            status:
-              description: Status of the deployment, whether it succeeded or failed
-              type: string
-              enum:
-              - SUCCESS
-              - FAILURE
-            appUrl:
-              description: The URL of the published app
-              type: string
-          required:
-          - _id
-          - status
-          - appUrl
+        name:
+          type: string
+          description: The name to be used when searching - this will be used in a case insensitive starts with match.
       required:
-      - data
+      - name
     workspaceExport:
       type: object
       properties:
@@ -340,17 +382,6 @@ components:
       required:
       - encryptPassword
       - excludeRows
-    workspace:
-      type: object
-      properties:
-        name:
-          description: The name of the app.
-          type: string
-        url:
-          description: The URL by which the app is accessed, this must be URL encoded.
-          type: string
-      required:
-      - name
   parameters:
     workspaceId:
       in: path
@@ -360,37 +391,6 @@ components:
       schema:
         default: '{{workspaceId}}'
         type: string
-  examples:
-    deploymentOutput:
-      value:
-        data:
-          _id: ef12381f934b4f129675cdbb76eff3c2
-          status: SUCCESS
-          appUrl: /app-url
-    workspaces:
-      value:
-        data:
-        - _id: app_metadata
-          appId: app_dev_957b12f943d348faa61db7e18e088d0f
-          version: 1.0.58-alpha.0
-          name: App name
-          url: /url
-          tenantId: default
-          updatedAt: 2022-02-22 13:00:54.035000+00:00
-          createdAt: 2022-02-11 18:02:26.961000+00:00
-          status: development
-    workspace:
-      value:
-        data:
-          _id: app_metadata
-          appId: app_dev_957b12f943d348faa61db7e18e088d0f
-          version: 1.0.58-alpha.0
-          name: App name
-          url: /url
-          tenantId: default
-          updatedAt: 2022-02-22 13:00:54.035000+00:00
-          createdAt: 2022-02-11 18:02:26.961000+00:00
-          status: development
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

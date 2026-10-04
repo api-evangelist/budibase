@@ -146,219 +146,6 @@ components:
           description: The name to be used when searching - this will be used in a case insensitive starts with match.
       required:
       - name
-    view:
-      description: The view to be created/updated.
-      type: object
-      required:
-      - name
-      - schema
-      - tableId
-      properties:
-        name:
-          description: The name of the view.
-          type: string
-        tableId:
-          description: The ID of the table this view is based on.
-          type: string
-        type:
-          description: The type of view - standard (empty value) or calculation.
-          type: string
-          enum:
-          - calculation
-        primaryDisplay:
-          type: string
-          description: A column used to display rows from this view - usually used when rendered in tables.
-        query:
-          description: Search parameters for view
-          type: object
-          properties:
-            logicalOperator:
-              description: When using groups this defines whether all of the filters must match, or only one of them.
-              type: string
-              enum:
-              - all
-              - any
-            onEmptyFilter:
-              description: If no filters match, should the view return all rows, or no rows.
-              type: string
-              enum:
-              - all
-              - none
-            groups:
-              description: A grouping of filters to be applied.
-              type: array
-              items:
-                type: object
-                properties:
-                  logicalOperator:
-                    description: When using groups this defines whether all of the filters must match, or only one of them.
-                    type: string
-                    enum:
-                    - all
-                    - any
-                  filters:
-                    description: A list of filters to apply
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        operator:
-                          type: string
-                          description: The type of search operation which is being performed.
-                          enum:
-                          - equal
-                          - notEqual
-                          - empty
-                          - notEmpty
-                          - fuzzy
-                          - string
-                          - contains
-                          - notContains
-                          - containsAny
-                          - oneOf
-                          - notOneOf
-                          - range
-                        field:
-                          type: string
-                          description: The field in the view to perform the search on.
-                        value:
-                          description: The value to search for - the type will depend on the operator in use.
-                          oneOf:
-                          - type: string
-                          - type: number
-                          - type: boolean
-                          - type: object
-                          - type: array
-                  groups:
-                    description: A grouping of filters to be applied.
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        logicalOperator:
-                          description: When using groups this defines whether all of the filters must match, or only one of them.
-                          type: string
-                          enum:
-                          - all
-                          - any
-                        filters:
-                          description: A list of filters to apply
-                          type: array
-                          items:
-                            type: object
-                            properties:
-                              operator:
-                                type: string
-                                description: The type of search operation which is being performed.
-                                enum:
-                                - equal
-                                - notEqual
-                                - empty
-                                - notEmpty
-                                - fuzzy
-                                - string
-                                - contains
-                                - notContains
-                                - containsAny
-                                - oneOf
-                                - notOneOf
-                                - range
-                              field:
-                                type: string
-                                description: The field in the view to perform the search on.
-                              value:
-                                description: The value to search for - the type will depend on the operator in use.
-                                oneOf:
-                                - type: string
-                                - type: number
-                                - type: boolean
-                                - type: object
-                                - type: array
-        sort:
-          oneOf:
-          - type: object
-            required:
-            - field
-            properties:
-              field:
-                type: string
-                description: The field from the table/view schema to sort on.
-              order:
-                type: string
-                description: The order in which to sort.
-                enum:
-                - ascending
-                - descending
-              type:
-                type: string
-                description: The type of sort to perform (by number, or by alphabetically).
-                enum:
-                - string
-                - number
-          - type: array
-            items:
-              type: object
-              required:
-              - field
-              properties:
-                field:
-                  type: string
-                  description: The field from the table/view schema to sort on.
-                order:
-                  type: string
-                  description: The order in which to sort.
-                  enum:
-                  - ascending
-                  - descending
-                type:
-                  type: string
-                  description: The type of sort to perform (by number, or by alphabetically).
-                  enum:
-                  - string
-                  - number
-        schema:
-          type: object
-          additionalProperties:
-            oneOf:
-            - type: object
-              properties:
-                visible:
-                  type: boolean
-                  description: Defines whether the column is visible or not - rows retrieved/updated through this view will not be able to access it.
-                readonly:
-                  type: boolean
-                  description: 'When used in combination with ''visible: true'' the column will be visible in row responses but cannot be updated.'
-                order:
-                  type: integer
-                  description: A number defining where the column shows up in tables, lowest being first.
-                width:
-                  type: integer
-                  description: A width for the column, defined in pixels - this affects rendering in tables.
-                column:
-                  type: array
-                  description: If this is a relationship column, we can set the columns we wish to include
-                  items:
-                    type: object
-                    properties:
-                      readonly:
-                        type: boolean
-            - type: object
-              properties:
-                calculationType:
-                  type: string
-                  description: This column should be built from a calculation, specifying a type and field. It is important to note when a calculation is configured all non-calculation columns will be used for grouping.
-                  enum:
-                  - sum
-                  - avg
-                  - count
-                  - min
-                  - max
-                field:
-                  type: string
-                  description: The field from the table to perform the calculation on.
-                distinct:
-                  type: boolean
-                  description: Can be used in tandem with the count calculation type, to count unique entries.
     viewSearch:
       type: object
       properties:
@@ -805,22 +592,219 @@ components:
               type: string
       required:
       - data
-  parameters:
-    viewId:
-      in: path
-      name: viewId
-      required: true
-      description: The ID of the view which this request is targeting.
-      schema:
-        type: string
-    appId:
-      in: header
-      name: x-budibase-app-id
-      required: true
-      description: The ID of the app which this request is targeting.
-      schema:
-        default: '{{appId}}'
-        type: string
+    view:
+      description: The view to be created/updated.
+      type: object
+      required:
+      - name
+      - schema
+      - tableId
+      properties:
+        name:
+          description: The name of the view.
+          type: string
+        tableId:
+          description: The ID of the table this view is based on.
+          type: string
+        type:
+          description: The type of view - standard (empty value) or calculation.
+          type: string
+          enum:
+          - calculation
+        primaryDisplay:
+          type: string
+          description: A column used to display rows from this view - usually used when rendered in tables.
+        query:
+          description: Search parameters for view
+          type: object
+          properties:
+            logicalOperator:
+              description: When using groups this defines whether all of the filters must match, or only one of them.
+              type: string
+              enum:
+              - all
+              - any
+            onEmptyFilter:
+              description: If no filters match, should the view return all rows, or no rows.
+              type: string
+              enum:
+              - all
+              - none
+            groups:
+              description: A grouping of filters to be applied.
+              type: array
+              items:
+                type: object
+                properties:
+                  logicalOperator:
+                    description: When using groups this defines whether all of the filters must match, or only one of them.
+                    type: string
+                    enum:
+                    - all
+                    - any
+                  filters:
+                    description: A list of filters to apply
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        operator:
+                          type: string
+                          description: The type of search operation which is being performed.
+                          enum:
+                          - equal
+                          - notEqual
+                          - empty
+                          - notEmpty
+                          - fuzzy
+                          - string
+                          - contains
+                          - notContains
+                          - containsAny
+                          - oneOf
+                          - notOneOf
+                          - range
+                        field:
+                          type: string
+                          description: The field in the view to perform the search on.
+                        value:
+                          description: The value to search for - the type will depend on the operator in use.
+                          oneOf:
+                          - type: string
+                          - type: number
+                          - type: boolean
+                          - type: object
+                          - type: array
+                  groups:
+                    description: A grouping of filters to be applied.
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        logicalOperator:
+                          description: When using groups this defines whether all of the filters must match, or only one of them.
+                          type: string
+                          enum:
+                          - all
+                          - any
+                        filters:
+                          description: A list of filters to apply
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              operator:
+                                type: string
+                                description: The type of search operation which is being performed.
+                                enum:
+                                - equal
+                                - notEqual
+                                - empty
+                                - notEmpty
+                                - fuzzy
+                                - string
+                                - contains
+                                - notContains
+                                - containsAny
+                                - oneOf
+                                - notOneOf
+                                - range
+                              field:
+                                type: string
+                                description: The field in the view to perform the search on.
+                              value:
+                                description: The value to search for - the type will depend on the operator in use.
+                                oneOf:
+                                - type: string
+                                - type: number
+                                - type: boolean
+                                - type: object
+                                - type: array
+        sort:
+          oneOf:
+          - type: object
+            required:
+            - field
+            properties:
+              field:
+                type: string
+                description: The field from the table/view schema to sort on.
+              order:
+                type: string
+                description: The order in which to sort.
+                enum:
+                - ascending
+                - descending
+              type:
+                type: string
+                description: The type of sort to perform (by number, or by alphabetically).
+                enum:
+                - string
+                - number
+          - type: array
+            items:
+              type: object
+              required:
+              - field
+              properties:
+                field:
+                  type: string
+                  description: The field from the table/view schema to sort on.
+                order:
+                  type: string
+                  description: The order in which to sort.
+                  enum:
+                  - ascending
+                  - descending
+                type:
+                  type: string
+                  description: The type of sort to perform (by number, or by alphabetically).
+                  enum:
+                  - string
+                  - number
+        schema:
+          type: object
+          additionalProperties:
+            oneOf:
+            - type: object
+              properties:
+                visible:
+                  type: boolean
+                  description: Defines whether the column is visible or not - rows retrieved/updated through this view will not be able to access it.
+                readonly:
+                  type: boolean
+                  description: 'When used in combination with ''visible: true'' the column will be visible in row responses but cannot be updated.'
+                order:
+                  type: integer
+                  description: A number defining where the column shows up in tables, lowest being first.
+                width:
+                  type: integer
+                  description: A width for the column, defined in pixels - this affects rendering in tables.
+                column:
+                  type: array
+                  description: If this is a relationship column, we can set the columns we wish to include
+                  items:
+                    type: object
+                    properties:
+                      readonly:
+                        type: boolean
+            - type: object
+              properties:
+                calculationType:
+                  type: string
+                  description: This column should be built from a calculation, specifying a type and field. It is important to note when a calculation is configured all non-calculation columns will be used for grouping.
+                  enum:
+                  - sum
+                  - avg
+                  - count
+                  - min
+                  - max
+                field:
+                  type: string
+                  description: The field from the table to perform the calculation on.
+                distinct:
+                  type: boolean
+                  description: Can be used in tandem with the count calculation type, to count unique entries.
   examples:
     views:
       value:
@@ -890,6 +874,22 @@ components:
                   low: 18
                   high: 100
           primaryDisplay: name
+  parameters:
+    appId:
+      in: header
+      name: x-budibase-app-id
+      required: true
+      description: The ID of the app which this request is targeting.
+      schema:
+        default: '{{appId}}'
+        type: string
+    viewId:
+      in: path
+      name: viewId
+      required: true
+      description: The ID of the view which this request is targeting.
+      schema:
+        type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

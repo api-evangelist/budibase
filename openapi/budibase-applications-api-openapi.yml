@@ -484,6 +484,39 @@ paths:
       - ApiKeyAuth: []
 components:
   schemas:
+    ApplicationCreate:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+    ApplicationSearch:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationOutput'
+    ApplicationOutput:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        url:
+          type: string
+        status:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
     NameSearch:
       type: object
       properties:
@@ -506,104 +539,6 @@ components:
               enum:
               - string
               - number
-    ApplicationCreate:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-        url:
-          type: string
-    ApplicationOutput:
-      type: object
-      properties:
-        _id:
-          type: string
-        name:
-          type: string
-        url:
-          type: string
-        status:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-    ApplicationSearch:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApplicationOutput'
-    application:
-      type: object
-      properties:
-        name:
-          description: The name of the app.
-          type: string
-        url:
-          description: The URL by which the app is accessed, this must be URL encoded.
-          type: string
-      required:
-      - name
-    nameSearch:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name to be used when searching - this will be used in a case insensitive starts with match.
-      required:
-      - name
-    applicationOutput:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            name:
-              description: The name of the app.
-              type: string
-            url:
-              description: The URL by which the app is accessed, this must be URL encoded.
-              type: string
-            _id:
-              description: The ID of the app.
-              type: string
-            status:
-              description: The status of the app, stating it if is the development or published version.
-              type: string
-              enum:
-              - development
-              - published
-            createdAt:
-              description: States when the app was created, will be constant. Stored in ISO format.
-              type: string
-            updatedAt:
-              description: States the last time the app was updated - stored in ISO format.
-              type: string
-            version:
-              description: States the version of the Budibase client this app is currently based on.
-              type: string
-            tenantId:
-              description: In a multi-tenant environment this will state the tenant this app is within.
-              type: string
-            lockedBy:
-              description: The user this app is currently being built by.
-              type: object
-          required:
-          - _id
-          - name
-          - url
-          - status
-          - createdAt
-          - updatedAt
-          - version
-      required:
-      - data
     deploymentOutput:
       type: object
       properties:
@@ -628,18 +563,6 @@ components:
           - appUrl
       required:
       - data
-    appExport:
-      type: object
-      properties:
-        encryptPassword:
-          description: An optional password used to encrypt the export.
-          type: string
-        excludeRows:
-          description: Set whether the internal table rows should be excluded from the export.
-          type: boolean
-      required:
-      - encryptPassword
-      - excludeRows
     applicationSearch:
       type: object
       properties:
@@ -688,6 +611,83 @@ components:
             - version
       required:
       - data
+    appExport:
+      type: object
+      properties:
+        encryptPassword:
+          description: An optional password used to encrypt the export.
+          type: string
+        excludeRows:
+          description: Set whether the internal table rows should be excluded from the export.
+          type: boolean
+      required:
+      - encryptPassword
+      - excludeRows
+    applicationOutput:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            name:
+              description: The name of the app.
+              type: string
+            url:
+              description: The URL by which the app is accessed, this must be URL encoded.
+              type: string
+            _id:
+              description: The ID of the app.
+              type: string
+            status:
+              description: The status of the app, stating it if is the development or published version.
+              type: string
+              enum:
+              - development
+              - published
+            createdAt:
+              description: States when the app was created, will be constant. Stored in ISO format.
+              type: string
+            updatedAt:
+              description: States the last time the app was updated - stored in ISO format.
+              type: string
+            version:
+              description: States the version of the Budibase client this app is currently based on.
+              type: string
+            tenantId:
+              description: In a multi-tenant environment this will state the tenant this app is within.
+              type: string
+            lockedBy:
+              description: The user this app is currently being built by.
+              type: object
+          required:
+          - _id
+          - name
+          - url
+          - status
+          - createdAt
+          - updatedAt
+          - version
+      required:
+      - data
+    application:
+      type: object
+      properties:
+        name:
+          description: The name of the app.
+          type: string
+        url:
+          description: The URL by which the app is accessed, this must be URL encoded.
+          type: string
+      required:
+      - name
+    nameSearch:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name to be used when searching - this will be used in a case insensitive starts with match.
+      required:
+      - name
   parameters:
     IdPath:
       name: id
@@ -704,6 +704,18 @@ components:
         default: '{{appId}}'
         type: string
   examples:
+    applications:
+      value:
+        data:
+        - _id: app_metadata
+          appId: app_dev_957b12f943d348faa61db7e18e088d0f
+          version: 1.0.58-alpha.0
+          name: App name
+          url: /url
+          tenantId: default
+          updatedAt: 2022-02-22 13:00:54.035000+00:00
+          createdAt: 2022-02-11 18:02:26.961000+00:00
+          status: development
     application:
       value:
         data:
@@ -722,18 +734,6 @@ components:
           _id: ef12381f934b4f129675cdbb76eff3c2
           status: SUCCESS
           appUrl: /app-url
-    applications:
-      value:
-        data:
-        - _id: app_metadata
-          appId: app_dev_957b12f943d348faa61db7e18e088d0f
-          version: 1.0.58-alpha.0
-          name: App name
-          url: /url
-          tenantId: default
-          updatedAt: 2022-02-22 13:00:54.035000+00:00
-          createdAt: 2022-02-11 18:02:26.961000+00:00
-          status: development
   securitySchemes:
     apiKeyAuth:
       type: apiKey
