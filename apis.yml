@@ -245,6 +245,8 @@ apis:
   - type: RateLimits
     url: rate-limits/budibase-rate-limits.yml
 common:
+  - type: FinOps
+    url: finops/budibase-finops.yml
   - type: CapabilityMap
     url: capabilities/budibase-capability-edges.yml
     name: Budibase Business Capability Map
