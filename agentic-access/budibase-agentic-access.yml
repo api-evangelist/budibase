@@ -1,4 +1,4 @@
-generated: '2026-09-16'
+generated: '2026-09-23'
 method: generated
 source: openapi/budibase-applications-api-openapi.yml, openapi/budibase-metrics-api-openapi.yml,
   openapi/budibase-queries-api-openapi.yml, openapi/budibase-roles-api-openapi.yml, openapi/budibase-rows-api-openapi.yml,
@@ -10,11 +10,11 @@ description: Recommended x-agentic-access execution contracts, classified heuris
 summary:
   operations: 67
   by_action_class:
-    connected: 16
-    acting: 51
+    connected: 24
+    acting: 43
   by_consequence:
-    read: 16
-    write: 51
+    read: 24
+    write: 43
   human_in_the_loop_required: 0
 operations:
 - path: /applications
@@ -259,18 +259,12 @@ operations:
   method: post
   operationId: appSearch
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /metrics
   method: get
   operationId: metricsGet
@@ -327,18 +321,12 @@ operations:
   method: post
   operationId: querySearch
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /roles/assign
   method: post
   operationId: roleAssign
@@ -501,34 +489,22 @@ operations:
   method: post
   operationId: rowSearch
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /views/{viewId}/rows/search
   method: post
   operationId: rowViewSearch
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /tables
   method: get
   operationId: searchTables
@@ -643,18 +619,12 @@ operations:
   method: post
   operationId: tableSearch
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /users
   method: get
   operationId: searchUsers
@@ -769,18 +739,12 @@ operations:
   method: post
   operationId: userSearch
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /views
   method: post
   operationId: viewCreate
@@ -843,18 +807,12 @@ operations:
   method: post
   operationId: viewSearch
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /workspaces
   method: post
   operationId: workspaceCreate
@@ -981,15 +939,9 @@ operations:
   method: post
   operationId: workspaceSearch
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
