@@ -173,22 +173,29 @@ paths:
       security:
       - ApiKeyAuth: []
 components:
+  parameters:
+    IdPath:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    appId:
+      in: header
+      name: x-budibase-app-id
+      required: true
+      description: The ID of the app which this request is targeting.
+      schema:
+        default: '{{appId}}'
+        type: string
+    queryId:
+      in: path
+      name: queryId
+      required: true
+      description: The ID of the query which this request is targeting.
+      schema:
+        type: string
   schemas:
-    Query:
-      type: object
-      properties:
-        _id:
-          type: string
-        name:
-          type: string
-        datasourceId:
-          type: string
-        queryVerb:
-          type: string
-        parameters:
-          type: array
-          items:
-            type: object
     NameSearch:
       type: object
       properties:
@@ -211,6 +218,40 @@ components:
               enum:
               - string
               - number
+    Query:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        datasourceId:
+          type: string
+        queryVerb:
+          type: string
+        parameters:
+          type: array
+          items:
+            type: object
+    executeQuery:
+      description: The parameters required for executing a query.
+      type: object
+      properties:
+        parameters:
+          type: object
+          description: This contains the required parameters for the query, this depends on query type, setup and bindings.
+          additionalProperties:
+            description: Key value properties of any type, depending on the query output schema.
+        pagination:
+          type: object
+          description: For supported query types (currently on REST) pagination can be performed using these properties.
+          properties:
+            page:
+              type: string
+              description: The page which has been returned from a previous query.
+            limit:
+              type: number
+              description: The number of rows to return per page.
     querySearch:
       type: object
       properties:
@@ -258,6 +299,14 @@ components:
             - _id
       required:
       - data
+    nameSearch:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name to be used when searching - this will be used in a case insensitive starts with match.
+      required:
+      - name
     executeQueryOutput:
       type: object
       properties:
@@ -281,78 +330,7 @@ components:
           type: object
       required:
       - data
-    executeQuery:
-      description: The parameters required for executing a query.
-      type: object
-      properties:
-        parameters:
-          type: object
-          description: This contains the required parameters for the query, this depends on query type, setup and bindings.
-          additionalProperties:
-            description: Key value properties of any type, depending on the query output schema.
-        pagination:
-          type: object
-          description: For supported query types (currently on REST) pagination can be performed using these properties.
-          properties:
-            page:
-              type: string
-              description: The page which has been returned from a previous query.
-            limit:
-              type: number
-              description: The number of rows to return per page.
-    nameSearch:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name to be used when searching - this will be used in a case insensitive starts with match.
-      required:
-      - name
-  parameters:
-    IdPath:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: string
-    queryId:
-      in: path
-      name: queryId
-      required: true
-      description: The ID of the query which this request is targeting.
-      schema:
-        type: string
-    appId:
-      in: header
-      name: x-budibase-app-id
-      required: true
-      description: The ID of the app which this request is targeting.
-      schema:
-        default: '{{appId}}'
-        type: string
   examples:
-    sqlResponse:
-      value:
-        data:
-        - personid: 1
-          lastname: Hughes
-          firstname: Mike
-          address: 123 Fake Street
-          city: Belfast
-        - personid: 2
-          lastname: Smith
-          firstname: John
-          address: 64 Updown Road
-          city: Dublin
-    restResponse:
-      value:
-        data:
-        - value: <html lang='en-GB'></html>
-        pagination:
-          cursor: '2'
-        raw: <html lang='en-GB'></html>
-        headers:
-          content-type: text/html; charset=ISO-8859-1
     queries:
       value:
         data:
@@ -381,6 +359,28 @@ components:
               type: string
           transformer: return data
           readable: true
+    restResponse:
+      value:
+        data:
+        - value: <html lang='en-GB'></html>
+        pagination:
+          cursor: '2'
+        raw: <html lang='en-GB'></html>
+        headers:
+          content-type: text/html; charset=ISO-8859-1
+    sqlResponse:
+      value:
+        data:
+        - personid: 1
+          lastname: Hughes
+          firstname: Mike
+          address: 123 Fake Street
+          city: Belfast
+        - personid: 2
+          lastname: Smith
+          firstname: John
+          address: 64 Updown Road
+          city: Dublin
   securitySchemes:
     apiKeyAuth:
       type: apiKey
