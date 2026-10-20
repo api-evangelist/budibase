@@ -14,15 +14,20 @@ source:
 - https://monid.ai/tools/budibase
 checked:
 - https://api.nuget.org/v3
+- https://cdn.winget.microsoft.com/cache
+- https://composio.dev/toolkits/budibase
 - https://crates.io/api/v1
+- https://formulae.brew.sh/api/cask.json
+- https://formulae.brew.sh/api/formula.json
+- https://github.com/ScoopInstaller/Extras
+- https://github.com/ScoopInstaller/Main
+- https://monid.ai/tools/budibase
+- https://n8n.io/integrations/budibase/
 - https://proxy.golang.org
 - https://pypi.org/pypi
 - https://registry.npmjs.org
 - https://repo1.maven.org/maven2
 - https://rubygems.org/api/v1
-- https://composio.dev/toolkits/budibase
-- https://monid.ai/tools/budibase
-- https://n8n.io/integrations/budibase/
 - https://zapier.com/apps/budibase/integrations
 summary: null
 marketplace_apps: []
@@ -75,4 +80,34 @@ edges:
     detected: '2026-10-18'
   detected_by: sweep-official-sdks.py
   first_seen: '2026-10-18'
+- partner_name: npm registry
+  partner: npm
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official CLI (npm registry)
+  evidence: https://www.npmjs.com/package/budibase
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: npm registry (public package index)
+    spec_file: null
+    packages:
+    - name: budibase
+      version: 0.0.31
+      released: '2022-04-12'
+      released_field: modified
+      lapsed: true
+      page: https://www.npmjs.com/package/budibase
+      cli: bin budi
+      repo_leg: domain:budibase.com
+      publisher_leg: email:budibase.com
+      matched_by: domain
+    current: false
+    signal_note: 'the provider''s own command-line tool on a package manager: distribution, not an integration;
+      lapsed = no release in 24 months or deprecated / disabled by the manager'
+    detected_by: sweep-official-clis.py
+    detected: '2026-10-20'
+  detected_by: sweep-official-clis.py
+  first_seen: '2026-10-20'
 templates: []
