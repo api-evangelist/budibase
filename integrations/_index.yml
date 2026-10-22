@@ -73,3 +73,16 @@
     detected: '2026-10-20'
   status: not-a-workflow
   arazzo: null
+- slug: budibase-digital-ocean-own
+  label: Digital Ocean (own)
+  partner: digital-ocean
+  partner_name: Digital Ocean (own)
+  category: Developer Tools
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.digitalocean.com/apps/budibase
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
