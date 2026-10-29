@@ -1,4 +1,4 @@
-# Budibase (budibase)
+# Budibase
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,71 +66,164 @@
 
 Budibase is an open source low-code platform for building AI agents, internal tools, and workflow automations. It enables teams to connect databases, spreadsheets, and business systems, then build applications and automations on top without extensive coding. Used by over 300,000 teams ranging from SMEs to government organizations, Budibase accelerates the delivery of internal business applications and process automation.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/budibase/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/budibase/refs/heads/main/apis.yml)
+**Areas:** AI Agents · Automation · Internal Tools · Low-Code · Open Source · Workflow Automation
 
-## Scope
+## Budibase on APIs.io
 
-- **Type:** Index
+Everything profiled for Budibase is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/budibase/](https://apis.io/providers/budibase/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (9)
 
-- AI Agents
-- Automation
-- Internal Tools
-- Low-Code
-- Open Source
-- Workflow Automation
+- [Budibase Applications API](https://apis.io/apis/budibase/budibase-applications-api/) — Manage Budibase applications.
+- [Budibase Queries API](https://apis.io/apis/budibase/budibase-queries-api/) — Execute and search queries.
+- [Budibase Rows API](https://apis.io/apis/budibase/budibase-rows-api/) — Manage rows inside a table.
+- [Budibase Tables API](https://apis.io/apis/budibase/budibase-tables-api/) — Manage data tables inside an application.
+- [Budibase Users API](https://apis.io/apis/budibase/budibase-users-api/) — Manage Budibase users.
+- [Budibase Metrics API](https://apis.io/apis/budibase/budibase-metrics-api/) — The metrics API from Budibase — 1 operation(s) for metrics.
+- [Budibase Roles API](https://apis.io/apis/budibase/budibase-roles-api/) — The roles API from Budibase — 2 operation(s) for roles.
+- [Budibase Views API](https://apis.io/apis/budibase/budibase-views-api/) — The views API from Budibase — 3 operation(s) for views.
+- [Budibase Workspaces API](https://apis.io/apis/budibase/budibase-workspaces-api/) — The workspaces API from Budibase — 7 operation(s) for workspaces.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-03-27
-- **Modified:** 2026-04-21
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### AsyncAPI (1)
 
-### Budibase REST API
+Event-driven and webhook contracts.
 
-The Budibase Public API provides programmatic access to Budibase resources including applications, tables, rows, users, queries, and automations. It enables external systems to read and write Budibase data, trigger automations, and manage platform resources. Authentication is via an API key generated in account settings.
+- [Budibase Webhooks](https://apis.io/asyncapis/budibase/budibase-webhooks/)
 
-- **Human URL:** [https://docs.budibase.com/docs/public-api](https://docs.budibase.com/docs/public-api)
+#### MCP servers (1)
 
-#### Tags
+Model Context Protocol servers that expose the API to agents.
 
-- Applications
-- Automation
-- Low-Code
-- Tables
-- Users
+- [budibase-mcp.yml](https://apis.io/servers/budibase/budibase-mcp-yml/)
 
-#### Properties
+#### Agentic access (1)
 
-- [Documentation](https://docs.budibase.com/docs/public-api)
-- [Authentication](https://docs.budibase.com/docs/public-api#authentication)
-- [OpenAPI](https://budibase.com/api/public/v1/openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/budibase.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/budibase.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Which operations an agent can call, which act, and which need a human in the loop.
 
-## Common Properties
+- [Budibase Agentic Access](https://apis.io/agentic-access/budibase/budibase-agentic-access/)
 
-- [LinkedIn](https://www.linkedin.com/company/budibase)
+#### Collections (6)
+
+Postman and Open Collection request collections.
+
+- [Budibase Public API](https://apis.io/collections/budibase/open-budibase/)
+- [Budibase Public Applications API](https://apis.io/collections/budibase/open-budibase-applications-api/)
+- [Budibase Public Applications Queries API](https://apis.io/collections/budibase/open-budibase-queries-api/)
+- [Budibase Public Applications Rows API](https://apis.io/collections/budibase/open-budibase-rows-api/)
+- [Budibase Public Applications Tables API](https://apis.io/collections/budibase/open-budibase-tables-api/)
+- [Budibase Public Applications Users API](https://apis.io/collections/budibase/open-budibase-users-api/)
+
+#### Overlays (6)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Budibase Applications Api Overlay](https://apis.io/overlays/budibase/budibase-applications-api-overlay/)
+- [Budibase Public Api Overlay](https://apis.io/overlays/budibase/budibase-public-api-overlay/)
+- [Budibase Queries Api Overlay](https://apis.io/overlays/budibase/budibase-queries-api-overlay/)
+- [Budibase Rows Api Overlay](https://apis.io/overlays/budibase/budibase-rows-api-overlay/)
+- [Budibase Tables Api Overlay](https://apis.io/overlays/budibase/budibase-tables-api-overlay/)
+- [Budibase Users Api Overlay](https://apis.io/overlays/budibase/budibase-users-api-overlay/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Budibase Authentication](https://apis.io/security/budibase/budibase-authentication/)
+- [Budibase Domain Security](https://apis.io/security/budibase/budibase-domain-security/)
+- [Budibase Trust Center](https://apis.io/security/budibase/budibase-trust-center/)
+- [Budibase Vulnerability Disclosure](https://apis.io/security/budibase/budibase-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Budibase Plans Pricing](https://apis.io/plans/budibase/budibase-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Budibase Rate Limits](https://apis.io/rate-limits/budibase/budibase-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Budibase Finops](https://apis.io/finops/budibase/budibase-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://budibase.com)
 - [Documentation](https://docs.budibase.com)
-- [GitHub Repository](https://github.com/budibase/budibase)
-- [Blog](https://budibase.com/blog)
+- [Getting started](https://docs.budibase.com/docs/quickstart)
+- [API reference](https://docs.budibase.com/reference)
 - [Pricing](https://budibase.com/pricing)
-- [Changelog](https://budibase.com/changelog)
-- [Community](https://discord.com/invite/budibase-733030666647765003)
-- [Sign Up](https://account.budibase.app/register)
-- [Login](https://account.budibase.app/auth/login)
 - [Support](https://budibase.com/support)
-- [Terms of Service](https://budibase.com/terms)
-- [Privacy Policy](https://budibase.com/privacy)
-- [Integrations](https://budibase.com/product/connections)
-- [Use Cases](undefined)
-- [Features](undefined)
-- [L L Ms Txt](https://docs.budibase.com/llms.txt)
+- [Changelog](https://budibase.com/changelog)
+- [Blog](https://budibase.com/blog)
+- [Security](https://github.com/Budibase/budibase/security/advisories/new)
+- [Terms of service](https://budibase.com/terms)
+- [Privacy policy](https://budibase.com/privacy)
+- [GitHub](https://github.com/Budibase)
+- [Status](https://status.budibase.com)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 61.8** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 57.5 |
+| Contract governance | 4.5 |
+| Operational transparency | 65.8 |
+| Developer ergonomics | 57.7 |
+| Access clarity | 85.5 |
+
+**Agent readiness 31.1** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | — |
+
+**Regulatory alignment 35.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/budibase/](https://apis.io/providers/budibase/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Budibase: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/budibase/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
