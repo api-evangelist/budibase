@@ -1,0 +1,110 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-28'
+method: searched
+source: https://budibase.com/pricing/
+sources:
+- https://budibase.com/pricing/
+- https://budibase.com/pricing
+provenance:
+  tool: engine/economics/harvest_pricing.py
+  run: 20261028T141238
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: tiered-subscription
+delivery:
+  delivery: open-core
+  method: page
+  read: '2026-10-28'
+  evidence: Open source Free Unlimited actions Visit the docs
+  free_edition: Open source
+  managed_tier: Pro
+published: true
+note: Pricing by monthly 'actions' with tiered plans; free self-hosted open-source edition alongside paid
+  tiers; no licence name stated.
+plan_count: 6
+currency: USD
+plans:
+- name: Pro
+  price_text: $19 / month
+  price: 19
+  currency: USD
+  period: month
+  included_quota: 5K actions / 10K actions, 2K Budibase AI credits, 1 creator, 1 day logs, 1 workspace
+  overage: End users for $5/user/mo
+- name: Premium
+  price_text: $49 / month
+  price: 49
+  currency: USD
+  period: month
+  included_quota: 20K actions / 50K actions, 10K Budibase AI credits, 1 creator, 7 days logs, 10 workspaces
+  overage: End users for $5/user/mo; Creators for $50/creator/mo
+- name: Business
+  price_text: $299 / month
+  price: 299
+  currency: USD
+  period: month
+  included_quota: 250K actions, 50K Budibase AI credits, 3 creators, 30 days logs, unlimited workspaces
+  overage: End users for $5/user/mo; Creators for $50/creator/mo
+- name: Enterprise (cloud)
+  price_text: Custom
+  period: none
+  included_quota: Custom actions, 365 days logs, audit logs, SCIM
+- name: Open source
+  price_text: Free
+  period: none
+  included_quota: Unlimited actions, 1 workspace, unlimited apps/automations/agents/users, self-host
+- name: Enterprise (self-host)
+  price_text: Custom
+  period: none
+  included_quota: Unlimited actions, everything in open source plus enterprise features
+rate_limit_statements:
+- Actions are hard monthly limits based on your selected plan tier.
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - hybrid
+  units: []
+  plans:
+  - name: Pro
+    access: other
+    model: hybrid
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Premium
+    access: other
+    model: hybrid
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Business
+    access: other
+    model: hybrid
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Enterprise (cloud)
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
+  - name: Open source
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
+  - name: Enterprise (self-host)
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
