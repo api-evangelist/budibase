@@ -77,6 +77,9 @@ artifacts:
   front-door-ai/2026-09-17.yml:
     method: unknown
     evidence: no authorship recorded
+  heartbeat/2026-11-02.yml:
+    method: unknown
+    evidence: no authorship recorded
   integrations/_index.yml:
     method: generated
     evidence: carries an API Evangelist house phrase
@@ -86,7 +89,7 @@ artifacts:
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  kin/checks-2026-10-31T095417.yml:
+  kin/checks-2026-11-02T082323.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-23T000603.yml:
@@ -141,6 +144,15 @@ artifacts:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-10-31T095417.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-01T171331.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-01T200237.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-02T082323.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   lifecycle/budibase-lifecycle.yml:
@@ -207,6 +219,9 @@ artifacts:
   packages/budibase-packages.yml:
     method: searched
     evidence: declared in the artifact
+  patterns/budibase-patterns.yml:
+    method: derived
+    evidence: declared in the artifact
   plans/budibase-plans-pricing.yml:
     method: searched
     evidence: declared in the artifact
@@ -216,6 +231,9 @@ artifacts:
   rate-limits/budibase-rate-limits.yml:
     method: unknown
     evidence: no authorship recorded
+  rules/budibase-rules.yml:
+    method: generated
+    evidence: declared in the artifact
   security/budibase-domain-security.yml:
     method: unknown
     evidence: no authorship recorded
@@ -236,6 +254,9 @@ artifacts:
     evidence: declared in the artifact
   skills/budibase-read-and-write-rows.md:
     method: generated
+    evidence: declared in the artifact
+  sla/budibase-sla.yml:
+    method: searched
     evidence: declared in the artifact
   well-known/budibase-well-known.yml:
     method: unknown
