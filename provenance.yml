@@ -5,6 +5,9 @@ artifacts:
   agentic-access/budibase-agentic-access.yml:
     method: generated
     evidence: declared in the artifact
+  ai-preferences/budibase-ai-preferences.yml:
+    method: harvested
+    evidence: declared in the artifact
   asyncapi/budibase-webhooks.yml:
     method: searched
     evidence: declared in the artifact
@@ -12,6 +15,12 @@ artifacts:
     method: searched
     evidence: declared in the artifact
   capabilities/budibase-capability-edges.yml:
+    method: unknown
+    evidence: no authorship recorded
+  certification/observations-2026-11-11.jsonl:
+    method: unknown
+    evidence: no authorship recorded
+  certification/status.yml:
     method: unknown
     evidence: no authorship recorded
   changelog/budibase-changelog.yml:
@@ -56,6 +65,9 @@ artifacts:
   collections/budibase.postman_collection.json:
     method: derived
     evidence: openapi/budibase
+  compliance/budibase-compliance.yml:
+    method: harvested
+    evidence: declared in the artifact
   components/budibase-components.yml:
     method: searched
     evidence: declared in the artifact
@@ -65,8 +77,14 @@ artifacts:
   conventions/budibase-conventions.yml:
     method: derived
     evidence: declared in the artifact
+  data-license/budibase-data-license.yml:
+    method: harvested
+    evidence: declared in the artifact
   data-model/budibase-data-model.yml:
     method: derived
+    evidence: declared in the artifact
+  eligibility/budibase-eligibility.yml:
+    method: harvested
     evidence: declared in the artifact
   errors/budibase-problem-types.yml:
     method: unknown
@@ -83,6 +101,9 @@ artifacts:
   heartbeat/2026-11-06.yml:
     method: unknown
     evidence: no authorship recorded
+  heartbeat/2026-11-13.yml:
+    method: unknown
+    evidence: no authorship recorded
   integrations/_index.yml:
     method: generated
     evidence: carries an API Evangelist house phrase
@@ -92,7 +113,7 @@ artifacts:
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  kin/checks-2026-11-02T082323.yml:
+  kin/checks-2026-11-06T143934.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-23T000603.yml:
@@ -156,6 +177,9 @@ artifacts:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-11-02T082323.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-06T143934.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   lifecycle/budibase-lifecycle.yml:
@@ -231,6 +255,9 @@ artifacts:
   plans/budibase-price-estimates.yml:
     method: unknown
     evidence: no authorship recorded
+  privacy/budibase-privacy-policy.yml:
+    method: harvested
+    evidence: declared in the artifact
   rate-limits/budibase-rate-limits.yml:
     method: unknown
     evidence: no authorship recorded
@@ -260,6 +287,9 @@ artifacts:
     evidence: declared in the artifact
   sla/budibase-sla.yml:
     method: searched
+    evidence: declared in the artifact
+  terms/budibase-terms-of-service.yml:
+    method: harvested
     evidence: declared in the artifact
   well-known/budibase-well-known.yml:
     method: unknown
